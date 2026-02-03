@@ -56,7 +56,7 @@ const Hero: FC = () => {
           />
           
           {/* Overlay */}
-          <div className="absolute inset-0 bg-[#B2AC88]/50" />
+          <div className="absolute inset-0 bg-black/25" />
           
           {/* Content */}
           <HeroContent textColor="text-white" />

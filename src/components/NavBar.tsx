@@ -53,7 +53,7 @@ export function Component() {
           background: linear-gradient(
             90deg,
             transparent,
-            #7A9070,
+            #8B7355,
             transparent
           );
           transform: scaleX(0);
@@ -69,7 +69,7 @@ export function Component() {
           background: linear-gradient(
             90deg,
             transparent,
-            #9CAF88,
+            #8B7355,
             transparent
           );
         }
@@ -120,7 +120,7 @@ export function Component() {
         .nav-divider {
           width: 3px;
           height: 3px;
-          background: #9CAF88;
+          background: #8B7355;
           border-radius: 50%;
           opacity: 0.4;
         }
@@ -138,7 +138,7 @@ export function Component() {
           left: 0;
           width: 100%;
           height: 2px;
-          background: #7A9070;
+          background: #8B7355;
           border-radius: 2px;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -177,42 +177,37 @@ export function Component() {
           scrolled
             ? "bg-white/98 backdrop-blur-xl nav-scrolled"
             : "bg-white/95 backdrop-blur-lg "
-        } border-b border-green-50/50`}
+        } border-b border-slate-200/30`}
       >
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           {/* Brand Section - Enhanced */}
           <NavbarBrand href="/" className="flex items-center gap-3 group cursor-pointer">
-            {/* Decorative leaf icon */}
+            {/* Decorative ornament */}
             <div className="relative">
               <svg
                 width="32"
                 height="32"
                 viewBox="0 0 32 32"
-                className="text-green-700 transition-all duration-500 group-hover:text-green-600 group-hover:rotate-12"
+                className="text-slate-700 transition-all duration-500 group-hover:text-slate-600 group-hover:scale-110"
               >
+                <circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5" />
                 <path
-                  d="M16 4C12 8 10 12 11 16C12 19 14 21 16 22C18 21 20 19 21 16C22 12 20 8 16 4Z"
-                  fill="none"
+                  d="M16 2v28M2 16h28"
                   stroke="currentColor"
-                  strokeWidth="1.5"
-                  opacity="0.7"
+                  strokeWidth="0.5"
+                  opacity="0.3"
                 />
-                <path
-                  d="M16 4L16 22"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
+                <circle cx="16" cy="16" r="2" fill="currentColor" opacity="0.7" />
               </svg>
             </div>
 
             {/* Brand text */}
             <div className="flex flex-col">
-              <span className="brand-script text-md md:text-xl font-medium tracking-wide text-green-800 transition-all duration-300 group-hover:text-green-600">
-                September
+              <span className="brand-script text-md md:text-xl font-light tracking-wide text-slate-800 transition-all duration-300 group-hover:text-slate-700">
+                M & J
               </span>
-              <span className="brand-subtitle text-[11px] md:text-[12px] text-green-600/80 font-light tracking-[0.25em] uppercase italic">
-                To Remember
+              <span className="brand-subtitle text-[10px] md:text-[11px] text-slate-600/70 font-light tracking-[0.2em] uppercase">
+                2026
               </span>
             </div>
           </NavbarBrand>
@@ -242,7 +237,7 @@ export function Component() {
 
           {/* Custom Mobile Toggle */}
           <button
-            className="md:hidden custom-toggle p-2 rounded-lg hover:bg-green-50/50 transition-colors"
+            className="md:hidden custom-toggle p-2 rounded-lg hover:bg-slate-100/50 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle navigation"
           >
@@ -256,7 +251,7 @@ export function Component() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden border-t border-green-100/50 bg-white/98 backdrop-blur-xl mt-4">
+          <div className="md:hidden border-t border-slate-200/30 bg-white/98 backdrop-blur-xl mt-4">
             <div className="px-6 py-6 space-y-4">
               <MobileNavLink
                 href="/"
@@ -305,10 +300,10 @@ function NavLink({ href, active, label }: NavLinkProps) {
   return (
     <a
       href={href}
-      className={`nav-link-wrapper relative px-4 py-2 text-[12px] font-medium tracking-[0.15em] uppercase transition-all duration-300 ${
+      className={`nav-link-wrapper relative px-4 py-2 text-[12px] font-light tracking-[0.15em] uppercase transition-all duration-300 ${
         active
-          ? "nav-link-active text-green-800"
-          : "text-green-600/90 hover:text-green-800"
+          ? "nav-link-active text-slate-800"
+          : "text-slate-600/80 hover:text-slate-800"
       }`}
     >
       {/* Botanical accent decoration */}
@@ -346,10 +341,10 @@ function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkPro
     <a
       href={href}
       onClick={onClick}
-      className={`mobile-menu-item block px-4 py-3 text-sm font-medium tracking-[0.1em] uppercase transition-all duration-300 rounded-lg ${
+      className={`mobile-menu-item block px-4 py-3 text-sm font-light tracking-[0.1em] uppercase transition-all duration-300 rounded-lg ${
         active
-          ? "bg-green-50 text-green-800"
-          : "text-green-600/90 hover:bg-green-50/50 hover:text-green-800"
+          ? "bg-slate-100 text-slate-800"
+          : "text-slate-600/80 hover:bg-slate-50/70 hover:text-slate-800"
       }`}
       style={{ opacity: 0 }}
     >
@@ -362,7 +357,7 @@ function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkPro
         <span className="flex-1">{label}</span>
         {/* Active indicator */}
         {active && (
-          <div className="w-1.5 h-1.5 rounded-full bg-green-600"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
         )}
       </div>
     </a>
