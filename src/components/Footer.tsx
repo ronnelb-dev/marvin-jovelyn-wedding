@@ -183,22 +183,12 @@ export function MyFooter() {
 
           {/* Bottom Border */}
           <div className="border-t border-green-100 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-600">
+            <div className="text-center text-sm text-gray-600">
               <p className="footer-body text-base">
                 © 2026 Marvin & Jovelyn Wedding. Made with{" "}
                 <Heart className="inline w-4 h-4 text-red-500 fill-current" />{" "}
                 and joy.
               </p>
-              
-              <div className="flex items-center gap-6">
-                <a href="#rsvp" className="footer-link text-gray-600 hover:text-green-700 transition-colors">
-                  RSVP
-                </a>
-                <span className="text-gray-300">|</span>
-                <a href="/our-story" className="footer-link text-gray-600 hover:text-green-700 transition-colors">
-                  Our Story
-                </a>
-              </div>
             </div>
           </div>
 
