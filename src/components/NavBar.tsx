@@ -1,0 +1,372 @@
+"use client";
+
+import {
+  Navbar,
+  NavbarBrand,
+} from "flowbite-react";
+import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+
+export function Component() {
+  const pathname = usePathname() ?? "/";
+  const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      {/* Add custom styles */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
+        
+        .wedding-nav {
+          font-family: 'Montserrat', sans-serif;
+        }
+        
+        .brand-script {
+          font-family: 'Cinzel', serif;
+        }
+        
+        .brand-subtitle {
+          font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Elegant underline animation */
+        .nav-link-wrapper {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .nav-link-underline {
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            #7A9070,
+            transparent
+          );
+          transform: scaleX(0);
+          transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link-wrapper:hover .nav-link-underline {
+          transform: scaleX(1);
+        }
+        
+        .nav-link-active .nav-link-underline {
+          transform: scaleX(1);
+          background: linear-gradient(
+            90deg,
+            transparent,
+            #9CAF88,
+            transparent
+          );
+        }
+        
+        /* Decorative botanical accent */
+        .botanical-accent {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          width: 24px;
+          height: 24px;
+          opacity: 0;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link-wrapper:hover .botanical-accent {
+          opacity: 0.3;
+          transform: rotate(15deg);
+        }
+        
+        /* Mobile menu animation */
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .mobile-menu-item {
+          animation: slideDown 0.3s ease-out forwards;
+        }
+        
+        .mobile-menu-item:nth-child(1) { animation-delay: 0.05s; }
+        .mobile-menu-item:nth-child(2) { animation-delay: 0.1s; }
+        .mobile-menu-item:nth-child(3) { animation-delay: 0.15s; }
+        .mobile-menu-item:nth-child(4) { animation-delay: 0.2s; }
+        
+        /* Scroll effect */
+        .nav-scrolled {
+          box-shadow: 0 4px 20px rgba(122, 144, 112, 0.08);
+        }
+        
+        /* Divider dots */
+        .nav-divider {
+          width: 3px;
+          height: 3px;
+          background: #9CAF88;
+          border-radius: 50%;
+          opacity: 0.4;
+        }
+        
+        /* Custom toggle button */
+        .custom-toggle {
+          position: relative;
+          width: 28px;
+          height: 20px;
+          cursor: pointer;
+        }
+        
+        .toggle-line {
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: #7A9070;
+          border-radius: 2px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .toggle-line:nth-child(1) {
+          top: 0;
+        }
+        
+        .toggle-line:nth-child(2) {
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        
+        .toggle-line:nth-child(3) {
+          bottom: 0;
+        }
+        
+        .toggle-open .toggle-line:nth-child(1) {
+          top: 50%;
+          transform: translateY(-50%) rotate(45deg);
+        }
+        
+        .toggle-open .toggle-line:nth-child(2) {
+          opacity: 0;
+        }
+        
+        .toggle-open .toggle-line:nth-child(3) {
+          bottom: 50%;
+          transform: translateY(50%) rotate(-45deg);
+        }
+      `}</style>
+
+      <Navbar
+        fluid
+        className={`wedding-nav fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-white/98 backdrop-blur-xl nav-scrolled"
+            : "bg-white/95 backdrop-blur-lg "
+        } border-b border-green-50/50`}
+      >
+        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
+          {/* Brand Section - Enhanced */}
+          <NavbarBrand href="/" className="flex items-center gap-3 group cursor-pointer">
+            {/* Decorative leaf icon */}
+            <div className="relative">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                className="text-green-700 transition-all duration-500 group-hover:text-green-600 group-hover:rotate-12"
+              >
+                <path
+                  d="M16 4C12 8 10 12 11 16C12 19 14 21 16 22C18 21 20 19 21 16C22 12 20 8 16 4Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  opacity="0.7"
+                />
+                <path
+                  d="M16 4L16 22"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  opacity="0.5"
+                />
+              </svg>
+            </div>
+
+            {/* Brand text */}
+            <div className="flex flex-col">
+              <span className="brand-script text-md md:text-xl font-medium tracking-wide text-green-800 transition-all duration-300 group-hover:text-green-600">
+                September
+              </span>
+              <span className="brand-subtitle text-[11px] md:text-[12px] text-green-600/80 font-light tracking-[0.25em] uppercase italic">
+                To Remember
+              </span>
+            </div>
+          </NavbarBrand>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-2">
+            <NavLink href="/" active={pathname === "/"} label="Home" />
+            <div className="nav-divider mx-1"></div>
+            <NavLink
+              href="/our-story"
+              active={pathname === "/our-story"}
+              label="Our Story"
+            />
+            <div className="nav-divider mx-1"></div>
+            <NavLink
+              href="/wedding-details"
+              active={pathname === "/wedding-details"}
+              label="Wedding Details"
+            />
+            <div className="nav-divider mx-1"></div>
+            <NavLink
+              href="/gallery-link-tree"
+              active={pathname === "/gallery-link-tree"}
+              label="Gallery"
+            />
+          </div>
+
+          {/* Custom Mobile Toggle */}
+          <button
+            className="md:hidden custom-toggle p-2 rounded-lg hover:bg-green-50/50 transition-colors"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle navigation"
+          >
+            <div className={`custom-toggle ${isOpen ? "toggle-open" : ""}`}>
+              <div className="toggle-line"></div>
+              <div className="toggle-line"></div>
+              <div className="toggle-line"></div>
+            </div>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden border-t border-green-100/50 bg-white/98 backdrop-blur-xl mt-4">
+            <div className="px-6 py-6 space-y-4">
+              <MobileNavLink
+                href="/"
+                active={pathname === "/"}
+                label="Home"
+                index={0}
+                onClick={() => setIsOpen(false)}
+              />
+              <MobileNavLink
+                href="/our-story"
+                active={pathname === "/our-story"}
+                label="Our Story"
+                index={1}
+                onClick={() => setIsOpen(false)}
+              />
+              <MobileNavLink
+                href="/wedding-details"
+                active={pathname === "/wedding-details"}
+                label="Wedding Details"
+                index={2}
+                onClick={() => setIsOpen(false)}
+              />
+              <MobileNavLink
+                href="/gallery-link-tree"
+                active={pathname === "/gallery-link-tree"}
+                label="Gallery"
+                index={3}
+                onClick={() => setIsOpen(false)}
+              />
+            </div>
+          </div>
+        )}
+      </Navbar>
+    </>
+  );
+}
+
+// Desktop Nav Link Component
+interface NavLinkProps {
+  href: string;
+  active: boolean;
+  label: string;
+}
+
+function NavLink({ href, active, label }: NavLinkProps) {
+  return (
+    <a
+      href={href}
+      className={`nav-link-wrapper relative px-4 py-2 text-[12px] font-medium tracking-[0.15em] uppercase transition-all duration-300 ${
+        active
+          ? "nav-link-active text-green-800"
+          : "text-green-600/90 hover:text-green-800"
+      }`}
+    >
+      {/* Botanical accent decoration */}
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        className="botanical-accent"
+      >
+        <path
+          d="M12 4C10 6 9 8 9.5 10C10 11.5 11 12.5 12 13C13 12.5 14 11.5 14.5 10C15 8 14 6 12 4Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+      </svg>
+
+      <span className="relative z-10">{label}</span>
+      <div className="nav-link-underline"></div>
+    </a>
+  );
+}
+
+// Mobile Nav Link Component
+interface MobileNavLinkProps {
+  href: string;
+  active: boolean;
+  label: string;
+  index: number;
+  onClick: () => void;
+}
+
+function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkProps) {
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      className={`mobile-menu-item block px-4 py-3 text-sm font-medium tracking-[0.1em] uppercase transition-all duration-300 rounded-lg ${
+        active
+          ? "bg-green-50 text-green-800"
+          : "text-green-600/90 hover:bg-green-50/50 hover:text-green-800"
+      }`}
+      style={{ opacity: 0 }}
+    >
+      <div className="flex items-center gap-3">
+        {/* Index number */}
+        <span className="text-[10px] opacity-40 font-light">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        {/* Label */}
+        <span className="flex-1">{label}</span>
+        {/* Active indicator */}
+        {active && (
+          <div className="w-1.5 h-1.5 rounded-full bg-green-600"></div>
+        )}
+      </div>
+    </a>
+  );
+}
+
+export default Component;
