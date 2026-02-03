@@ -8,19 +8,23 @@ import PageHeaderSection from "@/components/page-header";
 import Preloader from "@/components/preloader";
 import "@/styles/globals.css";
 import { Playfair_Display } from "next/font/google";
-import { Check, Mail, User, Users, AlertCircle, Heart } from "lucide-react";
+import { Check, Mail, User, Users, AlertCircle, Heart, Trash2, Plus } from "lucide-react";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 
-interface FormData {
-  guestName: string;
-  email: string;
-  phone: string;
-  numberOfGuests: string;
+interface Guest {
+  id: string;
+  name: string;
   mealPreference: string;
+}
+
+interface FormData {
+  primaryGuestName: string;
+  phone: string;
+  guests: Guest[];
   dietaryRestrictions: string;
   message: string;
   willAttend: string;
@@ -34,11 +38,9 @@ export default function RSVPPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    guestName: "",
-    email: "",
+    primaryGuestName: "",
     phone: "",
-    numberOfGuests: "1",
-    mealPreference: "chicken",
+    guests: [{ id: "1", name: "", mealPreference: "chicken" }],
     dietaryRestrictions: "",
     message: "",
     willAttend: "",
@@ -48,19 +50,17 @@ export default function RSVPPage() {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.guestName.trim()) {
-      newErrors.guestName = "Name is required";
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+    if (!formData.primaryGuestName.trim()) {
+      newErrors.primaryGuestName = "Name is required";
     }
     if (!formData.willAttend) {
       newErrors.willAttend = "Please indicate if you will attend";
     }
-    if (formData.willAttend === "yes" && !formData.numberOfGuests) {
-      newErrors.numberOfGuests = "Number of guests is required";
+    if (formData.willAttend === "yes") {
+      // Validate that at least the primary guest has a name
+      if (!formData.guests[0]?.name.trim()) {
+        newErrors.guestNames = "Please enter at least your name";
+      }
     }
 
     setErrors(newErrors);
@@ -86,6 +86,42 @@ export default function RSVPPage() {
     }
   };
 
+  const handleGuestChange = (
+    id: string,
+    field: keyof Guest,
+    value: string
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      guests: prev.guests.map((guest) =>
+        guest.id === id ? { ...guest, [field]: value } : guest
+      ),
+    }));
+    if (errors.guestNames) {
+      setErrors((prev) => ({
+        ...prev,
+        guestNames: "",
+      }));
+    }
+  };
+
+  const addGuest = () => {
+    const newId = Date.now().toString();
+    setFormData((prev) => ({
+      ...prev,
+      guests: [...prev.guests, { id: newId, name: "", mealPreference: "chicken" }],
+    }));
+  };
+
+  const removeGuest = (id: string) => {
+    if (formData.guests.length > 1) {
+      setFormData((prev) => ({
+        ...prev,
+        guests: prev.guests.filter((guest) => guest.id !== id),
+      }));
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -104,11 +140,9 @@ export default function RSVPPage() {
 
       setSubmitted(true);
       setFormData({
-        guestName: "",
-        email: "",
+        primaryGuestName: "",
         phone: "",
-        numberOfGuests: "1",
-        mealPreference: "chicken",
+        guests: [{ id: "1", name: "", mealPreference: "chicken" }],
         dietaryRestrictions: "",
         message: "",
         willAttend: "",
@@ -224,10 +258,10 @@ export default function RSVPPage() {
                     )}
                   </div>
 
-                  {/* Guest Name */}
+                  {/* Primary Guest Name */}
                   <div className="space-y-3">
                     <label
-                      htmlFor="guestName"
+                      htmlFor="primaryGuestName"
                       className="block text-lg font-semibold text-slate-900"
                     >
                       Your Full Name
@@ -235,43 +269,17 @@ export default function RSVPPage() {
                     </label>
                     <input
                       type="text"
-                      id="guestName"
-                      name="guestName"
-                      value={formData.guestName}
+                      id="primaryGuestName"
+                      name="primaryGuestName"
+                      value={formData.primaryGuestName}
                       onChange={handleChange}
                       placeholder="Enter your full name"
                       className="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
                     />
-                    {errors.guestName && (
+                    {errors.primaryGuestName && (
                       <div className="flex items-center gap-2 text-red-600 text-sm">
                         <AlertCircle className="w-4 h-4" />
-                        {errors.guestName}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Email */}
-                  <div className="space-y-3">
-                    <label
-                      htmlFor="email"
-                      className="block text-lg font-semibold text-slate-900"
-                    >
-                      Email Address
-                      <span className="text-red-500 ml-1">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="your@email.com"
-                      className="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
-                    />
-                    {errors.email && (
-                      <div className="flex items-center gap-2 text-red-600 text-sm">
-                        <AlertCircle className="w-4 h-4" />
-                        {errors.email}
+                        {errors.primaryGuestName}
                       </div>
                     )}
                   </div>
@@ -295,61 +303,78 @@ export default function RSVPPage() {
                     />
                   </div>
 
-                  {/* Number of Guests (Show only if attending) */}
+                  {/* Guest Names and Meal Preferences (Show only if attending) */}
                   {formData.willAttend === "yes" && (
-                    <div className="space-y-3">
-                      <label
-                        htmlFor="numberOfGuests"
-                        className="block text-lg font-semibold text-slate-900"
-                      >
-                        Number of Guests
-                        <span className="text-red-500 ml-1">*</span>
-                      </label>
-                      <select
-                        id="numberOfGuests"
-                        name="numberOfGuests"
-                        value={formData.numberOfGuests}
-                        onChange={handleChange}
-                        className="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
-                      >
-                        <option value="1">1 Guest</option>
-                        <option value="2">2 Guests</option>
-                        <option value="3">3 Guests</option>
-                        <option value="4">4 Guests</option>
-                        <option value="5">5+ Guests</option>
-                      </select>
-                      {errors.numberOfGuests && (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-lg font-semibold text-slate-900">
+                          Guest Details
+                          <span className="text-red-500 ml-1">*</span>
+                        </label>
+                        <button
+                          type="button"
+                          onClick={addGuest}
+                          className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-medium transition-colors"
+                        >
+                          <Plus className="w-4 h-4" />
+                          Add Guest
+                        </button>
+                      </div>
+
+                      {errors.guestNames && (
                         <div className="flex items-center gap-2 text-red-600 text-sm">
                           <AlertCircle className="w-4 h-4" />
-                          {errors.numberOfGuests}
+                          {errors.guestNames}
                         </div>
                       )}
-                    </div>
-                  )}
 
-                  {/* Meal Preference (Show only if attending) */}
-                  {formData.willAttend === "yes" && (
-                    <div className="space-y-3">
-                      <label
-                        htmlFor="mealPreference"
-                        className="block text-lg font-semibold text-slate-900"
-                      >
-                        Meal Preference
-                      </label>
-                      <select
-                        id="mealPreference"
-                        name="mealPreference"
-                        value={formData.mealPreference}
-                        onChange={handleChange}
-                        className="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
-                      >
-                        <option value="chicken">Grilled Chicken</option>
-                        <option value="fish">Pan Seared Fish</option>
-                        <option value="beef">Herb-Crusted Beef</option>
-                        <option value="vegetarian">
-                          Vegetarian Pasta
-                        </option>
-                      </select>
+                      <div className="space-y-4">
+                        {formData.guests.map((guest, index) => (
+                          <div
+                            key={guest.id}
+                            className="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3"
+                          >
+                            <div className="flex items-center justify-between mb-3">
+                              <span className="text-sm font-semibold text-slate-700">
+                                {index === 0 ? "You" : `Guest ${index}`}
+                              </span>
+                              {index > 0 && (
+                                <button
+                                  type="button"
+                                  onClick={() => removeGuest(guest.id)}
+                                  className="p-1 hover:bg-red-100 rounded transition-colors"
+                                  aria-label="Remove guest"
+                                >
+                                  <Trash2 className="w-4 h-4 text-red-600" />
+                                </button>
+                              )}
+                            </div>
+
+                            <input
+                              type="text"
+                              value={guest.name}
+                              onChange={(e) =>
+                                handleGuestChange(guest.id, "name", e.target.value)
+                              }
+                              placeholder="Guest name"
+                              className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
+                            />
+
+                            <select
+                              value={guest.mealPreference}
+                              onChange={(e) =>
+                                handleGuestChange(guest.id, "mealPreference", e.target.value)
+                              }
+                              className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
+                            >
+                              <option value="chicken">Grilled Chicken</option>
+                              <option value="fish">Pan Seared Fish</option>
+                              <option value="beef">Herb-Crusted Beef</option>
+                              <option value="vegetarian">Vegetarian Pasta</option>
+                            </select>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
 
