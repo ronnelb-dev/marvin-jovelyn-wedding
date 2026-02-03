@@ -2,16 +2,6 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../../.flowbite-react/class-list.json";
 
-@theme inline {
-  --color-background: #F5F3F0;
-  --color-foreground: #2C2420;
-  --color-primary: #8B7355;
-  --color-secondary: #E8E4DF;
-  --color-accent: #D4C5B0;
-  --color-muted: #B8AFA4;
-  --color-border: #E3DDD7;
-}
-
 @layer utilities {
   .animate-fade-in {
     animation: fadeIn 0.8s ease-in-out forwards;
