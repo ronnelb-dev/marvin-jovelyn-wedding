@@ -233,6 +233,12 @@ export function Component() {
               active={pathname === "/gallery-link-tree"}
               label="Gallery"
             />
+            <div className="nav-divider mx-1"></div>
+            <NavLink
+              href="/rsvp"
+              active={pathname === "/rsvp"}
+              label="RSVP"
+            />
           </div>
 
           {/* Custom Mobile Toggle */}
@@ -279,6 +285,13 @@ export function Component() {
                 active={pathname === "/gallery-link-tree"}
                 label="Gallery"
                 index={3}
+                onClick={() => setIsOpen(false)}
+              />
+              <MobileNavLink
+                href="/rsvp"
+                active={pathname === "/rsvp"}
+                label="RSVP"
+                index={4}
                 onClick={() => setIsOpen(false)}
               />
             </div>
