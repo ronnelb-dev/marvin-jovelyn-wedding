@@ -18,14 +18,12 @@ const playfair = Playfair_Display({
 interface Guest {
   id: string;
   name: string;
-  mealPreference: string;
 }
 
 interface FormData {
   primaryGuestName: string;
   phone: string;
   guests: Guest[];
-  dietaryRestrictions: string;
   message: string;
   willAttend: string;
 }
@@ -40,8 +38,7 @@ export default function RSVPPage() {
   const [formData, setFormData] = useState<FormData>({
     primaryGuestName: "",
     phone: "",
-    guests: [{ id: "1", name: "", mealPreference: "chicken" }],
-    dietaryRestrictions: "",
+    guests: [{ id: "1", name: "" }],
     message: "",
     willAttend: "",
   });
@@ -109,7 +106,7 @@ export default function RSVPPage() {
     const newId = Date.now().toString();
     setFormData((prev) => ({
       ...prev,
-      guests: [...prev.guests, { id: newId, name: "", mealPreference: "chicken" }],
+      guests: [...prev.guests, { id: newId, name: "" }],
     }));
   };
 
@@ -142,8 +139,7 @@ export default function RSVPPage() {
       setFormData({
         primaryGuestName: "",
         phone: "",
-        guests: [{ id: "1", name: "", mealPreference: "chicken" }],
-        dietaryRestrictions: "",
+        guests: [{ id: "1", name: "" }],
         message: "",
         willAttend: "",
       });
@@ -359,43 +355,11 @@ export default function RSVPPage() {
                               placeholder="Guest name"
                               className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
                             />
-
-                            <select
-                              value={guest.mealPreference}
-                              onChange={(e) =>
-                                handleGuestChange(guest.id, "mealPreference", e.target.value)
-                              }
-                              className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
-                            >
-                              <option value="chicken">Grilled Chicken</option>
-                              <option value="fish">Pan Seared Fish</option>
-                              <option value="beef">Herb-Crusted Beef</option>
-                              <option value="vegetarian">Vegetarian Pasta</option>
-                            </select>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
-
-                  {/* Dietary Restrictions */}
-                  <div className="space-y-3">
-                    <label
-                      htmlFor="dietaryRestrictions"
-                      className="block text-lg font-semibold text-slate-900"
-                    >
-                      Dietary Restrictions or Allergies
-                    </label>
-                    <textarea
-                      id="dietaryRestrictions"
-                      name="dietaryRestrictions"
-                      value={formData.dietaryRestrictions}
-                      onChange={handleChange}
-                      placeholder="Please let us know about any dietary restrictions or allergies..."
-                      rows={3}
-                      className="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all resize-none"
-                    />
-                  </div>
 
                   {/* Special Message */}
                   <div className="space-y-3">
