@@ -4,7 +4,7 @@ import { useState, FormEvent } from "react";
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import PageHeaderSection from "@/components/page-header";
+import { PageHeaderSection } from "@/components/page-header";
 import Preloader from "@/components/preloader";
 import "@/styles/globals.css";
 import { Playfair_Display } from "next/font/google";
@@ -129,11 +129,19 @@ export default function RSVPPage() {
     setIsLoading(true);
 
     try {
-      // Simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      // Here you would typically send the data to your backend
-      console.log("Form submitted:", formData);
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit RSVP");
+      }
 
       setSubmitted(true);
       setFormData({
@@ -150,6 +158,9 @@ export default function RSVPPage() {
       }, 3000);
     } catch (error) {
       console.error("Error submitting form:", error);
+      setErrors({
+        submit: error instanceof Error ? error.message : "Failed to submit RSVP",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -379,6 +390,14 @@ export default function RSVPPage() {
                       className="w-full px-5 py-3 bg-slate-50 border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all resize-none"
                     />
                   </div>
+
+                  {/* Submission Error */}
+                  {errors.submit && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-red-700">{errors.submit}</p>
+                    </div>
+                  )}
 
                   {/* Submit Button */}
                   <div className="pt-6">
