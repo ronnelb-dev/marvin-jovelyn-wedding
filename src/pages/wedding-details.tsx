@@ -8,7 +8,7 @@ import "@/styles/globals.css";
 import EventScheduleSection from "@/components/EventScheduleSection";
 import Image from "next/image";
 import Preloader from "@/components/preloader";
-import { Plane, Gift, Heart, MapPin, Leaf, Calendar, Utensils } from "lucide-react";
+import { Plane, Gift, Heart, MapPin, Leaf, Calendar } from "lucide-react";
 import Hero from "@/components/Hero";
 
 type ImageModalProps = {
