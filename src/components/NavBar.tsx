@@ -217,9 +217,9 @@ export function Component() {
             <NavLink href="/" active={pathname === "/"} label="Home" />
             <div className="nav-divider mx-1"></div>
             <NavLink
-              href="/wedding-details"
-              active={pathname === "/wedding-details"}
-              label="Wedding Details"
+              href="#details"
+              active={false}
+              label="Details"
             />
             <div className="nav-divider mx-1"></div>
             <NavLink
@@ -255,9 +255,9 @@ export function Component() {
                 onClick={() => setIsOpen(false)}
               />
               <MobileNavLink
-                href="/wedding-details"
-                active={pathname === "/wedding-details"}
-                label="Wedding Details"
+                href="#details"
+                active={false}
+                label="Details"
                 index={1}
                 onClick={() => setIsOpen(false)}
               />
