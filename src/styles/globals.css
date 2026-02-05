@@ -17,11 +17,15 @@
       transform: translateY(0);
     }
   }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 #preloader {
     position: fixed;
-    background: #fff;
+    background: #F5F3F0;
     top: 0;
     left: 0;
     width: 100%;
@@ -32,7 +36,7 @@
 
 #preloader .preloader-title {
     font-size: 20pt;
-    color: #73777b;
+    color: #8B7355;
     line-height: .9;
     position: absolute;
     top: 41px;
@@ -53,7 +57,7 @@
 
 .loading-heart {
     fill: transparent;
-    stroke: #B2AC88;
+    stroke: #8B7355;
     stroke-width: 11;
     position: absolute;
     top: 50%;

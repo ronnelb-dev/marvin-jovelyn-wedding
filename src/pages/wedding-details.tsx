@@ -5,17 +5,11 @@ import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import "@/styles/globals.css";
-import { Playfair_Display } from "next/font/google";
 import EventScheduleSection from "@/components/EventScheduleSection";
 import Image from "next/image";
 import Preloader from "@/components/preloader";
 import { Plane, Gift, Heart, MapPin, Leaf, Calendar, Utensils } from "lucide-react";
 import Hero from "@/components/Hero";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 type ImageModalProps = {
   isOpen: boolean;
@@ -75,7 +69,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute -top-14 right-0 text-white hover:text-green-300 transition-colors z-10 group"
+            className="absolute -top-14 right-0 text-white hover:text-slate-300 transition-colors z-10 group"
             aria-label="Close modal"
           >
             <div className="flex items-center gap-2">
@@ -102,7 +96,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
 
           {/* Modal content */}
           <div
-            className="relative flex-1 bg-white rounded-2xl overflow-hidden shadow-2xl border border-green-100"
+            className="relative flex-1 bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Image container */}
@@ -119,7 +113,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
 
             {/* Title overlay */}
             {title && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-green-900/90 via-green-900/70 to-transparent p-8">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/70 to-transparent p-8">
                 <h3 className="text-white text-2xl font-semibold">{title}</h3>
               </div>
             )}
@@ -182,7 +176,7 @@ export default function WeddingDetailsPage() {
           position: relative;
           width: 80px;
           height: 2px;
-          background: linear-gradient(90deg, transparent, #9CAF88, transparent);
+          background: linear-gradient(90deg, transparent, #8B7355, transparent);
           margin: 0 auto;
         }
         
@@ -195,7 +189,7 @@ export default function WeddingDetailsPage() {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #9CAF88;
+          background: #8B7355;
         }
         
         .section-ornament::before {
@@ -212,7 +206,7 @@ export default function WeddingDetailsPage() {
         <meta name="description" content="Wedding details for Marvin & Jovelyn - September 11, 2026" />
       </Head>
 
-      <main className="wedding-details-page antialiased bg-gradient-to-b from-white via-green-50/20 to-white text-gray-800">
+      <main className="wedding-details-page antialiased bg-gradient-to-b from-slate-50 via-slate-50/30 to-slate-50 text-slate-900">
         <NavBar />
         <Preloader />
         <Hero />
@@ -225,19 +219,19 @@ export default function WeddingDetailsPage() {
         <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <div className="inline-flex items-center gap-3 mb-6">
-              <Leaf className="w-6 h-6 text-green-600" />
-              <span className="text-sm uppercase tracking-[0.3em] text-green-700 font-medium">
+              <Leaf className="w-6 h-6 text-slate-600" />
+              <span className="text-sm uppercase tracking-[0.3em] text-slate-700 font-medium">
                 What to Wear
               </span>
-              <Leaf className="w-6 h-6 text-green-600" />
+              <Leaf className="w-6 h-6 text-slate-600" />
             </div>
-            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-green-900 mb-6">
+            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-slate-900 mb-6">
               Dress Code
             </h2>
             <div className="section-ornament mb-8"></div>
-            <p className="details-body text-xl text-gray-600 max-w-2xl mx-auto italic leading-relaxed">
+            <p className="details-body text-xl text-slate-600 max-w-2xl mx-auto italic leading-relaxed">
               We invite you to dress in semi-formal attire that complements our 
-              elegant sage green and natural botanical theme
+              elegant neutral and natural botanical theme
             </p>
           </div>
 
@@ -245,12 +239,12 @@ export default function WeddingDetailsPage() {
             {/* Dress Code Guidelines */}
             <div className="space-y-8">
               {/* For Ladies */}
-              <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-green-100 hover:shadow-xl hover:border-green-200 transition-all duration-300">
+              <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300">
                 <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                  <div className="w-14 h-14 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
                     <span className="text-white text-2xl">👗</span>
                   </div>
-                  <h3 className="details-serif text-3xl font-semibold text-green-900">
+                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
                     For Ladies
                   </h3>
                 </div>
@@ -279,19 +273,19 @@ export default function WeddingDetailsPage() {
                   </div>
 
                   <div className="space-y-4">
-                    <p className="details-body text-lg text-gray-700 leading-relaxed">
+                    <p className="details-body text-lg text-slate-700 leading-relaxed">
                       Cocktail dresses, dressy blouses with dress pants, or 
-                      elegant midi/maxi dresses in sage green, cream, or earth tones
+                      elegant midi/maxi dresses in taupe, cream, or earth tones
                     </p>
                     
                     <div className="flex flex-wrap gap-2">
-                      <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                         Cocktail Dress
                       </span>
-                      <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                         Midi Dress
                       </span>
-                      <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                         Dressy Blouse
                       </span>
                     </div>
@@ -300,12 +294,12 @@ export default function WeddingDetailsPage() {
               </div>
 
               {/* For Gentlemen */}
-              <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-green-100 hover:shadow-xl hover:border-green-200 transition-all duration-300">
+              <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300">
                 <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-700 to-green-800 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                  <div className="w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-800 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
                     <span className="text-white text-2xl">👔</span>
                   </div>
-                  <h3 className="details-serif text-3xl font-semibold text-green-900">
+                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
                     For Gentlemen
                   </h3>
                 </div>
@@ -334,19 +328,19 @@ export default function WeddingDetailsPage() {
                   </div>
 
                   <div className="space-y-4">
-                    <p className="details-body text-lg text-gray-700 leading-relaxed">
+                    <p className="details-body text-lg text-slate-700 leading-relaxed">
                       Dress shirts with slacks, blazers optional, or polo shirts 
                       with dress pants in neutral or earth tones
                     </p>
                     
                     <div className="flex flex-wrap gap-2">
-                      <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                         Dress Shirt
                       </span>
-                      <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                         Blazer
                       </span>
-                      <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
                         Polo Shirt
                       </span>
                     </div>
@@ -358,73 +352,73 @@ export default function WeddingDetailsPage() {
             {/* Color Palette & Guidelines */}
             <div className="space-y-8">
               {/* Color Palette */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-green-100">
-                <h3 className="details-serif text-3xl font-semibold text-green-900 mb-8 text-center">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
+                <h3 className="details-serif text-3xl font-semibold text-slate-900 mb-8 text-center">
                   Our Color Palette
                 </h3>
 
                 <div className="space-y-4 mb-8">
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-green-50 to-green-100/50 border border-green-200">
-                    <div className="w-16 h-16 rounded-full bg-[#9CAF88] shadow-lg flex-shrink-0 border-4 border-white"></div>
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
+                    <div className="w-16 h-16 rounded-full bg-[#8B7355] shadow-lg flex-shrink-0 border-4 border-white"></div>
                     <div>
-                      <h4 className="font-semibold text-lg text-gray-800">Sage Green</h4>
-                      <p className="text-sm text-gray-600 font-mono">#9CAF88</p>
+                      <h4 className="font-semibold text-lg text-slate-800">Taupe</h4>
+                      <p className="text-sm text-slate-600 font-mono">#8B7355</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-green-50 to-green-100/50 border border-green-200">
-                    <div className="w-16 h-16 rounded-full bg-[#7A9070] shadow-lg flex-shrink-0 border-4 border-white"></div>
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
+                    <div className="w-16 h-16 rounded-full bg-[#2C2420] shadow-lg flex-shrink-0 border-4 border-white"></div>
                     <div>
-                      <h4 className="font-semibold text-lg text-gray-800">Forest Green</h4>
-                      <p className="text-sm text-gray-600 font-mono">#7A9070</p>
+                      <h4 className="font-semibold text-lg text-slate-800">Charcoal</h4>
+                      <p className="text-sm text-slate-600 font-mono">#2C2420</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100/50 border border-amber-200">
-                    <div className="w-16 h-16 rounded-full bg-[#C5D5B8] shadow-lg flex-shrink-0 border-4 border-white"></div>
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
+                    <div className="w-16 h-16 rounded-full bg-[#E8E4DF] shadow-lg flex-shrink-0 border-4 border-white"></div>
                     <div>
-                      <h4 className="font-semibold text-lg text-gray-800">Sage Light</h4>
-                      <p className="text-sm text-gray-600 font-mono">#C5D5B8</p>
+                      <h4 className="font-semibold text-lg text-slate-800">Cream</h4>
+                      <p className="text-sm text-slate-600 font-mono">#E8E4DF</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100/50 border border-amber-200">
-                    <div className="w-16 h-16 rounded-full bg-[#FAF8F3] shadow-lg flex-shrink-0 border-4 border-white"></div>
+                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
+                    <div className="w-16 h-16 rounded-full bg-[#F5F3F0] shadow-lg flex-shrink-0 border-4 border-white"></div>
                     <div>
-                      <h4 className="font-semibold text-lg text-gray-800">Cream</h4>
-                      <p className="text-sm text-gray-600 font-mono">#FAF8F3</p>
+                      <h4 className="font-semibold text-lg text-slate-800">Ivory</h4>
+                      <p className="text-sm text-slate-600 font-mono">#F5F3F0</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Inspiration Quote */}
-                <div className="relative p-6 bg-gradient-to-br from-green-50 to-white rounded-xl border-l-4 border-green-600">
-                  <Leaf className="absolute top-4 right-4 w-8 h-8 text-green-400 opacity-20" />
-                  <p className="details-body text-lg text-gray-700 italic leading-relaxed">
-                    "These natural, organic tones reflect the timeless elegance and 
-                    botanical beauty we envision for our celebration."
+                <div className="relative p-6 bg-gradient-to-br from-slate-100 to-white rounded-xl border-l-4 border-slate-600">
+                  <Leaf className="absolute top-4 right-4 w-8 h-8 text-slate-400 opacity-20" />
+                  <p className="details-body text-lg text-slate-700 italic leading-relaxed">
+                    &quot;These natural, organic tones reflect the timeless elegance and 
+                    botanical beauty we envision for our celebration.&quot;
                   </p>
                   <div className="mt-4 flex justify-start gap-2">
-                    <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <div className="w-2 h-2 bg-slate-600 rounded-full"></div>
+                    <div className="w-2 h-2 bg-slate-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
                   </div>
                 </div>
               </div>
 
               {/* Please Avoid */}
-              <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border border-red-200 shadow-lg">
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 border border-amber-200 shadow-lg">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-white text-xl">⚠️</span>
                   </div>
                   <div>
-                    <h4 className="details-serif text-2xl font-semibold text-gray-800 mb-3">
+                    <h4 className="details-serif text-2xl font-semibold text-slate-800 mb-3">
                       Please Avoid
                     </h4>
-                    <p className="details-body text-gray-700 leading-relaxed text-lg">
-                      White, ivory, or very bright colors that might compete with our 
-                      sage green botanical theme. We want everyone to feel comfortable 
+                    <p className="details-body text-slate-700 leading-relaxed text-lg">
+                      Very bright neon colors or bold patterns that might compete with our 
+                      elegant neutral theme. We want everyone to feel comfortable 
                       while harmonizing with our wedding palette.
                     </p>
                   </div>
@@ -435,20 +429,20 @@ export default function WeddingDetailsPage() {
         </section>
 
         {/* Enhanced Menu Section */}
-        <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto bg-gradient-to-b from-white to-green-50/30">
+        <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto bg-gradient-to-b from-slate-50 to-slate-50/50">
           <div className="text-center mb-20">
             <div className="inline-flex items-center gap-3 mb-6">
-              <Utensils className="w-6 h-6 text-green-600" />
-              <span className="text-sm uppercase tracking-[0.3em] text-green-700 font-medium">
+              <Utensils className="w-6 h-6 text-slate-600" />
+              <span className="text-sm uppercase tracking-[0.3em] text-slate-700 font-medium">
                 Culinary Delights
               </span>
-              <Utensils className="w-6 h-6 text-green-600" />
+              <Utensils className="w-6 h-6 text-slate-600" />
             </div>
-            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-green-900 mb-6">
+            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-slate-900 mb-6">
               Wedding Menu
             </h2>
             <div className="section-ornament mb-8"></div>
-            <p className="details-body text-xl text-gray-600 max-w-2xl mx-auto italic leading-relaxed">
+            <p className="details-body text-xl text-slate-600 max-w-2xl mx-auto italic leading-relaxed">
               Savor carefully selected dishes that celebrate our love story 
               and bring joy to every palate
             </p>
@@ -458,12 +452,12 @@ export default function WeddingDetailsPage() {
             {/* Menu Content */}
             <div className="space-y-8">
               {/* Main Courses */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-green-100">
-                <div className="flex items-center mb-8 pb-6 border-b border-green-100">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center mr-4">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
+                <div className="flex items-center mb-8 pb-6 border-b border-slate-200">
+                  <div className="w-14 h-14 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center mr-4">
                     <span className="details-serif text-white font-semibold text-xl">1</span>
                   </div>
-                  <h3 className="details-serif text-3xl font-semibold text-green-900">
+                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
                     Main Courses
                   </h3>
                 </div>
@@ -474,12 +468,12 @@ export default function WeddingDetailsPage() {
                     { name: "Fish Fillet", detail: "with Mango Tomato Salsa" }
                   ].map((dish, idx) => (
                     <div key={idx} className="flex items-start gap-4 group">
-                      <div className="w-3 h-3 bg-green-600 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <div className="w-3 h-3 bg-slate-600 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
                       <div>
-                        <h4 className="details-serif text-xl font-semibold text-gray-800 mb-1">
+                        <h4 className="details-serif text-xl font-semibold text-slate-800 mb-1">
                           {dish.name}
                         </h4>
-                        <p className="details-body text-gray-600 text-lg italic">{dish.detail}</p>
+                        <p className="details-body text-slate-600 text-lg italic">{dish.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -487,12 +481,12 @@ export default function WeddingDetailsPage() {
               </div>
 
               {/* Side Dishes */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-green-100">
-                <div className="flex items-center mb-8 pb-6 border-b border-green-100">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-700 to-green-800 rounded-full flex items-center justify-center mr-4">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
+                <div className="flex items-center mb-8 pb-6 border-b border-slate-200">
+                  <div className="w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-800 rounded-full flex items-center justify-center mr-4">
                     <span className="details-serif text-white font-semibold text-xl">2</span>
                   </div>
-                  <h3 className="details-serif text-3xl font-semibold text-green-900">
+                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
                     Side Dishes
                   </h3>
                 </div>
@@ -503,8 +497,8 @@ export default function WeddingDetailsPage() {
                     "Vegetable Chowder Soup"
                   ].map((dish, idx) => (
                     <div key={idx} className="flex items-start gap-4 group">
-                      <div className="w-3 h-3 bg-green-700 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-                      <h4 className="details-serif text-xl font-semibold text-gray-800">
+                      <div className="w-3 h-3 bg-slate-700 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <h4 className="details-serif text-xl font-semibold text-slate-800">
                         {dish}
                       </h4>
                     </div>
@@ -513,20 +507,20 @@ export default function WeddingDetailsPage() {
               </div>
 
               {/* Beverages */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-green-100">
-                <div className="flex items-center mb-8 pb-6 border-b border-green-100">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-800 to-green-900 rounded-full flex items-center justify-center mr-4">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
+                <div className="flex items-center mb-8 pb-6 border-b border-slate-200">
+                  <div className="w-14 h-14 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center mr-4">
                     <span className="details-serif text-white font-semibold text-xl">3</span>
                   </div>
-                  <h3 className="details-serif text-3xl font-semibold text-green-900">
+                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
                     Beverages
                   </h3>
                 </div>
                 <div className="space-y-6">
                   {["Bottomless Iced Tea", "Water"].map((drink, idx) => (
                     <div key={idx} className="flex items-start gap-4 group">
-                      <div className="w-3 h-3 bg-green-800 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-                      <h4 className="details-serif text-xl font-semibold text-gray-800">
+                      <div className="w-3 h-3 bg-slate-800 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
+                      <h4 className="details-serif text-xl font-semibold text-slate-800">
                         {drink}
                       </h4>
                     </div>
@@ -545,13 +539,13 @@ export default function WeddingDetailsPage() {
                   className="object-cover"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
                   <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl">
-                    <h4 className="details-serif text-2xl font-semibold text-gray-800 mb-2">
+                    <h4 className="details-serif text-2xl font-semibold text-slate-800 mb-2">
                       An Elegant Dining Experience
                     </h4>
-                    <p className="details-body text-gray-600 text-lg leading-relaxed">
+                    <p className="details-body text-slate-600 text-lg leading-relaxed">
                       Every detail has been lovingly chosen to make your 
                       dining experience truly memorable
                     </p>
@@ -560,8 +554,8 @@ export default function WeddingDetailsPage() {
               </div>
 
               {/* Floating botanical accents */}
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-green-400 to-green-600 rounded-full opacity-20 blur-2xl"></div>
-              <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-gradient-to-br from-green-500 to-green-700 rounded-full opacity-20 blur-2xl"></div>
+              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-slate-400 to-slate-600 rounded-full opacity-20 blur-2xl"></div>
+              <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-gradient-to-br from-slate-500 to-slate-700 rounded-full opacity-20 blur-2xl"></div>
             </div>
           </div>
         </section>
@@ -587,7 +581,7 @@ export default function WeddingDetailsPage() {
                 <div className="inline-flex items-center gap-3 bg-blue-100 rounded-full px-6 py-3 border border-blue-200">
                   <MapPin className="w-5 h-5 text-blue-600" />
                   <span className="details-body text-lg font-semibold text-blue-800">
-                    We're Moving to Japan! 🇯🇵
+                    We&rsquo;re Moving to Japan! 🇯🇵
                   </span>
                 </div>
               </div>
@@ -606,13 +600,13 @@ export default function WeddingDetailsPage() {
                     </h3>
                     <div className="space-y-4 details-body text-lg text-gray-700 leading-relaxed">
                       <p>
-                        As we prepare for our exciting journey to Japan, we're in the 
+                        As we prepare for our exciting journey to Japan, we&rsquo;re in the 
                         process of downsizing and carefully selecting what to bring with us. 
                         International shipping is quite expensive, and we want to start 
                         fresh in our new home.
                       </p>
                       <p>
-                        If you'd like to celebrate with us, we would be incredibly grateful 
+                        If you&rsquo;d like to celebrate with us, we would be incredibly grateful 
                         for monetary gifts instead of physical items. This will help us with 
                         our moving expenses and getting settled in Japan.
                       </p>
@@ -631,7 +625,7 @@ export default function WeddingDetailsPage() {
                   <Heart className="w-6 h-6 text-green-600 fill-green-600" />
                 </div>
                 <p className="details-body text-base text-gray-500 italic">
-                  We can't wait to share our Japanese adventure with you!
+                  We can&rsquo;t wait to share our Japanese adventure with you!
                 </p>
               </div>
             </div>

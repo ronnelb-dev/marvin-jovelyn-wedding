@@ -197,7 +197,7 @@ const EventSchedule: FC = () => {
 
       <section 
         ref={sectionRef}
-        className="event-schedule relative overflow-hidden bg-gradient-to-b from-green-50 via-white to-green-50 py-20 md:py-28"
+        className="event-schedule relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50 py-20 md:py-28"
       >
         {/* Background Pattern */}
         <div 
@@ -214,16 +214,16 @@ const EventSchedule: FC = () => {
           <div className="text-center mb-16">
             <div className={isVisible ? "animate-fade-in-up" : "opacity-0"}>
               <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-12 h-px bg-green-600"></div>
-                <Clock className="w-5 h-5 text-green-600" />
-                <div className="w-12 h-px bg-green-600"></div>
+                <div className="w-12 h-px bg-slate-600"></div>
+                <Clock className="w-5 h-5 text-slate-600" />
+                <div className="w-12 h-px bg-slate-600"></div>
               </div>
               
-              <h2 className="event-title text-4xl md:text-5xl lg:text-6xl font-semibold text-green-900 mb-4">
+              <h2 className="event-title text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 mb-4">
                 Wedding Timeline
               </h2>
               
-              <p className="event-body text-xl text-gray-600 italic max-w-2xl mx-auto">
+              <p className="event-body text-xl text-slate-600 italic max-w-2xl mx-auto">
                 Join us through each beautiful moment of our special day
               </p>
             </div>
@@ -233,8 +233,8 @@ const EventSchedule: FC = () => {
           <div className="hidden md:block">
             {/* Timeline Line */}
             <div className="relative mb-16">
-              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-200 via-green-400 to-green-200 -translate-y-1/2">
-                {isVisible && <div className="timeline-line absolute inset-0 bg-gradient-to-r from-green-400 via-green-600 to-green-400"></div>}
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-slate-200 via-slate-400 to-slate-200 -translate-y-1/2">
+                {isVisible && <div className="timeline-line absolute inset-0 bg-gradient-to-r from-slate-400 via-slate-600 to-slate-400"></div>}
               </div>
               
               {/* Timeline Dots */}
@@ -242,7 +242,7 @@ const EventSchedule: FC = () => {
                 {events.map((event, index) => (
                   <div
                     key={index}
-                    className={`decorative-dot w-5 h-5 bg-green-600 rounded-full border-4 border-white shadow-lg ${
+                    className={`decorative-dot w-5 h-5 bg-slate-600 rounded-full border-4 border-white shadow-lg ${
                       isVisible ? `animate-scale-in delay-${index * 200}` : "opacity-0"
                     }`}
                   />
@@ -327,7 +327,7 @@ const EventCard: FC<EventCardProps> = ({
       onMouseLeave={onLeave}
     >
       {/* Gradient Header */}
-      <div className="relative h-32 bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center overflow-hidden">
+      <div className="relative h-32 bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center overflow-hidden">
         {/* Background Pattern */}
         <div 
           className="absolute inset-0 opacity-10"
@@ -353,18 +353,18 @@ const EventCard: FC<EventCardProps> = ({
       {/* Content */}
       <div className="p-6 space-y-4">
         {/* Title */}
-        <h3 className="event-title text-2xl font-semibold text-green-900">
+        <h3 className="event-title text-2xl font-semibold text-slate-900">
           {event.title}
         </h3>
 
         {/* Description */}
-        <p className="event-body text-gray-600 text-base leading-relaxed">
+        <p className="event-body text-slate-600 text-base leading-relaxed">
           {event.description}
         </p>
 
         {/* Time */}
-        <div className="flex items-center gap-3 text-gray-700">
-          <Clock className="w-4 h-4 text-green-600 flex-shrink-0" />
+        <div className="flex items-center gap-3 text-slate-700">
+          <Clock className="w-4 h-4 text-slate-600 flex-shrink-0" />
           <span className="text-sm font-medium">{event.time}</span>
         </div>
 
@@ -375,21 +375,21 @@ const EventCard: FC<EventCardProps> = ({
           rel="noopener noreferrer"
           className="block group/link"
         >
-          <div className="flex items-start gap-3 text-gray-700 hover:text-green-700 transition-colors">
-            <MapPin className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5 group-hover/link:scale-110 transition-transform" />
+          <div className="flex items-start gap-3 text-slate-700 hover:text-slate-700 transition-colors">
+            <MapPin className="w-4 h-4 text-slate-600 flex-shrink-0 mt-0.5 group-hover/link:scale-110 transition-transform" />
             <div className="text-sm">
               <p className="font-semibold">{event.location}</p>
-              <p className="text-gray-600">{event.address}</p>
+              <p className="text-slate-600">{event.address}</p>
             </div>
           </div>
         </a>
 
         {/* Divider */}
-        <div className="pt-2 border-t border-gray-100"></div>
+        <div className="pt-2 border-t border-slate-100"></div>
 
         {/* Learn More Button */}
         <Link href="/wedding-details">
-          <button className="btn-elegant w-full bg-gradient-to-r from-green-700 to-green-600 hover:from-green-800 hover:to-green-700 text-white py-3 px-6 rounded-lg font-medium text-sm tracking-wide uppercase transition-all duration-300 flex items-center justify-center gap-2 group/btn">
+          <button className="btn-elegant w-full bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-800 hover:to-slate-700 text-white py-3 px-6 rounded-lg font-medium text-sm tracking-wide uppercase transition-all duration-300 flex items-center justify-center gap-2 group/btn">
             <span>Learn More</span>
             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
           </button>
@@ -397,7 +397,7 @@ const EventCard: FC<EventCardProps> = ({
       </div>
 
       {/* Hover Accent Line */}
-      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 via-green-600 to-green-500 transform origin-left transition-transform duration-500 ${
+      <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-slate-500 via-slate-600 to-slate-500 transform origin-left transition-transform duration-500 ${
         isActive ? "scale-x-100" : "scale-x-0"
       }`}></div>
     </div>

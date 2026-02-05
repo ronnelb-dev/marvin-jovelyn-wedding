@@ -162,7 +162,7 @@ const ProposalSection = () => {
           position: relative;
           width: 80px;
           height: 2px;
-          background: linear-gradient(90deg, transparent, #9CAF88, transparent);
+          background: linear-gradient(90deg, transparent, #8B7355, transparent);
         }
         
         .decorative-line::before,
@@ -174,7 +174,7 @@ const ProposalSection = () => {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #9CAF88;
+          background: #8B7355;
         }
         
         .decorative-line::before {
@@ -198,7 +198,7 @@ const ProposalSection = () => {
           top: -10px;
           font-family: 'Playfair Display', serif;
           font-size: 80px;
-          color: #9CAF88;
+          color: #8B7355;
           opacity: 0.3;
           line-height: 1;
         }
@@ -206,7 +206,7 @@ const ProposalSection = () => {
 
       <section 
         ref={sectionRef}
-        className="proposal-section relative w-full min-h-screen overflow-hidden bg-gradient-to-b from-white via-green-50/30 to-white py-24 md:py-32"
+        className="proposal-section relative w-full min-h-screen overflow-hidden bg-gradient-to-b from-slate-50 via-slate-50/50 to-slate-50 py-24 md:py-32"
       >
         {/* Floating Botanical Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -219,7 +219,7 @@ const ProposalSection = () => {
                 width="120"
                 height="120"
                 viewBox="0 0 120 120"
-                className={`text-green-600 ${accent.rotation}`}
+                className={`text-slate-600 ${accent.rotation}`}
               >
                 <path
                   d="M60 20C40 40 30 60 35 80C40 95 50 105 60 110C70 105 80 95 85 80C90 60 80 40 60 20Z"
@@ -243,7 +243,7 @@ const ProposalSection = () => {
               
               {/* Section Label */}
               <div className={isVisible ? "animate-fade-in-up" : "opacity-0"}>
-                <div className="inline-flex items-center gap-3 text-green-700">
+                <div className="inline-flex items-center gap-3 text-slate-700">
                   <div className="decorative-line"></div>
                   <span className="text-sm tracking-[0.3em] uppercase font-light">
                     A Moment to Cherish
@@ -253,9 +253,9 @@ const ProposalSection = () => {
 
               {/* Main Heading */}
               <div className={`space-y-4 ${isVisible ? "animate-fade-in-up delay-200" : "opacity-0"}`}>
-                <h2 className="heading-serif text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight text-green-900">
+                <h2 className="heading-serif text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight text-slate-900">
                   The Question
-                  <span className="block text-green-700 italic font-normal">
+                  <span className="block text-slate-700 italic font-normal">
                     That Changed Everything
                   </span>
                 </h2>
@@ -274,45 +274,45 @@ const ProposalSection = () => {
                   In that magical first meeting, surrounded by the people who had supported 
                   our journey from the very beginning, the moment felt absolutely right. 
                   With trembling hands and a heart full of certainty, the question was 
-                  finally asked—and answered with the sweetest "yes" ever spoken.
+                  finally asked&mdash;and answered with the sweetest &quot;yes&quot; ever spoken.
                 </p>
               </div>
 
               {/* Detail Cards */}
               <div className={`grid sm:grid-cols-2 gap-4 pt-4 ${isVisible ? "animate-fade-in-up delay-600" : "opacity-0"}`}>
-                <div className="group relative p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-green-100 hover:border-green-200 transition-all duration-300 hover:shadow-lg">
+                <div className="group relative p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 bg-green-100 rounded-xl group-hover:bg-green-200 transition-colors">
-                      <Calendar className="w-6 h-6 text-green-700" />
+                    <div className="p-3 bg-slate-100 rounded-xl group-hover:bg-slate-200 transition-colors">
+                      <Calendar className="w-6 h-6 text-slate-700" />
                     </div>
                     <div>
-                      <p className="font-semibold text-green-900 mb-1">March 14, 2023</p>
-                      <p className="text-sm text-gray-600 body-serif">The day our forever began</p>
+                      <p className="font-semibold text-slate-900 mb-1">March 14, 2023</p>
+                      <p className="text-sm text-slate-600 body-serif">The day our forever began</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="group relative p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-green-100 hover:border-green-200 transition-all duration-300 hover:shadow-lg">
+                <div className="group relative p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-lg">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 bg-green-100 rounded-xl group-hover:bg-green-200 transition-colors">
-                      <MapPin className="w-6 h-6 text-green-700" />
+                    <div className="p-3 bg-slate-100 rounded-xl group-hover:bg-slate-200 transition-colors">
+                      <MapPin className="w-6 h-6 text-slate-700" />
                     </div>
                     <div>
-                      <p className="font-semibold text-green-900 mb-1">First Meeting</p>
-                      <p className="text-sm text-gray-600 body-serif">After 4 years apart</p>
+                      <p className="font-semibold text-slate-900 mb-1">First Meeting</p>
+                      <p className="text-sm text-slate-600 body-serif">After 4 years apart</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Testimonial Quote */}
-              <div className={`relative p-8 bg-gradient-to-br from-green-50 to-white rounded-2xl border-l-4 border-green-600 ${isVisible ? "animate-fade-in-up delay-800" : "opacity-0"}`}>
-                <Sparkles className="absolute top-4 right-4 w-6 h-6 text-green-400 opacity-50" />
-                <p className="body-serif text-lg text-gray-700 italic mb-3">
-                  "Surrounded by the love and blessings of family and friends, 
-                  witnessing this beautiful moment made our hearts overflow with joy."
+              <div className={`relative p-8 bg-gradient-to-br from-slate-100 to-white rounded-2xl border-l-4 border-slate-700 ${isVisible ? "animate-fade-in-up delay-800" : "opacity-0"}`}>
+                <Sparkles className="absolute top-4 right-4 w-6 h-6 text-slate-400 opacity-50" />
+                <p className="body-serif text-lg text-slate-700 italic mb-3">
+                  &quot;Surrounded by the love and blessings of family and friends, 
+                  witnessing this beautiful moment made our hearts overflow with joy.&quot;
                 </p>
-                <p className="text-sm text-green-700 font-medium tracking-wide">
+                <p className="text-sm text-slate-700 font-medium tracking-wide">
                   — OUR FAMILIES
                 </p>
               </div>
@@ -320,7 +320,7 @@ const ProposalSection = () => {
               {/* CTA Button */}
               <div className={`pt-4 ${isVisible ? "animate-fade-in-up delay-1000" : "opacity-0"}`}>
                 <Link href="/our-story">
-                  <Button className="group relative overflow-hidden bg-gradient-to-r from-green-700 to-green-600 hover:from-green-800 hover:to-green-700 border-0 px-8 py-4 rounded-full transition-all duration-500 hover:shadow-xl hover:scale-105">
+                  <Button className="group relative overflow-hidden bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-800 hover:to-slate-700 border-0 px-8 py-4 rounded-full transition-all duration-500 hover:shadow-xl hover:scale-105">
                     <span className="relative z-10 flex items-center gap-3 text-white font-medium tracking-wide uppercase text-sm">
                       <Leaf className="w-5 h-5" />
                       Discover Our Journey
@@ -344,13 +344,13 @@ const ProposalSection = () => {
                 {/* Decorative Corner Accents */}
                 <div className="relative max-w-md mx-auto lg:mx-0">
                   {/* Top Left Corner */}
-                  <div className="absolute -top-4 -left-4 w-20 h-20 border-t-2 border-l-2 border-green-600/40 rounded-tl-3xl"></div>
+                  <div className="absolute -top-4 -left-4 w-20 h-20 border-t-2 border-l-2 border-slate-600/40 rounded-tl-3xl"></div>
                   
                   {/* Bottom Right Corner */}
-                  <div className="absolute -bottom-4 -right-4 w-20 h-20 border-b-2 border-r-2 border-green-600/40 rounded-br-3xl"></div>
+                  <div className="absolute -bottom-4 -right-4 w-20 h-20 border-b-2 border-r-2 border-slate-600/40 rounded-br-3xl"></div>
 
                   {/* Main Image Container */}
-                  <div className="image-frame relative p-4 bg-gradient-to-br from-white via-green-50/50 to-white rounded-3xl shadow-2xl">
+                  <div className="image-frame relative p-4 bg-gradient-to-br from-white via-slate-50/50 to-white rounded-3xl shadow-2xl">
                     <div className="relative overflow-hidden rounded-2xl">
                       <Image
                         src="/images/RonnelJuna-98.webp"
@@ -370,9 +370,9 @@ const ProposalSection = () => {
                     </div>
 
                     {/* Image Caption Badge */}
-                    <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-8 py-3 rounded-full shadow-lg border border-green-100">
-                      <p className="body-serif text-sm font-medium text-green-800 whitespace-nowrap flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-green-600" />
+                    <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white px-8 py-3 rounded-full shadow-lg border border-slate-200">
+                      <p className="body-serif text-sm font-medium text-slate-800 whitespace-nowrap flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-slate-600" />
                         March 14, 2023
                       </p>
                     </div>
@@ -384,10 +384,10 @@ const ProposalSection = () => {
                       <path
                         d="M50 10C35 25 28 40 32 55C35 67 43 75 50 80C57 75 65 67 68 55C72 40 65 25 50 10Z"
                         fill="none"
-                        stroke="#7A9070"
+                        stroke="#8B7355"
                         strokeWidth="2"
                       />
-                      <path d="M50 10L50 80" stroke="#7A9070" strokeWidth="1.5" />
+                      <path d="M50 10L50 80" stroke="#8B7355" strokeWidth="1.5" />
                     </svg>
                   </div>
                 </div>
@@ -397,7 +397,7 @@ const ProposalSection = () => {
         </div>
 
         {/* Bottom Decorative Element */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-200 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
       </section>
     </>
   );

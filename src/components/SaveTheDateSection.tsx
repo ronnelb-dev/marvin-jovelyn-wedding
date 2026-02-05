@@ -242,7 +242,7 @@ const SaveTheDateSection: FC = () => {
           {/* Top Heading */}
           <div className={`text-center mb-12 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <h3 className="save-date-body text-2xl md:text-3xl text-white/90 font-light tracking-[0.3em] uppercase mb-4">
-              We're Getting Married
+              We&rsquo;re Getting Married
             </h3>
             <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto"></div>
           </div>
@@ -375,7 +375,7 @@ const SaveTheDateSection: FC = () => {
           {/* Bottom Text */}
           <div className={`text-center mt-12 ${isVisible ? 'animate-fade-in-up delay-900' : 'opacity-0'}`}>
             <p className="save-date-body text-white/70 text-sm md:text-base italic tracking-wide">
-              We can't wait to celebrate with you
+              We can&rsquo;t wait to celebrate with you
             </p>
           </div>
         </div>
