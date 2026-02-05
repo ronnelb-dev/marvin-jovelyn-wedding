@@ -274,7 +274,7 @@ const ProposalSection = () => {
                   In that magical first meeting, surrounded by the people who had supported 
                   our journey from the very beginning, the moment felt absolutely right. 
                   With trembling hands and a heart full of certainty, the question was 
-                  finally asked—and answered with the sweetest "yes" ever spoken.
+                  finally asked&mdash;and answered with the sweetest &quot;yes&quot; ever spoken.
                 </p>
               </div>
 
@@ -309,8 +309,8 @@ const ProposalSection = () => {
               <div className={`relative p-8 bg-gradient-to-br from-slate-100 to-white rounded-2xl border-l-4 border-slate-700 ${isVisible ? "animate-fade-in-up delay-800" : "opacity-0"}`}>
                 <Sparkles className="absolute top-4 right-4 w-6 h-6 text-slate-400 opacity-50" />
                 <p className="body-serif text-lg text-slate-700 italic mb-3">
-                  "Surrounded by the love and blessings of family and friends, 
-                  witnessing this beautiful moment made our hearts overflow with joy."
+                  &quot;Surrounded by the love and blessings of family and friends, 
+                  witnessing this beautiful moment made our hearts overflow with joy.&quot;
                 </p>
                 <p className="text-sm text-slate-700 font-medium tracking-wide">
                   — OUR FAMILIES

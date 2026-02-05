@@ -8,7 +8,7 @@ import { PageHeaderSection } from "@/components/page-header";
 import Preloader from "@/components/preloader";
 import "@/styles/globals.css";
 import { Playfair_Display } from "next/font/google";
-import { Check, Mail, User, Users, AlertCircle, Heart, Trash2, Plus } from "lucide-react";
+import { Check, Mail, Users, AlertCircle, Heart, Trash2, Plus } from "lucide-react";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -240,7 +240,7 @@ export default function RSVPPage() {
                           className="w-5 h-5 text-slate-700 cursor-pointer"
                         />
                         <span className="text-slate-700 group-hover:text-slate-900 transition-colors">
-                          Yes, I'll be there
+                          Yes, I&rsquo;ll be there
                         </span>
                       </label>
                       <label className="flex items-center gap-3 cursor-pointer group">
@@ -253,7 +253,7 @@ export default function RSVPPage() {
                           className="w-5 h-5 text-slate-700 cursor-pointer"
                         />
                         <span className="text-slate-700 group-hover:text-slate-900 transition-colors">
-                          Sorry, I can't attend
+                          Sorry, I can&rsquo;t attend
                         </span>
                       </label>
                     </div>
@@ -440,7 +440,7 @@ export default function RSVPPage() {
                     </h3>
                   </div>
                   <p className="text-slate-600">
-                    If you have any questions or need assistance, please don't
+                    If you have any questions or need assistance, please don&rsquo;t
                     hesitate to reach out to us.
                   </p>
                   <p className="text-slate-700 font-medium">

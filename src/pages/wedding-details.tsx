@@ -5,17 +5,11 @@ import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import "@/styles/globals.css";
-import { Playfair_Display } from "next/font/google";
 import EventScheduleSection from "@/components/EventScheduleSection";
 import Image from "next/image";
 import Preloader from "@/components/preloader";
 import { Plane, Gift, Heart, MapPin, Leaf, Calendar, Utensils } from "lucide-react";
 import Hero from "@/components/Hero";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 type ImageModalProps = {
   isOpen: boolean;
@@ -401,8 +395,8 @@ export default function WeddingDetailsPage() {
                 <div className="relative p-6 bg-gradient-to-br from-slate-100 to-white rounded-xl border-l-4 border-slate-600">
                   <Leaf className="absolute top-4 right-4 w-8 h-8 text-slate-400 opacity-20" />
                   <p className="details-body text-lg text-slate-700 italic leading-relaxed">
-                    "These natural, organic tones reflect the timeless elegance and 
-                    botanical beauty we envision for our celebration."
+                    &quot;These natural, organic tones reflect the timeless elegance and 
+                    botanical beauty we envision for our celebration.&quot;
                   </p>
                   <div className="mt-4 flex justify-start gap-2">
                     <div className="w-2 h-2 bg-slate-600 rounded-full"></div>
@@ -587,7 +581,7 @@ export default function WeddingDetailsPage() {
                 <div className="inline-flex items-center gap-3 bg-blue-100 rounded-full px-6 py-3 border border-blue-200">
                   <MapPin className="w-5 h-5 text-blue-600" />
                   <span className="details-body text-lg font-semibold text-blue-800">
-                    We're Moving to Japan! 🇯🇵
+                    We&rsquo;re Moving to Japan! 🇯🇵
                   </span>
                 </div>
               </div>
@@ -606,13 +600,13 @@ export default function WeddingDetailsPage() {
                     </h3>
                     <div className="space-y-4 details-body text-lg text-gray-700 leading-relaxed">
                       <p>
-                        As we prepare for our exciting journey to Japan, we're in the 
+                        As we prepare for our exciting journey to Japan, we&rsquo;re in the 
                         process of downsizing and carefully selecting what to bring with us. 
                         International shipping is quite expensive, and we want to start 
                         fresh in our new home.
                       </p>
                       <p>
-                        If you'd like to celebrate with us, we would be incredibly grateful 
+                        If you&rsquo;d like to celebrate with us, we would be incredibly grateful 
                         for monetary gifts instead of physical items. This will help us with 
                         our moving expenses and getting settled in Japan.
                       </p>
@@ -631,7 +625,7 @@ export default function WeddingDetailsPage() {
                   <Heart className="w-6 h-6 text-green-600 fill-green-600" />
                 </div>
                 <p className="details-body text-base text-gray-500 italic">
-                  We can't wait to share our Japanese adventure with you!
+                  We can&rsquo;t wait to share our Japanese adventure with you!
                 </p>
               </div>
             </div>

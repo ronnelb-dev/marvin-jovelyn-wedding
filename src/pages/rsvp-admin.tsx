@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import { PageHeaderSection } from "@/components/page-header";
 import Preloader from "@/components/preloader";
 import "@/styles/globals.css";
-import { Playfair_Display } from "next/font/google";
 import {
   Download,
   Users,
@@ -18,11 +17,6 @@ import {
   Loader,
 } from "lucide-react";
 import * as XLSX from "xlsx";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 interface Guest {
   id: string;
@@ -152,7 +146,7 @@ export default function RSVPAdminPage() {
   return (
     <>
       <Head>
-        <title>RSVP Admin - Marvin & Jovelyn's Wedding</title>
+        <title>RSVP Admin - Marvin &amp; Jovelyn&rsquo;s Wedding</title>
         <meta
           name="description"
           content="View and manage all RSVP entries for the wedding"

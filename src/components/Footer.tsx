@@ -1,5 +1,5 @@
 "use client";
-import { Heart, Calendar, MapPin, Mail } from "lucide-react";
+import { Heart, Mail } from "lucide-react";
 
 export function MyFooter() {
   return (
