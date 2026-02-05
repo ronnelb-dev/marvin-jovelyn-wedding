@@ -217,21 +217,9 @@ export function Component() {
             <NavLink href="/" active={pathname === "/"} label="Home" />
             <div className="nav-divider mx-1"></div>
             <NavLink
-              href="/our-story"
-              active={pathname === "/our-story"}
-              label="Our Story"
-            />
-            <div className="nav-divider mx-1"></div>
-            <NavLink
-              href="/wedding-details"
-              active={pathname === "/wedding-details"}
-              label="Wedding Details"
-            />
-            <div className="nav-divider mx-1"></div>
-            <NavLink
-              href="/gallery-link-tree"
-              active={pathname === "/gallery-link-tree"}
-              label="Gallery"
+              href="#details"
+              active={false}
+              label="Details"
             />
             <div className="nav-divider mx-1"></div>
             <NavLink
@@ -267,31 +255,17 @@ export function Component() {
                 onClick={() => setIsOpen(false)}
               />
               <MobileNavLink
-                href="/our-story"
-                active={pathname === "/our-story"}
-                label="Our Story"
+                href="#details"
+                active={false}
+                label="Details"
                 index={1}
-                onClick={() => setIsOpen(false)}
-              />
-              <MobileNavLink
-                href="/wedding-details"
-                active={pathname === "/wedding-details"}
-                label="Wedding Details"
-                index={2}
-                onClick={() => setIsOpen(false)}
-              />
-              <MobileNavLink
-                href="/gallery-link-tree"
-                active={pathname === "/gallery-link-tree"}
-                label="Gallery"
-                index={3}
                 onClick={() => setIsOpen(false)}
               />
               <MobileNavLink
                 href="/rsvp"
                 active={pathname === "/rsvp"}
                 label="RSVP"
-                index={4}
+                index={2}
                 onClick={() => setIsOpen(false)}
               />
             </div>

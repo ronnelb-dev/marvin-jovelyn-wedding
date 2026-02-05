@@ -8,7 +8,7 @@ import "@/styles/globals.css";
 import EventScheduleSection from "@/components/EventScheduleSection";
 import Image from "next/image";
 import Preloader from "@/components/preloader";
-import { Plane, Gift, Heart, MapPin, Leaf, Calendar, Utensils } from "lucide-react";
+import { Plane, Gift, Heart, MapPin, Leaf, Calendar } from "lucide-react";
 import Hero from "@/components/Hero";
 
 type ImageModalProps = {
@@ -206,7 +206,7 @@ export default function WeddingDetailsPage() {
         <meta name="description" content="Wedding details for Marvin & Jovelyn - September 11, 2026" />
       </Head>
 
-      <main className="wedding-details-page antialiased bg-gradient-to-b from-slate-50 via-slate-50/30 to-slate-50 text-slate-900">
+      <main className="wedding-details-page antialiased bg-white text-slate-900">
         <NavBar />
         <Preloader />
         <Hero />
@@ -215,439 +215,211 @@ export default function WeddingDetailsPage() {
           <EventScheduleSection />
         </div>
 
-        {/* Enhanced Dress Code Section */}
-        <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <Leaf className="w-6 h-6 text-slate-600" />
-              <span className="text-sm uppercase tracking-[0.3em] text-slate-700 font-medium">
-                What to Wear
-              </span>
-              <Leaf className="w-6 h-6 text-slate-600" />
-            </div>
-            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-slate-900 mb-6">
+        {/* Dress Code Section */}
+        <section className="py-20 md:py-28 px-4 md:px-8 max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-4">
               Dress Code
             </h2>
-            <div className="section-ornament mb-8"></div>
-            <p className="details-body text-xl text-slate-600 max-w-2xl mx-auto italic leading-relaxed">
-              We invite you to dress in semi-formal attire that complements our 
-              elegant neutral and natural botanical theme
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+              Semi-formal attire in neutral and earth tones
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Dress Code Guidelines */}
-            <div className="space-y-8">
-              {/* For Ladies */}
-              <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300">
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
-                    <span className="text-white text-2xl">👗</span>
-                  </div>
-                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
-                    For Ladies
-                  </h3>
-                </div>
-
-                <div className="relative">
-                  <div
-                    className="relative h-80 mb-6 rounded-xl overflow-hidden shadow-md cursor-pointer group/img"
-                    onClick={() =>
-                      openModal(
-                        "/images/ladies-attire-sample.webp",
-                        "Ladies semi-formal attire example",
-                        "For Ladies - Semi-Formal Attire"
-                      )
-                    }
-                  >
-                    <Image
-                      src="/images/ladies-attire-sample.webp"
-                      alt="Ladies semi-formal attire example"
-                      fill
-                      className="object-cover group-hover/img:scale-105 transition-transform duration-500"
-                    />
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                      <p className="text-white text-sm font-medium">Click to enlarge</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <p className="details-body text-lg text-slate-700 leading-relaxed">
-                      Cocktail dresses, dressy blouses with dress pants, or 
-                      elegant midi/maxi dresses in taupe, cream, or earth tones
-                    </p>
-                    
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
-                        Cocktail Dress
-                      </span>
-                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
-                        Midi Dress
-                      </span>
-                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
-                        Dressy Blouse
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* For Gentlemen */}
-              <div className="group bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300">
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-800 rounded-full flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
-                    <span className="text-white text-2xl">👔</span>
-                  </div>
-                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
-                    For Gentlemen
-                  </h3>
-                </div>
-
-                <div className="relative">
-                  <div
-                    className="relative h-80 mb-6 rounded-xl overflow-hidden shadow-md cursor-pointer group/img"
-                    onClick={() =>
-                      openModal(
-                        "/images/gentlemen-attire-sample.webp",
-                        "Gentlemen semi-formal attire example",
-                        "For Gentlemen - Semi-Formal Attire"
-                      )
-                    }
-                  >
-                    <Image
-                      src="/images/gentlemen-attire-sample.webp"
-                      alt="Gentlemen semi-formal attire example"
-                      fill
-                      className="object-cover group-hover/img:scale-105 transition-transform duration-500"
-                    />
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                      <p className="text-white text-sm font-medium">Click to enlarge</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <p className="details-body text-lg text-slate-700 leading-relaxed">
-                      Dress shirts with slacks, blazers optional, or polo shirts 
-                      with dress pants in neutral or earth tones
-                    </p>
-                    
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
-                        Dress Shirt
-                      </span>
-                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
-                        Blazer
-                      </span>
-                      <span className="px-4 py-2 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
-                        Polo Shirt
-                      </span>
-                    </div>
-                  </div>
-                </div>
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* For Ladies */}
+            <div>
+              <h3 className="text-2xl font-light text-slate-900 mb-4">For Ladies</h3>
+              <p className="text-slate-600 mb-4 leading-relaxed">
+                Cocktail dresses, dressy blouses with dress pants, or elegant midi/maxi dresses in taupe, cream, or earth tones.
+              </p>
+              <div
+                className="relative h-64 rounded-lg overflow-hidden cursor-pointer mb-4"
+                onClick={() =>
+                  openModal(
+                    "/images/ladies-attire-sample.webp",
+                    "Ladies semi-formal attire example",
+                    "For Ladies - Semi-Formal Attire"
+                  )
+                }
+              >
+                <Image
+                  src="/images/ladies-attire-sample.webp"
+                  alt="Ladies semi-formal attire example"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
 
-            {/* Color Palette & Guidelines */}
-            <div className="space-y-8">
-              {/* Color Palette */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
-                <h3 className="details-serif text-3xl font-semibold text-slate-900 mb-8 text-center">
-                  Our Color Palette
-                </h3>
-
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
-                    <div className="w-16 h-16 rounded-full bg-[#8B7355] shadow-lg flex-shrink-0 border-4 border-white"></div>
-                    <div>
-                      <h4 className="font-semibold text-lg text-slate-800">Taupe</h4>
-                      <p className="text-sm text-slate-600 font-mono">#8B7355</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
-                    <div className="w-16 h-16 rounded-full bg-[#2C2420] shadow-lg flex-shrink-0 border-4 border-white"></div>
-                    <div>
-                      <h4 className="font-semibold text-lg text-slate-800">Charcoal</h4>
-                      <p className="text-sm text-slate-600 font-mono">#2C2420</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
-                    <div className="w-16 h-16 rounded-full bg-[#E8E4DF] shadow-lg flex-shrink-0 border-4 border-white"></div>
-                    <div>
-                      <h4 className="font-semibold text-lg text-slate-800">Cream</h4>
-                      <p className="text-sm text-slate-600 font-mono">#E8E4DF</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-slate-100 to-slate-100/50 border border-slate-200">
-                    <div className="w-16 h-16 rounded-full bg-[#F5F3F0] shadow-lg flex-shrink-0 border-4 border-white"></div>
-                    <div>
-                      <h4 className="font-semibold text-lg text-slate-800">Ivory</h4>
-                      <p className="text-sm text-slate-600 font-mono">#F5F3F0</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Inspiration Quote */}
-                <div className="relative p-6 bg-gradient-to-br from-slate-100 to-white rounded-xl border-l-4 border-slate-600">
-                  <Leaf className="absolute top-4 right-4 w-8 h-8 text-slate-400 opacity-20" />
-                  <p className="details-body text-lg text-slate-700 italic leading-relaxed">
-                    &quot;These natural, organic tones reflect the timeless elegance and 
-                    botanical beauty we envision for our celebration.&quot;
-                  </p>
-                  <div className="mt-4 flex justify-start gap-2">
-                    <div className="w-2 h-2 bg-slate-600 rounded-full"></div>
-                    <div className="w-2 h-2 bg-slate-500 rounded-full"></div>
-                    <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Please Avoid */}
-              <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 border border-amber-200 shadow-lg">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white text-xl">⚠️</span>
-                  </div>
-                  <div>
-                    <h4 className="details-serif text-2xl font-semibold text-slate-800 mb-3">
-                      Please Avoid
-                    </h4>
-                    <p className="details-body text-slate-700 leading-relaxed text-lg">
-                      Very bright neon colors or bold patterns that might compete with our 
-                      elegant neutral theme. We want everyone to feel comfortable 
-                      while harmonizing with our wedding palette.
-                    </p>
-                  </div>
-                </div>
+            {/* For Gentlemen */}
+            <div>
+              <h3 className="text-2xl font-light text-slate-900 mb-4">For Gentlemen</h3>
+              <p className="text-slate-600 mb-4 leading-relaxed">
+                Dress shirts with slacks, blazers optional, or polo shirts with dress pants in neutral or earth tones.
+              </p>
+              <div
+                className="relative h-64 rounded-lg overflow-hidden cursor-pointer"
+                onClick={() =>
+                  openModal(
+                    "/images/gentlemen-attire-sample.webp",
+                    "Gentlemen semi-formal attire example",
+                    "For Gentlemen - Semi-Formal Attire"
+                  )
+                }
+              >
+                <Image
+                  src="/images/gentlemen-attire-sample.webp"
+                  alt="Gentlemen semi-formal attire example"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* Enhanced Menu Section */}
-        <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto bg-gradient-to-b from-slate-50 to-slate-50/50">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <Utensils className="w-6 h-6 text-slate-600" />
-              <span className="text-sm uppercase tracking-[0.3em] text-slate-700 font-medium">
-                Culinary Delights
-              </span>
-              <Utensils className="w-6 h-6 text-slate-600" />
+        {/* Color Palette Section */}
+        <section className="py-20 md:py-28 px-4 md:px-8 max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-4">
+              Color Palette
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+              Our elegant neutral tones
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Color Palette */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col items-center">
+                <div className="w-20 h-20 rounded-full bg-[#8B7355] mb-3 shadow-md"></div>
+                <p className="font-medium text-slate-900">Taupe</p>
+                <p className="text-sm text-slate-600">#8B7355</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-20 h-20 rounded-full bg-[#2C2420] mb-3 shadow-md"></div>
+                <p className="font-medium text-slate-900">Charcoal</p>
+                <p className="text-sm text-slate-600">#2C2420</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-20 h-20 rounded-full bg-[#E8E4DF] mb-3 shadow-md border border-slate-300"></div>
+                <p className="font-medium text-slate-900">Cream</p>
+                <p className="text-sm text-slate-600">#E8E4DF</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-20 h-20 rounded-full bg-[#F5F3F0] mb-3 shadow-md border border-slate-300"></div>
+                <p className="font-medium text-slate-900">Ivory</p>
+                <p className="text-sm text-slate-600">#F5F3F0</p>
+              </div>
             </div>
-            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-slate-900 mb-6">
+
+            {/* Please Avoid */}
+            <div>
+              <h3 className="text-2xl font-light text-slate-900 mb-4">Guidelines</h3>
+              <p className="text-slate-600 leading-relaxed">
+                We appreciate semi-formal attire in neutral tones that harmonize with our elegant palette. Avoid very bright neon colors or bold patterns that might compete with the refined aesthetic we&rsquo;ve envisioned.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Menu Section */}
+        <section className="py-20 md:py-28 px-4 md:px-8 max-w-6xl mx-auto bg-white">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-4">
               Wedding Menu
             </h2>
-            <div className="section-ornament mb-8"></div>
-            <p className="details-body text-xl text-slate-600 max-w-2xl mx-auto italic leading-relaxed">
-              Savor carefully selected dishes that celebrate our love story 
-              and bring joy to every palate
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+              Savor carefully selected dishes
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Menu Content */}
-            <div className="space-y-8">
-              {/* Main Courses */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
-                <div className="flex items-center mb-8 pb-6 border-b border-slate-200">
-                  <div className="w-14 h-14 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center mr-4">
-                    <span className="details-serif text-white font-semibold text-xl">1</span>
-                  </div>
-                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
-                    Main Courses
-                  </h3>
-                </div>
-                <div className="space-y-6">
-                  {[
-                    { name: "Spicy Thai Chicken", detail: "with Cashew Nuts" },
-                    { name: "Beef with Mushroom", detail: "& Gravy" },
-                    { name: "Fish Fillet", detail: "with Mango Tomato Salsa" }
-                  ].map((dish, idx) => (
-                    <div key={idx} className="flex items-start gap-4 group">
-                      <div className="w-3 h-3 bg-slate-600 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-                      <div>
-                        <h4 className="details-serif text-xl font-semibold text-slate-800 mb-1">
-                          {dish.name}
-                        </h4>
-                        <p className="details-body text-slate-600 text-lg italic">{dish.detail}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Side Dishes */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
-                <div className="flex items-center mb-8 pb-6 border-b border-slate-200">
-                  <div className="w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-800 rounded-full flex items-center justify-center mr-4">
-                    <span className="details-serif text-white font-semibold text-xl">2</span>
-                  </div>
-                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
-                    Side Dishes
-                  </h3>
-                </div>
-                <div className="space-y-6">
-                  {[
-                    "Alfredo Fettucine",
-                    "Buttered Corn & Carrots",
-                    "Vegetable Chowder Soup"
-                  ].map((dish, idx) => (
-                    <div key={idx} className="flex items-start gap-4 group">
-                      <div className="w-3 h-3 bg-slate-700 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-                      <h4 className="details-serif text-xl font-semibold text-slate-800">
-                        {dish}
-                      </h4>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Beverages */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-slate-200">
-                <div className="flex items-center mb-8 pb-6 border-b border-slate-200">
-                  <div className="w-14 h-14 bg-gradient-to-br from-slate-800 to-slate-900 rounded-full flex items-center justify-center mr-4">
-                    <span className="details-serif text-white font-semibold text-xl">3</span>
-                  </div>
-                  <h3 className="details-serif text-3xl font-semibold text-slate-900">
-                    Beverages
-                  </h3>
-                </div>
-                <div className="space-y-6">
-                  {["Bottomless Iced Tea", "Water"].map((drink, idx) => (
-                    <div key={idx} className="flex items-start gap-4 group">
-                      <div className="w-3 h-3 bg-slate-800 rounded-full mt-2 flex-shrink-0 group-hover:scale-125 transition-transform"></div>
-                      <h4 className="details-serif text-xl font-semibold text-slate-800">
-                        {drink}
-                      </h4>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Main Courses */}
+            <div>
+              <h3 className="text-2xl font-light text-slate-900 mb-6">Main Courses</h3>
+              <ul className="space-y-3">
+                {[
+                  "Spicy Thai Chicken with Cashew Nuts",
+                  "Beef with Mushroom & Gravy",
+                  "Fish Fillet with Mango Tomato Salsa"
+                ].map((dish, idx) => (
+                  <li key={idx} className="text-slate-600 flex items-start gap-2">
+                    <span className="text-slate-400 mt-1">•</span>
+                    <span>{dish}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Enhanced Image Section */}
-            <div className="relative">
-              <div className="relative h-[700px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-                <Image
-                  src="/images/table-img.webp"
-                  alt="Elegant dining setup"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl">
-                    <h4 className="details-serif text-2xl font-semibold text-slate-800 mb-2">
-                      An Elegant Dining Experience
-                    </h4>
-                    <p className="details-body text-slate-600 text-lg leading-relaxed">
-                      Every detail has been lovingly chosen to make your 
-                      dining experience truly memorable
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {/* Side Dishes */}
+            <div>
+              <h3 className="text-2xl font-light text-slate-900 mb-6">Side Dishes</h3>
+              <ul className="space-y-3">
+                {[
+                  "Alfredo Fettucine",
+                  "Buttered Corn & Carrots",
+                  "Vegetable Chowder Soup"
+                ].map((dish, idx) => (
+                  <li key={idx} className="text-slate-600 flex items-start gap-2">
+                    <span className="text-slate-400 mt-1">•</span>
+                    <span>{dish}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              {/* Floating botanical accents */}
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-slate-400 to-slate-600 rounded-full opacity-20 blur-2xl"></div>
-              <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-gradient-to-br from-slate-500 to-slate-700 rounded-full opacity-20 blur-2xl"></div>
+            {/* Beverages */}
+            <div>
+              <h3 className="text-2xl font-light text-slate-900 mb-6">Beverages</h3>
+              <ul className="space-y-3">
+                {["Bottomless Iced Tea", "Water"].map((drink, idx) => (
+                  <li key={idx} className="text-slate-600 flex items-start gap-2">
+                    <span className="text-slate-400 mt-1">•</span>
+                    <span>{drink}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Gift Registry - Japan Move Section */}
-        <section className="py-24 px-4 md:px-8 max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-blue-50 rounded-3xl"></div>
-            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-green-400/20 to-transparent rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-blue-400/20 to-transparent rounded-full blur-3xl"></div>
+        {/* Japan Move Section */}
+        <section className="py-20 md:py-28 px-4 md:px-8 max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-4">
+              Our Next Adventure
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+              We&rsquo;re Moving to Japan! 🇯🇵
+            </p>
+          </div>
 
-            <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-10 md:p-14 shadow-xl border border-green-100">
-              {/* Header */}
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mb-6 shadow-lg">
-                  <Plane className="w-10 h-10 text-white" />
-                </div>
-                <h2 className="details-serif text-4xl md:text-5xl font-semibold text-gray-800 mb-4">
-                  Our Next Adventure
-                </h2>
-                <div className="section-ornament mb-6"></div>
-                <div className="inline-flex items-center gap-3 bg-blue-100 rounded-full px-6 py-3 border border-blue-200">
-                  <MapPin className="w-5 h-5 text-blue-600" />
-                  <span className="details-body text-lg font-semibold text-blue-800">
-                    We&rsquo;re Moving to Japan! 🇯🇵
-                  </span>
-                </div>
-              </div>
-
-              {/* Main message */}
-              <div className="bg-gradient-to-br from-white to-green-50 rounded-2xl p-8 shadow-sm border border-green-100 mb-8">
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
-                      <Gift className="w-7 h-7 text-green-700" />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="details-serif text-2xl font-semibold text-gray-800 mb-4">
-                      A Special Request About Gifts
-                    </h3>
-                    <div className="space-y-4 details-body text-lg text-gray-700 leading-relaxed">
-                      <p>
-                        As we prepare for our exciting journey to Japan, we&rsquo;re in the 
-                        process of downsizing and carefully selecting what to bring with us. 
-                        International shipping is quite expensive, and we want to start 
-                        fresh in our new home.
-                      </p>
-                      <p>
-                        If you&rsquo;d like to celebrate with us, we would be incredibly grateful 
-                        for monetary gifts instead of physical items. This will help us with 
-                        our moving expenses and getting settled in Japan.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom section */}
-              <div className="text-center pt-6 border-t border-green-100">
-                <div className="inline-flex items-center gap-3 text-gray-600 mb-4">
-                  <Heart className="w-6 h-6 text-green-600 fill-green-600" />
-                  <span className="details-body text-lg">
-                    Your support means the world to us
-                  </span>
-                  <Heart className="w-6 h-6 text-green-600 fill-green-600" />
-                </div>
-                <p className="details-body text-base text-gray-500 italic">
-                  We can&rsquo;t wait to share our Japanese adventure with you!
-                </p>
-              </div>
+          <div className="max-w-3xl mx-auto bg-slate-50 rounded-lg p-8 md:p-12">
+            <div className="space-y-6 text-slate-700 leading-relaxed">
+              <p>
+                As we prepare for our exciting journey to Japan, we&rsquo;re in the process of downsizing and carefully selecting what to bring with us. International shipping is quite expensive, and we want to start fresh in our new home.
+              </p>
+              <p>
+                If you&rsquo;d like to celebrate with us, we would be incredibly grateful for monetary gifts instead of physical items. This will help us with our moving expenses and getting settled in Japan.
+              </p>
+              <p className="text-center font-light italic text-slate-600 pt-4">
+                We can&rsquo;t wait to share our Japanese adventure with you!
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Enhanced Location Section */}
-        <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <MapPin className="w-6 h-6 text-green-600" />
-              <span className="text-sm uppercase tracking-[0.3em] text-green-700 font-medium">
-                Find Us
-              </span>
-              <MapPin className="w-6 h-6 text-green-600" />
-            </div>
-            <h2 className="details-serif text-5xl md:text-6xl lg:text-7xl font-semibold text-green-900 mb-6">
+        {/* Location Section */}
+        <section className="py-20 md:py-28 px-4 md:px-8 max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-light text-slate-900 mb-4">
               Venue Location
             </h2>
-            <div className="section-ornament mb-8"></div>
-            <p className="details-body text-xl text-gray-600 max-w-2xl mx-auto italic">
-              Join us at this beautiful location as we celebrate our special day
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+              Join us at this beautiful location
             </p>
           </div>
 
