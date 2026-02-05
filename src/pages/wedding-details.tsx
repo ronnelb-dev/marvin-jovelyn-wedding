@@ -358,6 +358,10 @@ export default function WeddingDetailsPage() {
             <div>
               <h3 className="text-2xl font-light text-slate-900 mb-6">Side Dishes</h3>
               <ul className="space-y-3">
+                {[
+                  "Alfredo Fettucine",
+                  "Buttered Corn & Carrots",
+                  "Vegetable Chowder Soup"
                 ].map((dish, idx) => (
                   <li key={idx} className="text-slate-600 flex items-start gap-2">
                     <span className="text-slate-400 mt-1">•</span>
