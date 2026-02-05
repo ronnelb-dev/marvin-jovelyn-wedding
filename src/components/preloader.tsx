@@ -1,18 +1,18 @@
+"use client";
 import { useEffect, useState } from "react";
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate a loading process (adjust timing as needed)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Change duration as needed
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  if (!isLoading) return null; // Hide the preloader when done
+  if (!isLoading) return null;
 
   return (
     <div id="preloader">

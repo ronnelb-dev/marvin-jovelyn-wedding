@@ -270,22 +270,18 @@ export default function Home() {
               <div className="flex flex-col items-center">
                 <div className="w-20 h-20 rounded-full bg-[#8B7355] mb-3 shadow-md"></div>
                 <p className="font-medium text-slate-900">Taupe</p>
-                <p className="text-sm text-slate-600">#8B7355</p>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-20 h-20 rounded-full bg-[#2C2420] mb-3 shadow-md"></div>
-                <p className="font-medium text-slate-900">Charcoal</p>
-                <p className="text-sm text-slate-600">#2C2420</p>
+                <div className="w-20 h-20 rounded-full bg-[#B2AC88] mb-3 shadow-md"></div>
+                <p className="font-medium text-slate-900">Sage Green</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="w-20 h-20 rounded-full bg-[#E8E4DF] mb-3 shadow-md border border-slate-300"></div>
                 <p className="font-medium text-slate-900">Cream</p>
-                <p className="text-sm text-slate-600">#E8E4DF</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="w-20 h-20 rounded-full bg-[#F5F3F0] mb-3 shadow-md border border-slate-300"></div>
                 <p className="font-medium text-slate-900">Ivory</p>
-                <p className="text-sm text-slate-600">#F5F3F0</p>
               </div>
             </div>
 
