@@ -81,9 +81,12 @@ export default async function handler(
       });
     }
 
-    // Insert guest records if attending
-    if (formData.willAttend === 'yes' && formData.guests.length > 0) {
-      const guestRecords = formData.guests.map((guest) => ({
+    // Insert guest records if attending and have non-empty names
+    // Skip the first guest (index 0) as it's the primary guest placeholder
+    const additionalGuests = formData.guests.slice(1).filter((guest) => guest.name.trim());
+    
+    if (formData.willAttend === 'yes' && additionalGuests.length > 0) {
+      const guestRecords = additionalGuests.map((guest) => ({
         rsvp_id: rsvpData.id,
         guest_name: guest.name,
       }));
