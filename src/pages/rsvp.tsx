@@ -53,12 +53,7 @@ export default function RSVPPage() {
     if (!formData.willAttend) {
       newErrors.willAttend = "Please indicate if you will attend";
     }
-    if (formData.willAttend === "yes") {
-      // Validate that at least the primary guest has a name
-      if (!formData.guests[0]?.name.trim()) {
-        newErrors.guestNames = "Please enter at least your name";
-      }
-    }
+    // Guest details are now optional
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -316,7 +311,6 @@ export default function RSVPPage() {
                       <div className="flex items-center justify-between">
                         <label className="block text-lg font-semibold text-slate-900">
                           Guest Details
-                          <span className="text-red-500 ml-1">*</span>
                         </label>
                         <button
                           type="button"
@@ -328,12 +322,7 @@ export default function RSVPPage() {
                         </button>
                       </div>
 
-                      {errors.guestNames && (
-                        <div className="flex items-center gap-2 text-red-600 text-sm">
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.guestNames}
-                        </div>
-                      )}
+
 
                       <div className="space-y-4">
                         {formData.guests.map((guest, index) => (
@@ -343,7 +332,7 @@ export default function RSVPPage() {
                           >
                             <div className="flex items-center justify-between mb-3">
                               <span className="text-sm font-semibold text-slate-700">
-                                {index === 0 ? "You" : `Guest ${index}`}
+                                Guest {index + 1}
                               </span>
                               {index > 0 && (
                                 <button
