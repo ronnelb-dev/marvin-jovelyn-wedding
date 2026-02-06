@@ -168,11 +168,11 @@ export function MyFooter() {
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
           {/* Names Section */}
           <div className="text-center mb-8 sm:mb-10">
-            <h2 className="footer-script text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-3 sm:mb-4">
+            <h2 className="footer-script text-5xl sm:text-5xl md:text-6xl lg:text-7xl mb-3 sm:mb-4">
               {/* Desktop: side-by-side | Mobile: stacked */}
               <span className="hidden sm:inline">
                 <span className="shimmer-names">Marvin</span>
-                <span className="footer-body text-2xl sm:text-3xl md:text-4xl mx-2 sm:mx-3 md:mx-4 text-green-600/60 font-light italic">
+                <span className="footer-body text-2xl sm:text-4xl md:text-5xl mx-2 sm:mx-3 md:mx-4 text-green-600/60 font-light italic">
                   &
                 </span>
                 <span className="shimmer-names">Jovelyn</span>
