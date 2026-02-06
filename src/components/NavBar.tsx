@@ -180,14 +180,14 @@ export function Component() {
       >
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           {/* Brand Section - Enhanced */}
-          <NavbarBrand href="/" className="flex items-center gap-3 group cursor-pointer">
+          <NavbarBrand href="/" className="flex items-center gap-2 sm:gap-3 group cursor-pointer">
             {/* Decorative ornament */}
             <div className="relative">
               <svg
-                width="32"
-                height="32"
+                width="28"
+                height="28"
                 viewBox="0 0 32 32"
-                className="text-slate-700 transition-all duration-500 group-hover:text-slate-600 group-hover:scale-110"
+                className="text-slate-700 transition-all duration-500 group-hover:text-slate-600 group-hover:scale-110 sm:w-8 sm:h-8"
               >
                 <circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5" />
                 <path
@@ -202,10 +202,10 @@ export function Component() {
 
             {/* Brand text */}
             <div className="flex flex-col">
-              <span className="brand-script text-md md:text-xl font-light tracking-wide text-slate-800 transition-all duration-300 group-hover:text-slate-700">
+              <span className="brand-script text-base sm:text-md md:text-xl font-light tracking-wide text-slate-800 transition-all duration-300 group-hover:text-slate-700">
                 M & J
               </span>
-              <span className="brand-subtitle text-[10px] md:text-[11px] text-slate-600/70 font-light tracking-[0.2em] uppercase">
+              <span className="brand-subtitle text-[12px] sm:text-[13px] md:text-[14px] text-slate-600/70 font-light tracking-[0.2em] uppercase">
                 2026
               </span>
             </div>
@@ -222,9 +222,9 @@ export function Component() {
             />
           </div>
 
-          {/* Custom Mobile Toggle */}
+          {/* Custom Mobile Toggle - Now properly centered */}
           <button
-            className="md:hidden custom-toggle p-2 rounded-lg hover:bg-slate-100/50 transition-colors"
+            className="md:hidden rounded-lg hover:bg-slate-100/50 transition-colors flex items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle navigation"
           >
@@ -238,8 +238,8 @@ export function Component() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden border-t border-slate-200/30 bg-white/98 backdrop-blur-xl mt-4">
-            <div className="px-6 py-6 space-y-4">
+          <div className="md:hidden border-t border-slate-200/30 bg-white/98 backdrop-blur-xl">
+            <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
               <MobileNavLink
                 href="/"
                 active={pathname === "/"}
@@ -273,7 +273,7 @@ function NavLink({ href, active, label }: NavLinkProps) {
   return (
     <a
       href={href}
-      className={`nav-link-wrapper relative px-4 py-2 text-[12px] font-light tracking-[0.15em] uppercase transition-all duration-300 ${active
+      className={`nav-link-wrapper relative px-3 sm:px-4 py-2 text-[12px] sm:text-[13x] font-light tracking-[0.15em] uppercase transition-all duration-300 ${active
           ? "nav-link-active text-slate-800"
           : "text-slate-600/80 hover:text-slate-800"
         }`}
@@ -313,15 +313,15 @@ function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkPro
     <a
       href={href}
       onClick={onClick}
-      className={`mobile-menu-item block px-4 py-3 text-sm font-light tracking-[0.1em] uppercase transition-all duration-300 rounded-lg ${active
+      className={`mobile-menu-item block px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-light tracking-[0.1em] uppercase transition-all duration-300 rounded-lg ${active
           ? "bg-slate-100 text-slate-800"
           : "text-slate-600/80 hover:bg-slate-50/70 hover:text-slate-800"
         }`}
       style={{ opacity: 0 }}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Index number */}
-        <span className="text-[10px] opacity-40 font-light">
+        <span className="text-[9px] sm:text-[10px] opacity-40 font-light">
           {String(index + 1).padStart(2, "0")}
         </span>
         {/* Label */}
