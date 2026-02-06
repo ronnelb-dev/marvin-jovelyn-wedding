@@ -324,15 +324,15 @@ export default function RSVPPage() {
 
                       <div className="space-y-4">
                         {formData.guests.map((guest, index) => (
-                          <div
-                            key={guest.id}
-                            className="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3"
-                          >
-                            <div className="flex items-center justify-between mb-3">
-                              <span className="text-sm font-semibold text-slate-700">
-                                Guest {index + 1}
-                              </span>
-                              {index > 0 && (
+                          index > 0 && (
+                            <div
+                              key={guest.id}
+                              className="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3"
+                            >
+                              <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm font-semibold text-slate-700">
+                                  Guest {index + 1}
+                                </span>
                                 <button
                                   type="button"
                                   onClick={() => removeGuest(guest.id)}
@@ -341,19 +341,19 @@ export default function RSVPPage() {
                                 >
                                   <Trash2 className="w-4 h-4 text-red-600" />
                                 </button>
-                              )}
-                            </div>
+                              </div>
 
-                            <input
-                              type="text"
-                              value={guest.name}
-                              onChange={(e) =>
-                                handleGuestChange(guest.id, "name", e.target.value)
-                              }
-                              placeholder="Guest name"
-                              className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
-                            />
-                          </div>
+                              <input
+                                type="text"
+                                value={guest.name}
+                                onChange={(e) =>
+                                  handleGuestChange(guest.id, "name", e.target.value)
+                                }
+                                placeholder="Guest name"
+                                className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
+                              />
+                            </div>
+                          )
                         ))}
                       </div>
                     </div>
