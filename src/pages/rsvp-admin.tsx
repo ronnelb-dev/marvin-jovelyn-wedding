@@ -137,28 +137,24 @@ export default function RSVPAdminPage() {
       )
   );
 
-  const primaryAttendingCount = rsvps.filter(
-    (rsvp) => rsvp.will_attend
-  ).length;
-
   const attendingCount = rsvps.reduce((acc, rsvp) => {
     if (rsvp.will_attend) {
-      // Count only additional guests for attending
-      return acc + (rsvp.rsvp_guests?.length || 0);
+      // Count primary guest + additional guests for attending
+      return acc + 1 + (rsvp.rsvp_guests?.length || 0);
     }
     return acc;
   }, 0);
 
   const notAttendingCount = rsvps.reduce((acc, rsvp) => {
     if (!rsvp.will_attend) {
-      // Count only additional guests for not attending
-      return acc + (rsvp.rsvp_guests?.length || 0);
+      // Count primary guest + additional guests for not attending
+      return acc + 1 + (rsvp.rsvp_guests?.length || 0);
     }
     return acc;
   }, 0);
 
   const totalGuests = rsvps.reduce(
-    (acc, rsvp) => acc + (rsvp.rsvp_guests?.length || 0),
+    (acc, rsvp) => acc + 1 + (rsvp.rsvp_guests?.length || 0),
     0
   );
 
@@ -181,7 +177,7 @@ export default function RSVPAdminPage() {
 
         <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
           {/* Stats Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-slate-700">
               <div className="flex items-center justify-between">
                 <div>
@@ -196,25 +192,11 @@ export default function RSVPAdminPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-slate-600 font-medium">
-                    Primary Attending
-                  </p>
-                  <p className="text-4xl font-bold text-blue-600 mt-2">
-                    {primaryAttendingCount}
-                  </p>
-                </div>
-                <CheckCircle className="w-12 h-12 text-blue-400" />
-              </div>
-            </div>
-
             <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-600 font-medium">
-                    Additional Guests Attending
+                    Attending
                   </p>
                   <p className="text-4xl font-bold text-green-600 mt-2">
                     {attendingCount}
@@ -242,7 +224,7 @@ export default function RSVPAdminPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-slate-600 font-medium">
-                    Total Additional Guests
+                    Total Guests
                   </p>
                   <p className="text-4xl font-bold text-slate-900 mt-2">
                     {totalGuests}

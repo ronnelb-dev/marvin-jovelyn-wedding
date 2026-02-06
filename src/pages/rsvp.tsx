@@ -331,7 +331,7 @@ export default function RSVPPage() {
                             >
                               <div className="flex items-center justify-between mb-3">
                                 <span className="text-sm font-semibold text-slate-700">
-                                  Guest {index + 1}
+                                  Guest {index}
                                 </span>
                                 <button
                                   type="button"
