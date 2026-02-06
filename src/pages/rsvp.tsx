@@ -53,12 +53,7 @@ export default function RSVPPage() {
     if (!formData.willAttend) {
       newErrors.willAttend = "Please indicate if you will attend";
     }
-    if (formData.willAttend === "yes") {
-      // Validate that at least the primary guest has a name
-      if (!formData.guests[0]?.name.trim()) {
-        newErrors.guestNames = "Please enter at least your name";
-      }
-    }
+    // Guest details are now optional
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -310,13 +305,12 @@ export default function RSVPPage() {
                     />
                   </div>
 
-                  {/* Guest Names and Meal Preferences (Show only if attending) */}
-                  {formData.willAttend === "yes" && (
+                  {/* Guest Names - Show only if attending and guests have been added */}
+                  {formData.willAttend === "yes" && formData.guests.length > 1 && (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <label className="block text-lg font-semibold text-slate-900">
                           Guest Details
-                          <span className="text-red-500 ml-1">*</span>
                         </label>
                         <button
                           type="button"
@@ -328,24 +322,17 @@ export default function RSVPPage() {
                         </button>
                       </div>
 
-                      {errors.guestNames && (
-                        <div className="flex items-center gap-2 text-red-600 text-sm">
-                          <AlertCircle className="w-4 h-4" />
-                          {errors.guestNames}
-                        </div>
-                      )}
-
                       <div className="space-y-4">
                         {formData.guests.map((guest, index) => (
-                          <div
-                            key={guest.id}
-                            className="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3"
-                          >
-                            <div className="flex items-center justify-between mb-3">
-                              <span className="text-sm font-semibold text-slate-700">
-                                {index === 0 ? "You" : `Guest ${index}`}
-                              </span>
-                              {index > 0 && (
+                          index > 0 && (
+                            <div
+                              key={guest.id}
+                              className="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3"
+                            >
+                              <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm font-semibold text-slate-700">
+                                  Guest {index}
+                                </span>
                                 <button
                                   type="button"
                                   onClick={() => removeGuest(guest.id)}
@@ -354,22 +341,34 @@ export default function RSVPPage() {
                                 >
                                   <Trash2 className="w-4 h-4 text-red-600" />
                                 </button>
-                              )}
-                            </div>
+                              </div>
 
-                            <input
-                              type="text"
-                              value={guest.name}
-                              onChange={(e) =>
-                                handleGuestChange(guest.id, "name", e.target.value)
-                              }
-                              placeholder="Guest name"
-                              className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
-                            />
-                          </div>
+                              <input
+                                type="text"
+                                value={guest.name}
+                                onChange={(e) =>
+                                  handleGuestChange(guest.id, "name", e.target.value)
+                                }
+                                placeholder="Guest name"
+                                className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-700 focus:border-transparent transition-all"
+                              />
+                            </div>
+                          )
                         ))}
                       </div>
                     </div>
+                  )}
+
+                  {/* Add Guest Button - Show when attending but no guests added yet */}
+                  {formData.willAttend === "yes" && formData.guests.length === 1 && (
+                    <button
+                      type="button"
+                      onClick={addGuest}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-medium transition-colors"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add Guest
+                    </button>
                   )}
 
                   {/* Special Message */}

@@ -139,14 +139,22 @@ export default function RSVPAdminPage() {
 
   const attendingCount = rsvps.reduce((acc, rsvp) => {
     if (rsvp.will_attend) {
-      // Count primary guest + all additional guests
+      // Count primary guest + additional guests for attending
+      return acc + 1 + (rsvp.rsvp_guests?.length || 0);
+    }
+    return acc;
+  }, 0);
+
+  const notAttendingCount = rsvps.reduce((acc, rsvp) => {
+    if (!rsvp.will_attend) {
+      // Count primary guest + additional guests for not attending
       return acc + 1 + (rsvp.rsvp_guests?.length || 0);
     }
     return acc;
   }, 0);
 
   const totalGuests = rsvps.reduce(
-    (acc, rsvp) => acc + (rsvp.rsvp_guests?.length || 0) + 1,
+    (acc, rsvp) => acc + 1 + (rsvp.rsvp_guests?.length || 0),
     0
   );
 
@@ -169,7 +177,7 @@ export default function RSVPAdminPage() {
 
         <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
           {/* Stats Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-slate-700">
               <div className="flex items-center justify-between">
                 <div>
@@ -195,6 +203,20 @@ export default function RSVPAdminPage() {
                   </p>
                 </div>
                 <CheckCircle className="w-12 h-12 text-green-400" />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-slate-600 font-medium">
+                    Not Attending
+                  </p>
+                  <p className="text-4xl font-bold text-red-600 mt-2">
+                    {notAttendingCount}
+                  </p>
+                </div>
+                <XCircle className="w-12 h-12 text-red-400" />
               </div>
             </div>
 
