@@ -139,14 +139,14 @@ export default function RSVPAdminPage() {
 
   const attendingCount = rsvps.reduce((acc, rsvp) => {
     if (rsvp.will_attend) {
-      // Count primary guest + all additional guests
-      return acc + 1 + (rsvp.rsvp_guests?.length || 0);
+      // Count only additional guests for attending
+      return acc + (rsvp.rsvp_guests?.length || 0);
     }
     return acc;
   }, 0);
 
   const totalGuests = rsvps.reduce(
-    (acc, rsvp) => acc + (rsvp.rsvp_guests?.length || 0) + 1,
+    (acc, rsvp) => acc + (rsvp.rsvp_guests?.length || 0),
     0
   );
 
