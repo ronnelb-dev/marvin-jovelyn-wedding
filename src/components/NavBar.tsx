@@ -251,7 +251,7 @@ export function Component() {
                 href="/rsvp"
                 active={pathname === "/rsvp"}
                 label="RSVP"
-                index={2}
+                index={1}
                 onClick={() => setIsOpen(false)}
               />
             </div>
