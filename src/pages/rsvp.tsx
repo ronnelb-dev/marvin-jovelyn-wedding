@@ -305,8 +305,8 @@ export default function RSVPPage() {
                     />
                   </div>
 
-                  {/* Guest Names and Meal Preferences (Show only if attending) */}
-                  {formData.willAttend === "yes" && (
+                  {/* Guest Names - Show only if attending and guests have been added */}
+                  {formData.willAttend === "yes" && formData.guests.length > 1 && (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <label className="block text-lg font-semibold text-slate-900">
@@ -321,8 +321,6 @@ export default function RSVPPage() {
                           Add Guest
                         </button>
                       </div>
-
-
 
                       <div className="space-y-4">
                         {formData.guests.map((guest, index) => (
@@ -359,6 +357,18 @@ export default function RSVPPage() {
                         ))}
                       </div>
                     </div>
+                  )}
+
+                  {/* Add Guest Button - Show when attending but no guests added yet */}
+                  {formData.willAttend === "yes" && formData.guests.length === 1 && (
+                    <button
+                      type="button"
+                      onClick={addGuest}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-medium transition-colors"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add Guest
+                    </button>
                   )}
 
                   {/* Special Message */}
