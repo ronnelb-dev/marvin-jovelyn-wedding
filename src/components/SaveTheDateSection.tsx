@@ -137,6 +137,7 @@ const SaveTheDateSection: FC = () => {
         .delay-600 { animation-delay: 0.6s; }
         .delay-700 { animation-delay: 0.7s; }
         .delay-800 { animation-delay: 0.8s; }
+        .delay-900 { animation-delay: 0.9s; }
         
         /* Decorative ornament */
         .ornament-divider {
@@ -191,20 +192,56 @@ const SaveTheDateSection: FC = () => {
         /* Botanical decoration */
         .botanical-corner {
           position: absolute;
-          width: 120px;
-          height: 120px;
+          width: 80px;
+          height: 80px;
           opacity: 0.15;
         }
         
+        @media (min-width: 640px) {
+          .botanical-corner {
+            width: 100px;
+            height: 100px;
+          }
+        }
+        
+        @media (min-width: 768px) {
+          .botanical-corner {
+            width: 120px;
+            height: 120px;
+          }
+        }
+        
         .botanical-corner-tl {
-          top: -20px;
-          left: -20px;
+          top: -10px;
+          left: -10px;
+        }
+        
+        @media (min-width: 768px) {
+          .botanical-corner-tl {
+            top: -20px;
+            left: -20px;
+          }
         }
         
         .botanical-corner-br {
-          bottom: -20px;
-          right: -20px;
+          bottom: -10px;
+          right: -10px;
           transform: rotate(180deg);
+        }
+        
+        @media (min-width: 768px) {
+          .botanical-corner-br {
+            bottom: -20px;
+            right: -20px;
+          }
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 767px) {
+          .save-date-section {
+            min-height: 100vh;
+            min-height: 100svh; /* Support for newer mobile browsers */
+          }
         }
       `}</style>
 
@@ -237,22 +274,22 @@ const SaveTheDateSection: FC = () => {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 flex flex-col justify-center items-center min-h-screen px-4 py-20">
+        <div className="relative z-10 flex flex-col justify-center items-center min-h-screen px-4 sm:px-6 py-12 sm:py-16 md:py-20">
           
           {/* Top Heading */}
-          <div className={`text-center mb-12 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            <h3 className="save-date-body text-2xl md:text-3xl text-white/90 font-light tracking-[0.3em] uppercase mb-4">
+          <div className={`text-center mb-8 sm:mb-10 md:mb-12 ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <h3 className="save-date-body text-xl sm:text-2xl md:text-3xl text-white/90 font-light tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4 px-2">
               We&rsquo;re Getting Married
             </h3>
-            <div className="w-32 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto"></div>
+            <div className="w-24 sm:w-32 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto"></div>
           </div>
 
           {/* Main Card Container */}
           <div className={`max-w-5xl w-full ${isVisible ? 'animate-fade-in-scale delay-200' : 'opacity-0'}`}>
-            <div className="grid md:grid-cols-5 gap-0 overflow-hidden rounded-2xl shadow-2xl">
+            <div className="grid md:grid-cols-5 gap-0 overflow-hidden rounded-xl sm:rounded-2xl shadow-2xl">
               
               {/* Left Panel - Save the Date (2 columns on desktop) */}
-              <div className="md:col-span-2 relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border-r border-white/20 p-10 md:p-12 flex flex-col justify-center items-center text-center">
+              <div className="md:col-span-2 relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl md:border-r border-white/20 p-8 sm:p-10 md:p-12 flex flex-col justify-center items-center text-center min-h-[280px] sm:min-h-[320px] md:min-h-0">
                 {/* Botanical decoration - top left */}
                 <svg className="botanical-corner botanical-corner-tl" viewBox="0 0 120 120">
                   <path
@@ -266,17 +303,17 @@ const SaveTheDateSection: FC = () => {
 
                 {/* Content */}
                 <div className={isVisible ? 'animate-slide-in-left delay-400' : 'opacity-0'}>
-                  <h3 className="save-date-serif text-7xl md:text-8xl font-bold text-white leading-none mb-2">
+                  <h3 className="save-date-serif text-6xl sm:text-7xl md:text-8xl font-bold text-white leading-none mb-2">
                     Save
                   </h3>
-                  <div className="flex items-center justify-center gap-3 my-4">
-                    <div className="w-8 h-px bg-white/50"></div>
-                    <span className="save-date-section text-sm tracking-[0.4em] text-white/90 uppercase">
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 my-3 sm:my-4">
+                    <div className="w-6 sm:w-8 h-px bg-white/50"></div>
+                    <span className="save-date-section text-xs sm:text-sm tracking-[0.3em] sm:tracking-[0.4em] text-white/90 uppercase">
                       The
                     </span>
-                    <div className="w-8 h-px bg-white/50"></div>
+                    <div className="w-6 sm:w-8 h-px bg-white/50"></div>
                   </div>
-                  <h3 className="save-date-serif text-7xl md:text-8xl font-bold text-white leading-none">
+                  <h3 className="save-date-serif text-6xl sm:text-7xl md:text-8xl font-bold text-white leading-none">
                     Date
                   </h3>
                 </div>
@@ -294,63 +331,63 @@ const SaveTheDateSection: FC = () => {
               </div>
 
               {/* Right Panel - Details (3 columns on desktop) */}
-              <div className="md:col-span-3 relative bg-gradient-to-br from-green-700/90 to-green-800/90 backdrop-blur-xl p-10 md:p-14 flex flex-col justify-center">
+              <div className="md:col-span-3 relative bg-gradient-to-br from-green-700/90 to-green-800/90 backdrop-blur-xl p-8 sm:p-10 md:p-14 flex flex-col justify-center">
                 
                 {/* Couple Names */}
-                <div className={`text-center mb-8 ${isVisible ? 'animate-slide-in-right delay-500' : 'opacity-0'}`}>
-                  <h2 className="save-date-script text-4xl md:text-5xl lg:text-6xl font-semibold text-white shimmer-text mb-4">
+                <div className={`text-center mb-6 sm:mb-8 ${isVisible ? 'animate-slide-in-right delay-500' : 'opacity-0'}`}>
+                  <h2 className="save-date-script text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white shimmer-text mb-3 sm:mb-4 leading-tight px-2">
                     {WEDDING_DETAILS.names.bride}
-                    <span className="save-date-body text-3xl md:text-4xl mx-3 font-light italic">&</span>
+                    <span className="save-date-body text-2xl sm:text-3xl md:text-4xl mx-2 sm:mx-3 font-light italic">&</span>
                     {WEDDING_DETAILS.names.groom}
                   </h2>
                   
-                  <p className="save-date-body text-base md:text-lg text-white/90 tracking-wide italic mt-4 px-4">
+                  <p className="save-date-body text-sm sm:text-base md:text-lg text-white/90 tracking-wide italic mt-3 sm:mt-4 px-4 sm:px-6 leading-relaxed">
                     Request the honor of your presence on their wedding day
                   </p>
                 </div>
 
                 {/* Ornamental Divider */}
-                <div className={`my-8 ${isVisible ? 'animate-fade-in-up delay-600' : 'opacity-0'}`}>
+                <div className={`my-6 sm:my-8 ${isVisible ? 'animate-fade-in-up delay-600' : 'opacity-0'}`}>
                   <div className="ornament-divider max-w-xs mx-auto"></div>
                 </div>
 
                 {/* Wedding Details Cards */}
-                <div className={`space-y-4 ${isVisible ? 'animate-fade-in-up delay-700' : 'opacity-0'}`}>
+                <div className={`space-y-3 sm:space-y-4 ${isVisible ? 'animate-fade-in-up delay-700' : 'opacity-0'}`}>
                   
                   {/* Date */}
-                  <div className="glass-card rounded-xl p-5 flex items-center gap-4 hover:bg-white/20 transition-all duration-300">
-                    <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-white" />
+                  <div className="glass-card rounded-lg sm:rounded-xl p-4 sm:p-5 flex items-center gap-3 sm:gap-4 hover:bg-white/20 transition-all duration-300">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
+                      <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div className="text-left">
                       <p className="text-xs text-white/70 uppercase tracking-wider mb-1">Date</p>
-                      <p className="save-date-serif text-xl md:text-2xl font-semibold text-white">
+                      <p className="save-date-serif text-lg sm:text-xl md:text-2xl font-semibold text-white">
                         {WEDDING_DETAILS.date}
                       </p>
                     </div>
                   </div>
 
                   {/* Time */}
-                  <div className="glass-card rounded-xl p-5 flex items-center gap-4 hover:bg-white/20 transition-all duration-300">
-                    <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-white" />
+                  <div className="glass-card rounded-lg sm:rounded-xl p-4 sm:p-5 flex items-center gap-3 sm:gap-4 hover:bg-white/20 transition-all duration-300">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
+                      <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div className="text-left">
                       <p className="text-xs text-white/70 uppercase tracking-wider mb-1">Time</p>
-                      <p className="save-date-serif text-xl md:text-2xl font-semibold text-white">
+                      <p className="save-date-serif text-lg sm:text-xl md:text-2xl font-semibold text-white">
                         {WEDDING_DETAILS.time}
                       </p>
                     </div>
                   </div>
 
                   {/* Venue */}
-                  <div className="glass-card rounded-xl p-5 flex items-center gap-4 hover:bg-white/20 transition-all duration-300">
-                    <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <MapPin className="w-6 h-6 text-white" />
+                  <div className="glass-card rounded-lg sm:rounded-xl p-4 sm:p-5 flex items-center gap-3 sm:gap-4 hover:bg-white/20 transition-all duration-300">
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center">
+                      <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                     <div className="text-left">
                       <p className="text-xs text-white/70 uppercase tracking-wider mb-1">Venue</p>
-                      <p className="save-date-serif text-xl md:text-2xl font-semibold text-white">
+                      <p className="save-date-serif text-lg sm:text-xl md:text-2xl font-semibold text-white">
                         {WEDDING_DETAILS.venue}
                       </p>
                       <p className="text-sm text-white/80 mt-1">
@@ -361,7 +398,7 @@ const SaveTheDateSection: FC = () => {
                 </div>
 
                 {/* Bottom decorative element */}
-                <div className={`mt-8 flex justify-center ${isVisible ? 'animate-fade-in-up delay-800' : 'opacity-0'}`}>
+                <div className={`mt-6 sm:mt-8 flex justify-center ${isVisible ? 'animate-fade-in-up delay-800' : 'opacity-0'}`}>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-white/40"></div>
                     <div className="w-2 h-2 rounded-full bg-white/60"></div>
@@ -373,8 +410,8 @@ const SaveTheDateSection: FC = () => {
           </div>
 
           {/* Bottom Text */}
-          <div className={`text-center mt-12 ${isVisible ? 'animate-fade-in-up delay-900' : 'opacity-0'}`}>
-            <p className="save-date-body text-white/70 text-sm md:text-base italic tracking-wide">
+          <div className={`text-center mt-8 sm:mt-10 md:mt-12 ${isVisible ? 'animate-fade-in-up delay-900' : 'opacity-0'}`}>
+            <p className="save-date-body text-white/70 text-sm sm:text-base italic tracking-wide px-4">
               We can&rsquo;t wait to celebrate with you
             </p>
           </div>

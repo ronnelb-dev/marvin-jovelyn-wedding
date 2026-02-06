@@ -27,10 +27,16 @@ export function MyFooter() {
         .elegant-divider {
           position: relative;
           width: 100%;
-          max-width: 200px;
+          max-width: 150px;
           height: 1px;
           background: linear-gradient(90deg, transparent, #9CAF88, transparent);
           margin: 0 auto;
+        }
+        
+        @media (min-width: 640px) {
+          .elegant-divider {
+            max-width: 200px;
+          }
         }
         
         .elegant-divider::before,
@@ -112,9 +118,19 @@ export function MyFooter() {
         .footer-link:hover::after {
           width: 100%;
         }
+        
+        /* Mobile optimization for long names */
+        @media (max-width: 639px) {
+          .footer-names-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+          }
+        }
       `}</style>
 
-      <footer className="footer-container relative bg-gradient-to-b from-white via-green-50/30 to-white py-16 md:py-20 overflow-hidden">
+      <footer className="footer-container relative bg-gradient-to-b from-white via-green-50/30 to-white py-12 sm:py-16 md:py-20 overflow-hidden">
         {/* Background Pattern */}
         <div 
           className="absolute inset-0 opacity-[0.02]"
@@ -124,9 +140,9 @@ export function MyFooter() {
           }}
         />
 
-        {/* Floating Botanical Decorations */}
-        <div className="absolute top-8 left-8 md:left-20 opacity-10 float-botanical">
-          <svg width="80" height="80" viewBox="0 0 80 80">
+        {/* Floating Botanical Decorations - Hidden on mobile for cleaner look */}
+        <div className="hidden sm:block absolute top-8 left-8 md:left-20 opacity-10 float-botanical">
+          <svg width="60" height="60" viewBox="0 0 80 80" className="sm:w-[70px] sm:h-[70px] md:w-[80px] md:h-[80px]">
             <path
               d="M40 10C30 20 25 30 27.5 40C30 47.5 35 52.5 40 55C45 52.5 50 47.5 52.5 40C55 30 50 20 40 10Z"
               fill="none"
@@ -137,8 +153,8 @@ export function MyFooter() {
           </svg>
         </div>
 
-        <div className="absolute bottom-8 right-8 md:right-20 opacity-10 float-botanical" style={{ animationDelay: '2s' }}>
-          <svg width="80" height="80" viewBox="0 0 80 80">
+        <div className="hidden sm:block absolute bottom-8 right-8 md:right-20 opacity-10 float-botanical" style={{ animationDelay: '2s' }}>
+          <svg width="60" height="60" viewBox="0 0 80 80" className="sm:w-[70px] sm:h-[70px] md:w-[80px] md:h-[80px]">
             <path
               d="M40 10C30 20 25 30 27.5 40C30 47.5 35 52.5 40 55C45 52.5 50 47.5 52.5 40C55 30 50 20 40 10Z"
               fill="none"
@@ -149,52 +165,71 @@ export function MyFooter() {
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
           {/* Names Section */}
-          <div className="text-center mb-10">
-            <h2 className="footer-script text-5xl md:text-6xl lg:text-7xl mb-4">
-              <span className="shimmer-names">Marvin</span>
-              <span className="footer-body text-3xl md:text-4xl mx-3 md:mx-4 text-green-600/60 font-light italic">
-                &
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="footer-script text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-3 sm:mb-4">
+              {/* Desktop: side-by-side | Mobile: stacked */}
+              <span className="hidden sm:inline">
+                <span className="shimmer-names">Marvin</span>
+                <span className="footer-body text-2xl sm:text-3xl md:text-4xl mx-2 sm:mx-3 md:mx-4 text-green-600/60 font-light italic">
+                  &
+                </span>
+                <span className="shimmer-names">Jovelyn</span>
               </span>
-              <span className="shimmer-names">Jovelyn</span>
+              
+              {/* Mobile: stacked names */}
+              <span className="footer-names-container sm:hidden">
+                <span className="shimmer-names block">Marvin</span>
+                <span className="footer-body text-xl text-green-600/60 font-light italic block">
+                  &
+                </span>
+                <span className="shimmer-names block">Jovelyn</span>
+              </span>
             </h2>
             
             {/* Decorative Divider */}
-            <div className="elegant-divider my-8"></div>
+            <div className="elegant-divider my-6 sm:my-8"></div>
             
-            <p className="footer-body text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed italic">
+            <p className="footer-body text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed italic px-4 sm:px-6">
               Join us as we celebrate the beginning of our forever. 
               Your presence is the greatest gift of all.
             </p>
           </div>
 
-          {/* Social Links / Contact (Optional) */}
-          <div className="text-center mb-10">
-            <p className="text-sm text-gray-600 mb-3">For any inquiries, please contact us:</p>
+          {/* Social Links / Contact */}
+          <div className="text-center mb-8 sm:mb-10">
+            <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 px-4">
+              For any inquiries, please contact us:
+            </p>
             <a 
               href="mailto:wedding@example.com" 
-              className="footer-link inline-flex items-center gap-2 text-green-700 hover:text-green-800 transition-colors"
+              className="footer-link inline-flex items-center gap-2 text-green-700 hover:text-green-800 transition-colors px-4"
             >
-              <Mail className="w-4 h-4" />
-              <span className="text-sm font-medium">wedding@example.com</span>
+              <Mail className="w-4 h-4 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium break-all sm:break-normal">
+                wedding@example.com
+              </span>
             </a>
           </div>
 
           {/* Bottom Border */}
-          <div className="border-t border-green-100 pt-8">
-            <div className="text-center text-sm text-gray-600">
-              <p className="footer-body text-base">
-                © 2026 Marvin & Jovelyn Wedding. Made with{" "}
-                <Heart className="inline w-4 h-4 text-red-500 fill-current" />{" "}
-                and joy.
+          <div className="border-t border-green-100 pt-6 sm:pt-8">
+            <div className="text-center text-xs sm:text-sm text-gray-600 px-4">
+              <p className="footer-body text-sm sm:text-base">
+                © 2026 Marvin & Jovelyn Wedding.{" "}
+                <span className="inline-block">
+                  Made with{" "}
+                  <Heart className="inline w-3 h-3 sm:w-4 sm:h-4 text-red-500 fill-current" />{" "}
+                  and joy.
+                </span>
               </p>
             </div>
           </div>
 
           {/* Hashtag */}
-          <div className="mt-8 text-center">
-            <p className="footer-body text-green-700 text-xl italic tracking-wide">
+          <div className="mt-6 sm:mt-8 text-center px-4">
+            <p className="footer-body text-green-700 text-lg sm:text-xl italic tracking-wide break-all sm:break-normal">
               #MarvinAndJovelyn2026
             </p>
           </div>
