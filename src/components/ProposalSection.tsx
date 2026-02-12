@@ -410,7 +410,7 @@ const ProposalSection = () => {
                   <div className="image-frame relative p-4 bg-gradient-to-br from-white via-slate-50/50 to-white rounded-3xl shadow-2xl">
                     <div className="relative overflow-hidden rounded-2xl">
                       <Image
-                        src="/images/RonnelJuna-98.webp"
+                        src="/images/proposal.webp"
                         alt="The proposal moment - A memory to treasure forever"
                         width={500}
                         height={750}

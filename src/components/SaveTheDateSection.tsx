@@ -233,7 +233,7 @@ const SaveTheDateSection: FC = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/DSC04481.webp"
+            src="/images/slider1.webp"
             alt="Wedding celebration - Save the date for Jovelyn and Marvin"
             fill
             className="object-cover"

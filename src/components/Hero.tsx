@@ -20,7 +20,6 @@ const HERO_IMAGES = [
   "/images/slider5.webp",
   "/images/slider6.webp",
   "/images/slider7.webp",
-  "/images/slider8.webp",
 ] as const;
 
 // Memoize Swiper configuration

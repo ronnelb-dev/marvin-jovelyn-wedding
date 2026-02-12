@@ -313,7 +313,7 @@ function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkPro
     <a
       href={href}
       onClick={onClick}
-      className={`mobile-menu-item block px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-light tracking-[0.1em] uppercase transition-all duration-300 rounded-lg ${active
+      className={`mobile-menu-item block px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-light tracking-widest uppercase transition-all duration-300 rounded-lg ${active
           ? "bg-slate-100 text-slate-800"
           : "text-slate-600/80 hover:bg-slate-50/70 hover:text-slate-800"
         }`}
