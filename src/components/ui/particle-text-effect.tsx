@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Vector2D {
   x: number;
@@ -192,6 +192,7 @@ export function ParticleTextEffect({
     isPressed: false,
     isRightClick: false,
   });
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -206,12 +207,11 @@ export function ParticleTextEffect({
     frameCountRef.current = 0;
     wordIndexRef.current = 0;
 
-    // Set up looping video element
     if (backgroundVideo) {
       const vid = document.createElement("video");
       vid.src = backgroundVideo;
       vid.loop = true;
-      vid.muted = true;
+      vid.muted = true; // start muted so autoplay works
       vid.playsInline = true;
       vid.autoplay = true;
       vid.oncanplay = () => {
@@ -328,7 +328,6 @@ export function ParticleTextEffect({
       const vid = videoRef.current;
 
       if (vid && videoReadyRef.current && !vid.paused && !vid.ended) {
-        // Draw video frame with cover behavior
         const canvasAspect = canvas.width / canvas.height;
         const vidAspect = vid.videoWidth / vid.videoHeight;
 
@@ -348,12 +347,10 @@ export function ParticleTextEffect({
 
         ctx.drawImage(vid, drawX, drawY, drawWidth, drawHeight);
       } else {
-        // Fallback while video loads
         ctx.fillStyle = "#020617";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
-      // Dark overlay for trail effect + video darkening
       ctx.fillStyle = `rgba(2, 6, 23, ${overlayOpacity})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
@@ -438,7 +435,6 @@ export function ParticleTextEffect({
       if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current);
       }
-      // Clean up video element
       if (videoRef.current) {
         videoRef.current.pause();
         videoRef.current.src = "";
@@ -453,10 +449,19 @@ export function ParticleTextEffect({
     };
   }, [words, backgroundVideo, overlayOpacity]);
 
+  const handleMuteToggle = () => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    const newMuted = !isMuted;
+    vid.muted = newMuted;
+    if (!newMuted) vid.play().catch(() => {});
+    setIsMuted(newMuted);
+  };
+
   return (
     <div
       className={[
-        "flex flex-col items-center justify-center bg-slate-950",
+        "relative flex flex-col items-center justify-center bg-slate-950",
         className,
       ]
         .filter(Boolean)
@@ -467,6 +472,16 @@ export function ParticleTextEffect({
         className={["w-full h-full", canvasClassName].filter(Boolean).join(" ")}
         style={{ display: "block", width: "100%", height: "100%" }}
       />
+
+      {backgroundVideo && (
+        <button
+          onClick={handleMuteToggle}
+          className="absolute bottom-3 right-6 z-10 flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white backdrop-blur-sm transition hover:bg-white/20"
+        >
+          {isMuted ? "🔇 Unmute" : "🔊 Mute"}
+        </button>
+      )}
+
       {showInstructions && (
         <div className="mt-4 max-w-md text-center text-sm text-white">
           <p className="mb-2">Particle Text Effect</p>
