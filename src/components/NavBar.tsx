@@ -1,9 +1,5 @@
 "use client";
-
-import {
-  Navbar,
-  NavbarBrand,
-} from "flowbite-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -171,8 +167,7 @@ export function Component() {
         }
       `}</style>
 
-      <Navbar
-        fluid
+      <nav
         className={`wedding-nav fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled
             ? "bg-white/98 backdrop-blur-xl nav-scrolled"
             : "bg-white/95 backdrop-blur-lg "
@@ -180,7 +175,7 @@ export function Component() {
       >
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
           {/* Brand Section - Enhanced */}
-          <NavbarBrand href="/" className="flex items-center gap-2 sm:gap-3 group cursor-pointer">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group cursor-pointer">
             {/* Decorative ornament */}
             <div className="relative">
               <svg
@@ -209,7 +204,7 @@ export function Component() {
                 2026
               </span>
             </div>
-          </NavbarBrand>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-2">
@@ -257,7 +252,7 @@ export function Component() {
             </div>
           </div>
         )}
-      </Navbar>
+      </nav>
     </>
   );
 }
@@ -271,7 +266,7 @@ interface NavLinkProps {
 
 function NavLink({ href, active, label }: NavLinkProps) {
   return (
-    <a
+    <Link
       href={href}
       className={`nav-link-wrapper relative px-3 sm:px-4 py-2 text-[12px] sm:text-[13x] font-light tracking-[0.15em] uppercase transition-all duration-300 ${active
           ? "nav-link-active text-slate-800"
@@ -295,7 +290,7 @@ function NavLink({ href, active, label }: NavLinkProps) {
 
       <span className="relative z-10">{label}</span>
       <div className="nav-link-underline"></div>
-    </a>
+    </Link>
   );
 }
 
@@ -310,7 +305,7 @@ interface MobileNavLinkProps {
 
 function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkProps) {
   return (
-    <a
+    <Link
       href={href}
       onClick={onClick}
       className={`mobile-menu-item block px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-light tracking-widest uppercase transition-all duration-300 rounded-lg ${active
@@ -331,7 +326,7 @@ function MobileNavLink({ href, active, label, index, onClick }: MobileNavLinkPro
           <div className="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
         )}
       </div>
-    </a>
+    </Link>
   );
 }
 

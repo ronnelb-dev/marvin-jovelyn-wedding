@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import withFlowbiteReact from "flowbite-react/plugin/nextjs";
 
 const nextConfig: NextConfig = {
   images: {
@@ -13,4 +12,4 @@ const nextConfig: NextConfig = {
   poweredByHeader: false, // Remove X-Powered-By header
 };
 
-export default withFlowbiteReact(nextConfig);
+export default nextConfig;
