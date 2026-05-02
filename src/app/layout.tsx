@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 
-import { Playfair_Display } from "next/font/google";
 import "./globals.css";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Marvin & Jovelyn Wedding",
@@ -21,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.className} antialiased`}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
