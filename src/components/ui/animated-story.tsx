@@ -21,13 +21,13 @@ interface StoryChapter {
   title: string
   body: string
   /** 3 photos revealed during this chapter */
-  photos: StoryPhoto[]
+  photos: readonly StoryPhoto[]
 }
 
 interface AnimatedStoryProps {
   kicker?: string
   heading?: string
-  chapters: StoryChapter[]
+  chapters: readonly StoryChapter[]
 }
 
 /* ─────────── polaroid collage positions ─────────── */
