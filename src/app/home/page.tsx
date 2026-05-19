@@ -54,6 +54,21 @@ const reminders = [
   },
 ] as const;
 
+const digitalBankAccounts = [
+  {
+    title: "Maribank",
+    image: "/maribank.png",
+  },
+  {
+    title: "BDO",
+    image: "/bdo.png",
+  },
+  {
+    title: "GCash",
+    image: "/gcash.png",
+  },
+] as const;
+
 const entourageIntro = [
   {
     heading: "Parents of the Groom",
@@ -94,12 +109,10 @@ const weddingParty = [
   ["Camille Dayao", "John Minquet"],
   ["Reychelle Damian", "EJ Servo"],
   ["Jonalyn Laurente", "Nickerson Regonay"],
-  ["Leslie Pontero", "Brayan Regonay"],
+  ["Trisha Cruz", "Brayan Regonay"],
   ["Michelle Panelo-Amar", "Kenneth Alcira"],
   ["Giselle Mina", "Kervin Pulborido"],
-  ["Aubrey Cordero", "Mervin Panis"],
   ["Justine Mojica", "Ammeler Tubosa"],
-  ["Trisha Cruz", "Lucky Angelo Talibsao"],
 ] as const;
 
 const childAttendants = [
@@ -119,22 +132,15 @@ const childAttendants = [
     heading: "Bible Bearer",
     names: ["Jenelyn Regonay"],
   },
+  {
+    heading: "Candle",
+    names: ["Lucky Angelo Talibsao", "Aubrey Cordero"],
+  },
+  {
+    heading: "Veil",
+    names: ["Mervin Panis", "Leslie Pontero"],
+  },
 ] as const;
-
-// const secondarySponsors = [
-//   {
-//     heading: "Candle Sponsors",
-//     names: ["To be announced"],
-//   },
-//   {
-//     heading: "Veil Sponsors",
-//     names: ["To be announced"],
-//   },
-//   {
-//     heading: "Cord Sponsors",
-//     names: ["To be announced"],
-//   },
-// ] as const;
 
 const timelineEvents = [
   {
@@ -281,7 +287,7 @@ export default function WeddingHomePage() {
             <h3>Principal Sponsors</h3>
             <p>Elegant long gowns, dress shirts, coats, and slacks in sage or neutral tones.</p>
             <Image
-              src="/principal-attire.png"
+              src="/principal-attire-2.png"
               alt="Principal sponsor attire guide"
               width={520}
               height={568}
@@ -400,7 +406,7 @@ export default function WeddingHomePage() {
 
       <section id="timeline" className="wedding-timeline-hero">
         <Image
-          src="/images/slider2.webp"
+          src="/images/DSC03880.jpg"
           alt="Marvin and Jovelyn riding a horse carriage in front of a heritage building"
           fill
           sizes="100vw"
@@ -442,12 +448,26 @@ export default function WeddingHomePage() {
             <br></br>
             For your convenience, we&apos;ve included our QR code below to our digital bank accounts.
           </p>
+          <div className="wedding-bank-qr-grid" aria-label="Digital bank account QR codes">
+            {digitalBankAccounts.map((account) => (
+              <article className="wedding-bank-qr-card" key={account.title}>
+                <h3>{account.title}</h3>
+                <Image
+                  src={account.image}
+                  alt={`${account.title} QR code`}
+                  width={420}
+                  height={420}
+                  sizes="(max-width: 640px) 70vw, (max-width: 980px) 28vw, 180px"
+                />
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="wedding-image-break wedding-image-break-soft" aria-label="Marvin and Jovelyn travel memory">
         <Image
-          src="/images/slider7.webp"
+          src="/images/proposal.webp"
           alt="Marvin and Jovelyn smiling during a desert trip"
           fill
           sizes="100vw"
@@ -480,7 +500,7 @@ export default function WeddingHomePage() {
           <h2>Join us as we count the days</h2>
           <CountdownStrip />
           <p>
-            Please confirm your attendance on or before September 1, 2026 so we
+            Please confirm your attendance on or before August 21, 2026 so we
             can prepare every seat, meal, and small detail with love.
           </p>
           <Link href="/rsvp">Open RSVP form</Link>

@@ -164,7 +164,7 @@ export default function RSVPPage() {
           <h1>RSVP</h1>
           <p>
             We would be honored by your presence at our wedding celebration.
-            Please respond by September 1st, 2026.
+            Please respond by August 21st, 2026.
           </p>
         </section>
 
@@ -183,8 +183,7 @@ export default function RSVPPage() {
           ) : (
             <div className="cordially-rsvp-layout">
               <aside className="cordially-rsvp-aside">
-                <p className="cordially-kicker">find your invitation</p>
-                <h2>You are responding for your household.</h2>
+                <p className="cordially-kicker">We’re so excited to celebrate with you. To keep our wedding intimate, we kindly ask that this invitation link not be forwarded or shared with others.</p>
                 <div className="cordially-rsvp-note">
                   <Mail size={20} />
                   <div>
@@ -329,7 +328,7 @@ export default function RSVPPage() {
                 </button>
 
                 <p className="cordially-rsvp-deadline">
-                  RSVP Deadline: September 1st, 2026
+                  RSVP Deadline: August 21st, 2026
                 </p>
               </form>
             </div>

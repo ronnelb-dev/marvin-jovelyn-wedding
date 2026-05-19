@@ -3405,6 +3405,43 @@ a {
   color: var(--template-muted);
 }
 
+.wedding-bank-qr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 620px;
+  margin-top: 28px;
+}
+
+.wedding-bank-qr-card {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  padding: 16px;
+  border: 1px solid var(--template-border);
+  border-radius: 18px;
+  background: rgba(255, 250, 240, 0.72);
+  box-shadow: 0 18px 44px rgba(67, 78, 48, 0.08);
+}
+
+.wedding-bank-qr-card h3 {
+  margin: 0;
+  color: var(--wedding-sage-900);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.wedding-bank-qr-card img {
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 156px;
+  height: auto;
+  object-fit: contain;
+}
+
 .wedding-reminders {
   padding: clamp(82px, 9vw, 126px) 24px;
   text-align: center;
@@ -3956,6 +3993,12 @@ a {
     margin-right: auto;
   }
 
+  .wedding-bank-qr-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .wedding-gallery-upload {
     grid-template-columns: 1fr;
   }
@@ -4108,6 +4151,15 @@ a {
 
   .wedding-gift-card {
     max-width: 260px;
+  }
+
+  .wedding-bank-qr-grid {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+  }
+
+  .wedding-bank-qr-card img {
+    max-width: 180px;
   }
 
   .wedding-rsvp-final .cordially-countdown {
