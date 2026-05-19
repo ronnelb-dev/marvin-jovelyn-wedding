@@ -171,7 +171,7 @@ export const detailCards = [
   {
     id: "venue",
     title: "Venue Details",
-    subtitle: "Sky Garden Cafe, Santa Rosa.",
+    subtitle: "Santa Rosa de Lima Parish Church, Santa Rosa Plaza, Laguna.",
     image: "/images/slider2.webp",
   },
 ] as const;
@@ -185,7 +185,7 @@ export const faqs = [
   {
     question: "Where is the wedding?",
     answer:
-      "The ceremony and reception will be held at Sky Garden Cafe, Lazuri Hotel Tagaytay, Santa Rosa.",
+      "The ceremony and reception will be held at Santa Rosa de Lima Parish Church, Santa Rosa Plaza, Laguna",
   },
   {
     question: "What time should I arrive?",
@@ -200,17 +200,7 @@ export const faqs = [
   {
     question: "Can I bring a guest?",
     answer:
-      "We are delighted to welcome your plus one. Please include their name when you submit your RSVP.",
-  },
-  {
-    question: "What gifts would be most helpful?",
-    answer:
-      "As we prepare to move to Japan, monetary gifts would mean a lot and will help us with moving expenses and settling into our new home.",
-  },
-  {
-    question: "Can dietary restrictions be accommodated?",
-    answer:
-      "Please include allergies or dietary needs in your RSVP message and we will do our best to accommodate them.",
+      "No, we are keeping the celebration intimate with only our closest family and friends. We hope you understand and look forward to celebrating together.",
   },
 ] as const;
 
