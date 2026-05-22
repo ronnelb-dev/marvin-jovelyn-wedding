@@ -1,85 +1,60 @@
-import { type CSSProperties } from "react";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-import Footer from "@/components/Footer";
-import CordiallyScrollHero from "@/components/home/CordiallyScrollHero";
+import { useRouter } from "next/navigation";
 import CountdownStrip from "@/components/home/CountdownStrip";
-import FAQSection from "@/components/home/FAQSection";
-import WeddingDetails from "@/components/home/WeddingDetails";
-import { AnimatedStory } from "@/components/ui/animated-story";
-import {
-  STORY_INTRO_WORDS,
-  storyChapters,
-  WEDDING_LOCATION_DIRECTIONS,
-} from "@/data/homepage";
 
-export default function Home() {
+export default function LandingPage() {
+  const router = useRouter();
+
+  const handleOpen = () => {
+    router.push("/home");
+  };
+
   return (
-    <main className="cordially-template">
-      <CordiallyScrollHero />
+    <main
+      id="landing-page"
+      className="landing-page"
+      onClick={handleOpen}
+      role="button"
+      tabIndex={0}
+      aria-label="Tap to open wedding invitation"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") handleOpen();
+      }}
+    >
+      {/* Background images — portrait (mobile) and landscape (desktop) */}
+      <div className="landing-bg" aria-hidden="true" />
 
-      <section id="story-intro" className="cordially-story-intro">
-        <p aria-label="Two souls, one love. You are cordially invited to celebrate our story.">
-          {STORY_INTRO_WORDS.map((word, index) => (
-            <span
-              key={`${word}-${index}`}
-              style={{ "--word-index": index } as CSSProperties}
-            >
-              {word}
-            </span>
-          ))}
-        </p>
-      </section>
+      <div className="landing-content" aria-hidden="false">
+        {/* Names heading */}
+        <h1 className="landing-names" aria-label="Marvin and Jovelyn">
+          Marvin &amp; Jovelyn
+        </h1>
 
-      <AnimatedStory
-        kicker="our beginning"
-        heading="our story"
-        chapters={storyChapters}
-      />
+        {/* Envelope + countdown strip wrapper */}
+        <div className="landing-envelope-wrapper">
+          {/* CountdownStrip anchored to top of envelope */}
+          <div className="landing-countdown-anchor">
+            <CountdownStrip />
+          </div>
 
-      <section id="logistics" className="cordially-logistics">
-        <div className="cordially-logistics-sticky">
-          <p className="cordially-display-small">so please join us...</p>
-          <h2>september 11, 2026</h2>
-          <CountdownStrip />
-        </div>
-        <div className="cordially-venue">
-          <div className="cordially-venue-image">
-            <Image
-              src="/images/table-img.webp"
-              alt="Wedding reception table setup at Sky Garden Cafe"
-              width={1400}
-              height={900}
+          {/* Envelope image — plain img to allow mix-blend-mode across elements */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <div className="landing-envelope-image" aria-hidden="true">
+            <img
+              src="/images/envelope.png"
+              alt="Wedding invitation envelope for Marvin and Jovelyn"
+              width={600}
+              height={600}
             />
           </div>
-          <p className="cordially-display-small">Sky Garden Cafe</p>
-          <a
-            href={WEDDING_LOCATION_DIRECTIONS}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Lazuri Hotel Tagaytay, Santa Rosa
-          </a>
-          <div className="cordially-venue-actions">
-            <Link href="/rsvp">Submit RSVP</Link>
-            <p>RSVP by September 1st, 2026</p>
-          </div>
         </div>
-      </section>
 
-      <WeddingDetails />
-
-      <section className="cordially-vision">
-        <p>
-          We are thrilled to celebrate this beautiful moment with you. Your
-          presence is the greatest gift of all.
+        {/* Tap to open CTA */}
+        <p className="landing-cta" aria-live="polite">
+          ✦&ensp;Tap to Open&ensp;✦
         </p>
-      </section>
-
-      <FAQSection />
-
-      <Footer />
+      </div>
     </main>
   );
 }

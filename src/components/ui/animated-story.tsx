@@ -304,7 +304,7 @@ export function AnimatedStory({ kicker, heading, chapters }: AnimatedStoryProps)
             style={{
               fontFamily: "var(--font-display-instrument-stack)",
               fontSize: "clamp(3.5rem, 14vw, 12rem)",
-              letterSpacing: "-0.025em",
+              letterSpacing: "0",
               color: "var(--template-text)",
             }}
           >

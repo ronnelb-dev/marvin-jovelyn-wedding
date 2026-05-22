@@ -25,9 +25,15 @@ function createStorage() {
   };
 }
 
+const localStorageDescriptor = Object.getOwnPropertyDescriptor(
+  globalThis,
+  "localStorage"
+);
+
 const hasBrokenLocalStorage =
-  typeof globalThis.localStorage !== "undefined" &&
-  typeof globalThis.localStorage?.getItem !== "function";
+  !localStorageDescriptor ||
+  typeof localStorageDescriptor.get === "function" ||
+  typeof localStorageDescriptor.value?.getItem !== "function";
 
 if (hasBrokenLocalStorage) {
   Object.defineProperty(globalThis, "localStorage", {

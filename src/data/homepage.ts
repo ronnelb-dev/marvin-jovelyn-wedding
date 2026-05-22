@@ -30,7 +30,7 @@ export const scrollHeroSatellites = [
 
 export const WEDDING_TARGET = "2026-09-11T16:00:00+08:00";
 export const WEDDING_LOCATION_DIRECTIONS =
-  "https://www.google.com/maps/dir//Brgy,+Tagaytay+-+Nasugbu+Hwy,+Tagaytay+City,+4120+Cavite/@14.0873567,120.8964515,16z/data=!4m9!4m8!1m0!1m5!1m1!1s0x33bd772fa2bb7ca1:0xd9fe20a6632bdd4b!2m2!1d120.8981882!2d14.0882557!3e0!5m2!1e1!1e4?entry=ttu&g_ep=EgoyMDI1MDUyNy4wIKXMDSoASAFQAw%3D%3D";
+  "https://www.google.com/maps/place/santa+rosa+de+lima+parish+santa+rosa+laguna/data=!4m2!3m1!1s0x3397d9ba8cd1e037:0x47a6cb58d5e84769?sa=X&ved=1t:242&ictx=111";
 export const STORY_INTRO_WORDS =
   "two souls, one love, you are cordially invited to celebrate our story.".split(
     " ",
@@ -131,10 +131,10 @@ export const menuItems = [
 ] as const;
 
 export const paletteColors = [
-  ["Taupe", "#8B7355"],
-  ["Sage Green", "#B2AC88"],
-  ["Cream", "#E8E4DF"],
-  ["Ivory", "#F5F3F0"],
+  ["Deep Sage", "#4f6042"],
+  ["Soft Sage", "#aeb99e"],
+  ["Warm Ivory", "#f7f2e8"],
+  ["Champagne", "#c5a46d"],
 ] as const;
 
 export const detailCards = [
@@ -159,7 +159,7 @@ export const detailCards = [
   {
     id: "palette",
     title: "Color Palette",
-    subtitle: "Taupe, sage, cream, and ivory.",
+    subtitle: "Deep sage, soft sage, ivory, and champagne.",
     image: "/images/gentlemen-attire-sample.webp",
   },
   {
@@ -195,7 +195,7 @@ export const faqs = [
   {
     question: "Is there a dress code?",
     answer:
-      "Yes. We would love semi-formal attire in neutral and earth tones such as taupe, sage green, cream, and ivory.",
+      "Yes. We would love semi-formal attire in neutral and earth tones such as sage green, warm ivory, champagne, and soft natural shades.",
   },
   {
     question: "Can I bring a guest?",

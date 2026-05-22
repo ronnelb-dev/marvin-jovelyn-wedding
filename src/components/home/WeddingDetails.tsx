@@ -91,7 +91,7 @@ function DetailModal({
                 <h4>For Ladies</h4>
                 <p>
                   Cocktail dresses, dressy blouses with dress pants, or elegant
-                  midi/maxi dresses in taupe, cream, or earth tones.
+                  midi/maxi dresses in sage, ivory, champagne, or earth tones.
                 </p>
               </div>
               <div>
