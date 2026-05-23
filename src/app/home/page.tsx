@@ -134,7 +134,7 @@ const childAttendants = [
   },
   {
     heading: "Candle",
-    names: ["Nickerson Regonay", "Aubrey Cordero"],
+    names: ["Lucky Angelo Talibsao", "Aubrey Cordero"],
   },
   {
     heading: "Veil",
