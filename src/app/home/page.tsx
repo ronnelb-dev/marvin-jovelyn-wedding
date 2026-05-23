@@ -296,7 +296,7 @@ export default function WeddingHomePage() {
             <h3>Principal Sponsors</h3>
             <p>Elegant long gowns, dress shirts, coats, and slacks in sage or neutral tones.</p>
             <Image
-              src="/principal-attire.png"
+              src="/principal-attire-2.png"
               alt="Principal sponsor attire guide"
               width={520}
               height={568}
