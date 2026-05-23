@@ -4,7 +4,6 @@ import {
   CalendarHeart,
   Camera,
   Clock,
-  Gift,
   MapPin,
   PartyPopper,
   Sparkles,
@@ -41,7 +40,7 @@ const reminders = [
   {
     icon: Clock,
     title: "Please arrive early",
-    body: "The ceremony begins at 4:00 PM. Arriving a little early gives everyone time to settle in and be present for the moment.",
+    body: "The ceremony begins at 2:00 PM. Arriving a little early gives everyone time to settle in and be present for the moment.",
   },
   {
     icon: PartyPopper,
@@ -58,15 +57,15 @@ const reminders = [
 const entourageIntro = [
   {
     heading: "Parents of the Groom",
-    names: ["Mr. Nestor O. Dy", "Mrs. Nestora T. Dy"],
+    names: ["Mr. Apolinario Talibsao", "Mrs. Maria Talibsao"],
     note: "",
     noteNames: [],
   },
   {
-    heading: "In Loving Memory of the Parents of the Bride",
-    names: ["Mr. Apolinario M. De Roxas, Jr.", "Mrs. Rita Myrna S. De Roxas"],
-    note: "To be represented and escorted by",
-    noteNames: ["Mr. Rendon Jason D. Endozo", "Mrs. Maria Allysa May D. Endozo"],
+    heading: "Parents of the Bride",
+    names: ["Mr. Victor Regonay", "Mrs. Nenebeth Regonay"],
+    note: "",
+    noteNames: [],
   },
 ] as const;
 
@@ -80,31 +79,78 @@ const principalSponsors = [
   ["Mrs. Flory Mendez", "Dr. Peter Lloyd Mallari"],
 ] as const;
 
-const secondarySponsors = [
+const honorAttendants = [
   {
-    heading: "Candle Sponsors",
-    names: ["To be announced"],
+    heading: "Maid of Honor",
+    name: "Crisel Talibsao",
   },
   {
-    heading: "Veil Sponsors",
-    names: ["To be announced"],
-  },
-  {
-    heading: "Cord Sponsors",
-    names: ["To be announced"],
+    heading: "Best Man",
+    name: "Jonathan Amar Jr.",
   },
 ] as const;
 
+const weddingParty = [
+  ["Camille Dayao", "John Minquet"],
+  ["Reychelle Damian", "EJ Servo"],
+  ["Jonalyn Laurente", "Nickerson Regonay"],
+  ["Leslie Pontero", "Brayan Regonay"],
+  ["Michelle Panelo-Amar", "Kenneth Alcira"],
+  ["Giselle Mina", "Kervin Pulborido"],
+  ["Aubrey Cordero", "Mervin Panis"],
+  ["Justine Mojica", "Ammeler Tubosa"],
+  ["Trisha Cruz", "Lucky Angelo Talibsao"],
+] as const;
+
+const childAttendants = [
+  {
+    heading: "Flower Girls",
+    names: ["Sunshine Pearl Artajo", "Levi Panis", "Alliah Mendez", "Allwena Mendez"],
+  },
+  {
+    heading: "Ring Bearer",
+    names: ["Mark Christian Talibsao"],
+  },
+  {
+    heading: "Coin Bearer",
+    names: ["Colyn Regonay"],
+  },
+  {
+    heading: "Bible Bearer",
+    names: ["Jenelyn Regonay"],
+  },
+] as const;
+
+// const secondarySponsors = [
+//   {
+//     heading: "Candle Sponsors",
+//     names: ["To be announced"],
+//   },
+//   {
+//     heading: "Veil Sponsors",
+//     names: ["To be announced"],
+//   },
+//   {
+//     heading: "Cord Sponsors",
+//     names: ["To be announced"],
+//   },
+// ] as const;
+
 const timelineEvents = [
   {
-    time: "2:30 PM",
+    time: "1:30 PM",
     title: "Gathering",
     icon: Sparkles,
   },
   {
-    time: "3:00 PM",
+    time: "2:00 PM",
     title: "Ceremony",
     icon: CalendarHeart,
+  },
+  {
+    time: "4:00 PM",
+    title: "Reception",
+    icon: PartyPopper,
   },
   {
     time: "5:00 PM",
@@ -113,17 +159,12 @@ const timelineEvents = [
   },
   {
     time: "6:00 PM",
-    title: "Reception",
-    icon: PartyPopper,
-  },
-  {
-    time: "7:00 PM",
     title: "Dinner",
     icon: Utensils,
   },
   {
-    time: "9:00 PM",
-    title: "After Party",
+    time: "8:00 PM",
+    title: "After Party at Garden Villa's House",
     icon: Disc3,
   },
 ] as const;
@@ -284,10 +325,11 @@ export default function WeddingHomePage() {
               </article>
             ))}
           </div>
-
-          <p className="wedding-entourage-script">
+            <br></br>
+          <p className="wedding-entourage-script mt-5">
             To guide and support us with wisdom and love
           </p>
+
           <section className="wedding-entourage-group" aria-labelledby="principal-sponsors-heading">
             <h3 id="principal-sponsors-heading">Principal Sponsors</h3>
             <div className="wedding-entourage-principal-list">
@@ -300,7 +342,47 @@ export default function WeddingHomePage() {
             </div>
           </section>
 
-          <section className="wedding-entourage-group" aria-labelledby="secondary-sponsors-heading">
+          <section className="wedding-entourage-group" aria-labelledby="honor-attendants-heading">
+            <h3 id="honor-attendants-heading">Honor Attendants</h3>
+            <div className="wedding-entourage-honor-list">
+              {honorAttendants.map((attendant) => (
+                <article key={attendant.heading}>
+                  <h4>{attendant.heading}</h4>
+                  <p>{attendant.name}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="wedding-entourage-group" aria-labelledby="wedding-party-heading">
+            <h3 id="wedding-party-heading">Bridesmaid &amp; Groomsmen</h3>
+            <div className="wedding-entourage-principal-list">
+              {weddingParty.map(([left, right]) => (
+                <div className="wedding-entourage-pair" key={`${left}-${right || "groomsman"}`}>
+                  <p>{left}</p>
+                  <p>{right}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="wedding-entourage-group" aria-labelledby="child-attendants-heading">
+            <h3 id="child-attendants-heading">Little Attendants</h3>
+            <div className="wedding-entourage-child-list">
+              {childAttendants.map((group) => (
+                <article key={group.heading}>
+                  <h4>{group.heading}</h4>
+                  {group.names.map((name) => (
+                    <p key={name}>{name}</p>
+                  ))}
+                </article>
+              ))}
+            </div>
+          </section>
+
+          
+
+          {/* <section className="wedding-entourage-group" aria-labelledby="secondary-sponsors-heading">
             <h3 id="secondary-sponsors-heading">Secondary Sponsors</h3>
             <div className="wedding-entourage-secondary-list">
               {secondarySponsors.map((group) => (
@@ -312,7 +394,7 @@ export default function WeddingHomePage() {
                 </article>
               ))}
             </div>
-          </section>
+          </section> */}
         </div>
       </section>
 
@@ -343,17 +425,22 @@ export default function WeddingHomePage() {
       </section>
 
       <section className="wedding-gift-note">
-        <div className="wedding-gift-card" aria-hidden="true">
-          <Gift size={48} />
-          <span>Gift Guide</span>
+        <div className="wedding-gift-card">
+          <Image
+            src="/gift-guide.png"
+            alt="Wedding gift guide"
+            width={1014}
+            height={1080}
+          />
         </div>
         <div>
           <p className="wedding-kicker">gift note</p>
-          <h2>A blessing for our next chapter</h2>
           <p>
-            As we prepare for married life and our move to Japan, monetary gifts
-            would mean so much and will help us begin this new season with care.
-            Your presence, prayers, and love are already the greatest gifts.
+            We’ve built a love both strong and true. And now
+            we start our life anew. If you would like to lend a
+            hand, A cash gift helps our dreams be planned.
+            <br></br>
+            For your convenience, we&apos;ve included our QR code below to our digital bank accounts.
           </p>
         </div>
       </section>
