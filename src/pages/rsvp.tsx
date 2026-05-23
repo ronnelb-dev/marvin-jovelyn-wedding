@@ -6,9 +6,9 @@ import {
   AlertCircle,
   Check,
   Mail,
-  Plus,
-  Trash2,
-  Users,
+  // Plus,
+  // Trash2,
+  // Users,
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
@@ -79,30 +79,30 @@ export default function RSVPPage() {
     }
   };
 
-  const handleGuestChange = (id: string, value: string) => {
-    setFormData((current) => ({
-      ...current,
-      guests: current.guests.map((guest) =>
-        guest.id === id ? { ...guest, name: value } : guest,
-      ),
-    }));
-  };
+  // const handleGuestChange = (id: string, value: string) => {
+  //   setFormData((current) => ({
+  //     ...current,
+  //     guests: current.guests.map((guest) =>
+  //       guest.id === id ? { ...guest, name: value } : guest,
+  //     ),
+  //   }));
+  // };
 
-  const addGuest = () => {
-    setFormData((current) => ({
-      ...current,
-      guests: [...current.guests, { id: Date.now().toString(), name: "" }],
-    }));
-  };
+  // const addGuest = () => {
+  //   setFormData((current) => ({
+  //     ...current,
+  //     guests: [...current.guests, { id: Date.now().toString(), name: "" }],
+  //   }));
+  // };
 
-  const removeGuest = (id: string) => {
-    if (formData.guests.length <= 1) return;
+  // const removeGuest = (id: string) => {
+  //   if (formData.guests.length <= 1) return;
 
-    setFormData((current) => ({
-      ...current,
-      guests: current.guests.filter((guest) => guest.id !== id),
-    }));
-  };
+  //   setFormData((current) => ({
+  //     ...current,
+  //     guests: current.guests.filter((guest) => guest.id !== id),
+  //   }));
+  // };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

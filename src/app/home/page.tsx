@@ -71,19 +71,13 @@ const entourageIntro = [
 ] as const;
 
 const principalSponsors = [
-  ["Engr. Randy M. De Roxas", "Mrs. Hilaria De Roxas"],
-  ["Mr. Lester V. Dela Merced", "Ms. Ma. Alisa A. Jumangit"],
-  ["Mr. Norlan Delas Alas", "Mrs. Rhodora Delas Alas"],
-  ["Mr. Augustus F. Rapirap", "Mrs. Grace B. Manalac"],
-  ["Mr. Jerome Neil E. Riego", "Dra. Mercedes David"],
-  ["Mr. Den Ryan Chiang", "Mrs. Irene Sarmiento"],
-  ["Mr. Ace Celestial", "Mrs. Amelia Manuntag"],
-  ["Mr. Josef Jovellino G. Villaran", "Mrs. Diana O. De Leon"],
-  ["Mr. Francis Layag", "Mrs. Angel Hizon"],
-  ["Mr. Jonas Evangelista", "Ms. Ma. Margarita Laviano"],
-  ["Engr. Ronaldo M. De Roxas", "Mrs. Lynn Tan"],
-  ["Mr. Florante T. Mortel", "Mrs. Evangeline De Villa"],
-  ["Hon. Eugene Dela Cruz", "Mrs. Marie Mercader Dela Cruz"],
+  ["Hon. Arlene Arcillas", "Dr. Cesar Espiritu"],
+  ["Dra. Ma. Margarita Evidente", "Mr. Almer Almazan"],
+  ["Mrs. Sherlyn Caiga", "Mr. Angelito Talibsao"],
+  ["Mrs. Nery Pontero", "Mr. Alvin Talibsao"],
+  ["Mrs. Diane Bayani", "Mr. Patricio Regonay"],
+  ["Mrs. Cecile Villapando", "Mr. Edwin Dadula"],
+  ["Mrs. Flory Mendez", "Dr. Peter Lloyd Mallari"],
 ] as const;
 
 const secondarySponsors = [

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import NavBar from "@/components/NavBar";
+// import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { PageHeaderSection } from "@/components/page-header";
 import Preloader from "@/components/preloader";
