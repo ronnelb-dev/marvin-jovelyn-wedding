@@ -170,7 +170,6 @@ export default function RSVPAdminPage() {
       </Head>
 
       <Preloader />
-      <NavBar />
 
       <main className="min-h-screen bg-slate-50 text-slate-900">
         <PageHeaderSection title="RSVP Admin Dashboard" />
@@ -340,7 +339,7 @@ export default function RSVPAdminPage() {
                     </div>
 
                     {/* Additional Guests */}
-                    {rsvp.rsvp_guests && rsvp.rsvp_guests.length > 0 && (
+                    {/* {rsvp.rsvp_guests && rsvp.rsvp_guests.length > 0 && (
                       <div className="mt-4 pt-4 border-t border-slate-200">
                         <p className="text-sm font-semibold text-slate-700 mb-3">
                           Additional Guests ({rsvp.rsvp_guests.length})
@@ -359,7 +358,7 @@ export default function RSVPAdminPage() {
                           ))}
                         </div>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               ))}

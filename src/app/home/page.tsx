@@ -256,7 +256,7 @@ export default function WeddingHomePage() {
             <h3>Wedding Guests</h3>
             <p>Cocktail dresses, gowns, suits, long sleeves, and dress pants in soft natural colors.</p>
             <Image
-              src="/guest-attire.png"
+              src="/attire.png"
               alt="Wedding guest attire guide"
               width={520}
               height={520}

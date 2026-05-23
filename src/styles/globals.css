@@ -976,11 +976,9 @@ a {
 
 .cordially-rsvp-hero {
     display: flex;
-    min-height: 58svh;
+    min-height: 35svh;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    padding: 140px 24px 72px;
     text-align: center;
 }
 
@@ -1508,8 +1506,7 @@ a {
     }
 
     .cordially-rsvp-hero {
-        min-height: 48svh;
-        padding: 120px 18px 54px;
+        padding: 20px 18px 10px;
     }
 
     .cordially-rsvp-hero h1 {

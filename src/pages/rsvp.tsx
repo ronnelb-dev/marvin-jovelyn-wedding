@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
-import NavBar from "@/components/NavBar";
+// import NavBar from "@/components/NavBar";
 import "@/styles/globals.css";
 
 interface Guest {
@@ -157,7 +157,7 @@ export default function RSVPPage() {
       </Head>
 
       <main className="cordially-template cordially-rsvp-page">
-        <NavBar />
+        {/* <NavBar /> */}
 
         <section className="cordially-rsvp-hero">
           <p className="cordially-kicker">marvin &amp; jovelyn</p>
@@ -192,7 +192,7 @@ export default function RSVPPage() {
                     <span>rsvp@marvinnjovelyn.com</span>
                   </div>
                 </div>
-                <div className="cordially-rsvp-note">
+                {/* <div className="cordially-rsvp-note">
                   <Users size={20} />
                   <div>
                     <strong>Plus Ones</strong>
@@ -200,7 +200,7 @@ export default function RSVPPage() {
                       Add your guest below so we can reserve their seat.
                     </span>
                   </div>
-                </div>
+                </div> */}
               </aside>
 
               <form className="cordially-rsvp-form" onSubmit={handleSubmit}>
@@ -268,7 +268,7 @@ export default function RSVPPage() {
                   />
                 </label>
 
-                {formData.willAttend === "yes" && (
+                {/* {formData.willAttend === "yes" && (
                   <div className="cordially-guests">
                     <div className="cordially-guests-header">
                       <span>Guest Details</span>
@@ -300,7 +300,7 @@ export default function RSVPPage() {
                       ),
                     )}
                   </div>
-                )}
+                )} */}
 
                 <label className="cordially-field">
                   <span>Special Message for Us</span>

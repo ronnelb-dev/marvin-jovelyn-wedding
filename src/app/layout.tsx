@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Marvin & Jovelyn Wedding",
   description:
     "Marvin and Jovelyn wedding website, wedding will be at Santa Rosa in September 11, 2026, come and join us at our wedding",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
