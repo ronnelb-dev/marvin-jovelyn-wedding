@@ -480,7 +480,7 @@ export default function WeddingHomePage() {
           <h2>Join us as we count the days</h2>
           <CountdownStrip />
           <p>
-            Please confirm your attendance on or before September 1, 2026 so we
+            Please confirm your attendance on or before August 21, 2026 so we
             can prepare every seat, meal, and small detail with love.
           </p>
           <Link href="/rsvp">Open RSVP form</Link>

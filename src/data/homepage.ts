@@ -180,7 +180,7 @@ export const faqs = [
   {
     question: "When should I RSVP by?",
     answer:
-      "Please respond by September 1st, 2026 so we can finalize the celebration details.",
+      "Please respond by August 21st, 2026 so we can finalize the celebration details.",
   },
   {
     question: "Where is the wedding?",
