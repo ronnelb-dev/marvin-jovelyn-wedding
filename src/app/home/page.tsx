@@ -109,12 +109,10 @@ const weddingParty = [
   ["Camille Dayao", "John Minquet"],
   ["Reychelle Damian", "EJ Servo"],
   ["Jonalyn Laurente", "Nickerson Regonay"],
-  ["Leslie Pontero", "Brayan Regonay"],
+  ["Trisha Cruz", "Brayan Regonay"],
   ["Michelle Panelo-Amar", "Kenneth Alcira"],
   ["Giselle Mina", "Kervin Pulborido"],
-  ["Aubrey Cordero", "Mervin Panis"],
   ["Justine Mojica", "Ammeler Tubosa"],
-  ["Trisha Cruz", "Lucky Angelo Talibsao"],
 ] as const;
 
 const childAttendants = [
@@ -134,22 +132,15 @@ const childAttendants = [
     heading: "Bible Bearer",
     names: ["Jenelyn Regonay"],
   },
+  {
+    heading: "Candle",
+    names: ["Nickerson Regonay", "Aubrey Cordero"],
+  },
+  {
+    heading: "Veil",
+    names: ["Mervin Panis", "Leslie Pontero"],
+  },
 ] as const;
-
-// const secondarySponsors = [
-//   {
-//     heading: "Candle Sponsors",
-//     names: ["To be announced"],
-//   },
-//   {
-//     heading: "Veil Sponsors",
-//     names: ["To be announced"],
-//   },
-//   {
-//     heading: "Cord Sponsors",
-//     names: ["To be announced"],
-//   },
-// ] as const;
 
 const timelineEvents = [
   {
