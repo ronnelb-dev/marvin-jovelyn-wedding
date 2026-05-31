@@ -14,8 +14,9 @@ import {
 
 import CountdownStrip from "@/components/home/CountdownStrip";
 import FAQSection from "@/components/home/FAQSection";
+import PrenupVideoSection from "@/components/home/PrenupVideoSection";
+import WeddingHero from "@/components/home/WeddingHero";
 import WeddingImageSlider from "@/components/home/WeddingImageSlider";
-import WeddingSongRow from "@/components/home/WeddingSongRow";
 
 const ceremonyDetails = [
   {
@@ -40,7 +41,7 @@ const reminders = [
   {
     icon: Clock,
     title: "Please arrive early",
-    body: "The ceremony begins at 2:00 PM. Arriving a little early gives everyone time to settle in and be present for the moment.",
+    body: "The ceremony begins at 1:30 PM. Arriving a little early gives everyone time to settle in and be present for the moment.",
   },
   {
     icon: PartyPopper,
@@ -85,13 +86,14 @@ const entourageIntro = [
 ] as const;
 
 const principalSponsors = [
-  ["Hon. Arlene Arcillas", "Dr. Cesar Espiritu"],
+  ["Hon. Arlene Arcillas", "Dr. Cesar Ramon Espiritu"],
   ["Dra. Ma. Margarita Evidente", "Mr. Almer Almazan"],
   ["Mrs. Sherlyn Caiga", "Mr. Angelito Talibsao"],
   ["Mrs. Nery Pontero", "Mr. Alvin Talibsao"],
   ["Mrs. Diane Bayani", "Mr. Patricio Regonay"],
   ["Mrs. Cecile Villapando", "Mr. Edwin Dadula"],
   ["Mrs. Flory Mendez", "Dr. Peter Lloyd Mallari"],
+  ["Mrs. Ryanita Llena", "Hon. Edwin Servo"],
 ] as const;
 
 const honorAttendants = [
@@ -106,7 +108,6 @@ const honorAttendants = [
 ] as const;
 
 const weddingParty = [
-  ["Camille Dayao", "John Minquet"],
   ["Reychelle Damian", "EJ Servo"],
   ["Jonalyn Laurente", "Nickerson Regonay"],
   ["Trisha Cruz", "Brayan Regonay"],
@@ -139,6 +140,14 @@ const childAttendants = [
   {
     heading: "Veil",
     names: ["Mervin Panis", "Leslie Pontero"],
+  },
+    {
+    heading: "Cord",
+    names: ["John Minguet","Camille Dayao"],
+  },
+      {
+    heading: "Grandparents of the bride",
+    names: ["Lilia Mendez","Ronnie Mendez"],
   },
 ] as const;
 
@@ -193,41 +202,11 @@ export default function WeddingHomePage() {
         </Link>
       </nav> */}
 
-      <section className="wedding-hero" aria-label="Marvin and Jovelyn wedding">
-        <Image
-          src="/images/DSC03678.jpg"
-          alt="Marvin and Jovelyn sitting together by white seaside cliffs"
-          fill
-          priority
-          sizes="100vw"
-          className="wedding-hero-image"
-        />
-        <div className="wedding-hero-overlay" />
-        <div className="wedding-hero-content">
-          <Image
-            src="/mj-mono.png"
-            alt=""
-            width={180}
-            height={180}
-            className="wedding-hero-monogram"
-            aria-hidden="true"
-          />
-          
-          <p className="wedding-hero-copy">
-            Marvin &amp; Jovelyn
-          </p>
-          <div className="wedding-hero-divider" />
-          <p className="wedding-hero-copy">
-            9.11.26
-          </p>
-          
-        </div>
-      </section>
+      <WeddingHero priority />
 
       <section id="welcome" className="wedding-welcome-panel">
         <div className="wedding-welcome-panel-inner">
           <h2>Welcome our families &amp; friends</h2>
-          <WeddingSongRow />
           <p>
             This invitation has found its way to you because you are part of our
             story. We hope you will be with us as we celebrate, laugh, make
@@ -285,7 +264,7 @@ export default function WeddingHomePage() {
         <div className="wedding-attire-grid">
           <article>
             <h3>Principal Sponsors</h3>
-            <p>Elegant long gowns, dress shirts, coats, and slacks in sage or neutral tones.</p>
+            <p>Elegant long gowns, dress shirts, coats, and slacks in beige or neutral tones.</p>
             <Image
               src="/principal-attire-2.png"
               alt="Principal sponsor attire guide"
@@ -373,7 +352,6 @@ export default function WeddingHomePage() {
           </section>
 
           <section className="wedding-entourage-group" aria-labelledby="child-attendants-heading">
-            <h3 id="child-attendants-heading">Little Attendants</h3>
             <div className="wedding-entourage-child-list">
               {childAttendants.map((group) => (
                 <article key={group.heading}>
@@ -464,7 +442,32 @@ export default function WeddingHomePage() {
           </div>
         </div>
       </section>
+      <h2 className="proposal-title">
+        <span>The Proposal</span>
+      </h2>
+      <div className="proposal-content">
+        <p>
+          They call Mt. Pulag the Playground of the Gods, and on that morning,
+          it felt exactly that way.
+        </p>
 
+        <p>
+          Above the clouds, beneath the sunrise, and surrounded by the most perfect
+          backdrop imaginable, our lives changed forever. In a place known for its
+          breathtaking views, we found ourselves looking ahead to the greatest
+          adventure yet.
+        </p>
+
+        <p>
+          A beautiful journey, a life-changing question, and the beginning of our
+          forever.
+        </p>
+
+        <p className="proposal-ending">
+          And just like that, a mountain we climbed together became the place where
+          our next chapter began.
+        </p>
+      </div>
       <section className="wedding-image-break wedding-image-break-soft" aria-label="Marvin and Jovelyn travel memory">
         <Image
           src="/images/proposal.webp"
@@ -474,6 +477,8 @@ export default function WeddingHomePage() {
           className="wedding-cover"
         />
       </section>
+
+      <PrenupVideoSection />
 
       <section className="wedding-reminders">
         <div className="wedding-section-heading wedding-section-heading-light">

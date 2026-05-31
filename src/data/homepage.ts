@@ -180,22 +180,28 @@ export const faqs = [
   {
     question: "When should I RSVP by?",
     answer:
-      "Please respond by August 21st, 2026 so we can finalize the celebration details.",
+      "Please respond on or before August 21st, 2026 so we can finalize the celebration details.",
   },
   {
     question: "Where is the wedding?",
     answer:
-      "The ceremony and reception will be held at Santa Rosa de Lima Parish Church, Santa Rosa Plaza, Laguna",
+      "The ceremony will be held at Santa Rosa de Lima Parish Church, Santa Rosa Plaza, Laguna and the reception will be held at Pablos Event Place.",
   },
   {
     question: "What time should I arrive?",
     answer:
-      "The ceremony begins at 4:00 PM. Please arrive around 15 minutes early so everyone has time to settle in.",
+      "The ceremony begins at 1:30 PM. Please arrive around 15 minutes early so everyone has time to settle in.",
   },
   {
     question: "Is there a dress code?",
     answer:
       "Yes. We would love semi-formal attire in neutral and earth tones such as sage green, warm ivory, champagne, and soft natural shades.",
+    image: {
+      src: "/attire.png",
+      alt: "Semi-formal attire guide with strawberry matcha color palette examples for ladies and gentlemen",
+      width: 1430,
+      height: 1160,
+    },
   },
   {
     question: "Can I bring a guest?",

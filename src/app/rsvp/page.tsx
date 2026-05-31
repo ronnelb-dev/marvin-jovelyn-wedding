@@ -1,7 +1,6 @@
 "use client";
 
 import { type ChangeEvent, type FormEvent, useState } from "react";
-import Head from "next/head";
 import {
   AlertCircle,
   Check,
@@ -13,7 +12,6 @@ import {
 
 import Footer from "@/components/Footer";
 // import NavBar from "@/components/NavBar";
-import "@/styles/globals.css";
 
 interface Guest {
   id: string;
@@ -147,15 +145,6 @@ export default function RSVPPage() {
   };
 
   return (
-    <>
-      <Head>
-        <title>RSVP - Marvin & Jovelyn Wedding</title>
-        <meta
-          name="description"
-          content="RSVP for Marvin and Jovelyn's wedding celebration"
-        />
-      </Head>
-
       <main className="cordially-template cordially-rsvp-page">
         {/* <NavBar /> */}
 
@@ -164,7 +153,7 @@ export default function RSVPPage() {
           <h1>RSVP</h1>
           <p>
             We would be honored by your presence at our wedding celebration.
-            Please respond by August 21st, 2026.
+            Please respond on or before August 21st, 2026.
           </p>
         </section>
 
@@ -188,7 +177,7 @@ export default function RSVPPage() {
                   <Mail size={20} />
                   <div>
                     <strong>Questions?</strong>
-                    <span>rsvp@marvinnjovelyn.com</span>
+                    <span>Feel free to contact Marvin or Jovelyn via Messenger.</span>
                   </div>
                 </div>
                 {/* <div className="cordially-rsvp-note">
@@ -337,6 +326,5 @@ export default function RSVPPage() {
 
         <Footer />
       </main>
-    </>
   );
 }

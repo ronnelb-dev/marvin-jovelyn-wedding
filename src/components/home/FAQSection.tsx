@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 
 import { faqs } from "@/data/homepage";
@@ -15,8 +16,8 @@ export default function FAQSection() {
           <div>
             <h2>Questions and answers</h2>
             <p>Can&apos;t find the answer here?</p>
-            <a href="mailto:rsvp@marvinnjovelyn.com">
-              Reach out to Marvin or Jovelyn
+            <a>
+              Feel free to contact Marvin or Jovelyn via Messenger.
             </a>
           </div>
         </div>
@@ -39,6 +40,16 @@ export default function FAQSection() {
                 </button>
                 <div className={isOpen ? "is-open" : undefined}>
                   <p>{item.answer}</p>
+                  {"image" in item && item.image ? (
+                    <Image
+                      className="cordially-faq-answer-image"
+                      src={item.image.src}
+                      alt={item.image.alt}
+                      width={item.image.width}
+                      height={item.image.height}
+                      sizes="(max-width: 768px) 88vw, 640px"
+                    />
+                  ) : null}
                 </div>
               </div>
             );

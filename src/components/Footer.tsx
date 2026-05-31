@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="cordially-footer">
       <div className="cordially-footer-frame">
         <Image
-          src="/images/slider3.webp"
+          src="/images/DSC03570.jpg"
           alt="Marvin and Jovelyn together"
           fill
           sizes="100vw"
@@ -19,7 +19,7 @@ export default function Footer() {
             Join us as we celebrate the beginning of our forever. Your presence
             is the greatest gift of all.
           </h2>
-          <p>#MarvinAndJovelyn2026</p>
+          <p className="cordially-footer-hashtag">#JovAlwaysVinTheOne</p>
         </div>
       </div>
     </footer>

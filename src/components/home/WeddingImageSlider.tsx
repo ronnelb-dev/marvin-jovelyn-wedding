@@ -6,77 +6,64 @@ import { useState } from "react";
 
 const sliderImages = [
   {
-    src: "/images/slider1.webp",
-    alt: "Marvin and Jovelyn wedding gallery photo 1",
+    src: "/images/first.png",
+    alt: "Marvin and Jovelyn first meeting",
+    caption: "Just us, in our favorite little moments.",
   },
   {
-    src: "/images/slider2.webp",
-    alt: "Marvin and Jovelyn standing together on a forest trail",
+    src: "/images/First Meet.png",
+    alt: "Marvin and Jovelyn first meeting",
+    caption: "The moment our story began",
   },
   {
-    src: "/images/slider3.webp",
-    alt: "Marvin and Jovelyn wedding gallery photo 3",
+    src: "/images/frienny.png",
+    alt: "Marvin and Jovelyn as friends",
+    caption: "From friendship to forever",
   },
   {
-    src: "/images/slider4.webp",
-    alt: "Marvin and Jovelyn wedding gallery photo 4",
+    src: "/images/Falling.png",
+    alt: "Marvin and Jovelyn falling in love",
+    caption: "Slowly, surely, falling in love",
   },
   {
-    src: "/images/slider5.webp",
-    alt: "Marvin and Jovelyn wedding gallery photo 5",
+    src: "/images/Official.png",
+    alt: "Marvin and Jovelyn becoming official",
+    caption: "The day we chose each other",
   },
   {
-    src: "/images/slider6.webp",
-    alt: "Marvin and Jovelyn wedding gallery photo 6",
+    src: "/images/o-travel.png",
+    alt: "Marvin and Jovelyn traveling together",
+    caption: "Every road felt like home",
   },
   {
-    src: "/images/slider7.webp",
-    alt: "Marvin and Jovelyn smiling during a desert trip",
+    src: "/images/international.png",
+    alt: "Marvin and Jovelyn on an international trip",
+    caption: "Across miles, always together",
   },
   {
-    src: "/images/DSC03524.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03524",
+    src: "/images/engage.png",
+    alt: "Marvin and Jovelyn engagement",
+    caption: "Our sweetest yes",
   },
   {
-    src: "/images/DSC03570.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03570",
+    src: "/images/house.png",
+    alt: "Marvin and Jovelyn at home",
+    caption: "Building a life, hand in hand",
   },
   {
-    src: "/images/DSC03657.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03657",
+    src: "/images/favorite.png",
+    alt: "Marvin and Jovelyn favorite memory",
+    caption: "A favorite moment of ours",
   },
   {
-    src: "/images/DSC03678.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03678",
-  },
-  {
-    src: "/images/DSC03898.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03898",
-  },
-  {
-    src: "/images/DSC03880.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03880",
-  },
-  {
-    src: "/images/DSC03826.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03826",
-  },
-  {
-    src: "/images/DSC03776.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03776",
-  },
-  {
-    src: "/images/DSC03597.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03597",
-  },
-  {
-    src: "/images/DSC03554.jpg",
-    alt: "Marvin and Jovelyn wedding gallery photo DSC03554",
+    src: "/images/loading.png",
+    alt: "Marvin and Jovelyn loading the next chapter",
+    caption: "Loading our forever",
   },
 ] as const;
 
 export default function WeddingImageSlider() {
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const activeImage = sliderImages[activeIndex];
 
   const showPreviousImage = () => {
@@ -92,15 +79,17 @@ export default function WeddingImageSlider() {
   };
 
   return (
-    <section className="wedding-image-break" aria-label="Marvin and Jovelyn portrait gallery">
-      <div className="wedding-hero-overlay" />
-      <Image
-        src={activeImage.src}
-        alt={activeImage.alt}
-        fill
-        sizes="100vw"
-        className="wedding-cover"
-      />
+    <section className="wedding-image-break wedding-image-break-slider" aria-label="Marvin and Jovelyn portrait gallery">
+      <div className="wedding-slider-photo">
+        <Image
+          src={activeImage.src}
+          alt={activeImage.alt}
+          fill
+          sizes="100vw"
+          className="wedding-slider-image"
+        />
+      </div>
+      <p className="wedding-slider-caption">{activeImage.caption}</p>
       <button
         type="button"
         className="wedding-slider-button wedding-slider-button-previous"
