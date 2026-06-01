@@ -1,11 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function WeddingHero({
   className = "",
   priority = false,
+  showRsvp = false,
 }: {
   className?: string;
   priority?: boolean;
+  showRsvp?: boolean;
 }) {
   return (
     <section className={`wedding-hero ${className}`} aria-label="Marvin and Jovelyn wedding">

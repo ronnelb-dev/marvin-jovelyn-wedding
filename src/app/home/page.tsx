@@ -41,7 +41,7 @@ const reminders = [
   {
     icon: Clock,
     title: "Please arrive early",
-    body: "The ceremony begins at 1:30 PM. Arriving a little early gives everyone time to settle in and be present for the moment.",
+    body: "Please arrive by 1:15 PM. The ceremony begins at 1:30 PM, giving everyone time to settle in and be present for the moment.",
   },
   {
     icon: PartyPopper,
@@ -91,7 +91,7 @@ const principalSponsors = [
   ["Mrs. Sherlyn Caiga", "Mr. Angelito Talibsao"],
   ["Mrs. Nery Pontero", "Mr. Alvin Talibsao"],
   ["Mrs. Diane Bayani", "Mr. Patricio Regonay"],
-  ["Mrs. Cecile Villapando", "Mr. Edwin Dadula"],
+  ["Mrs. Cecile Villapando", "Hon. Arnold Arcillas"],
   ["Mrs. Flory Mendez", "Dr. Peter Lloyd Mallari"],
   ["Mrs. Ryanita Llena", "Hon. Edwin Servo"],
 ] as const;
@@ -119,7 +119,7 @@ const weddingParty = [
 const childAttendants = [
   {
     heading: "Flower Girls",
-    names: ["Sunshine Pearl Artajo", "Levi Panis", "Alliah Mendez", "Allwena Mendez"],
+    names: ["Sunshine Pearl Artajo", "Levi Panis", "Alliah Mendez", "Allwena Mendez","Paris Paula Siño"],
   },
   {
     heading: "Ring Bearer",
@@ -153,12 +153,12 @@ const childAttendants = [
 
 const timelineEvents = [
   {
-    time: "1:30 PM",
+    time: "1:15 PM",
     title: "Gathering",
     icon: Sparkles,
   },
   {
-    time: "2:00 PM",
+    time: "1:30 PM",
     title: "Ceremony",
     icon: CalendarHeart,
   },
@@ -202,11 +202,11 @@ export default function WeddingHomePage() {
         </Link>
       </nav> */}
 
-      <WeddingHero priority />
+      <WeddingHero priority showRsvp />
 
       <section id="welcome" className="wedding-welcome-panel">
         <div className="wedding-welcome-panel-inner">
-          <h2>Welcome our families &amp; friends</h2>
+          <h2>To our family and friends</h2>
           <p>
             This invitation has found its way to you because you are part of our
             story. We hope you will be with us as we celebrate, laugh, make
@@ -217,6 +217,44 @@ export default function WeddingHomePage() {
       </section>
 
       <WeddingImageSlider />
+
+      <h2 className="proposal-title">
+        <span>The Proposal</span>
+      </h2>
+      <div className="proposal-content">
+        <p>
+          They call Mt. Pulag the Playground of the Gods, and on that morning,
+          it felt exactly that way.
+        </p>
+
+        <p>
+          Above the clouds, beneath the sunrise, and surrounded by the most perfect
+          backdrop imaginable, our lives changed forever. In a place known for its
+          breathtaking views, we found ourselves looking ahead to the greatest
+          adventure yet.
+        </p>
+
+        <p>
+          A beautiful journey, a life-changing question, and the beginning of our
+          forever.
+        </p>
+
+        <p className="proposal-ending">
+          And just like that, a mountain we climbed together became the place where
+          our next chapter began.
+        </p>
+      </div>
+      <section className="wedding-image-break wedding-image-break-soft" aria-label="Marvin and Jovelyn travel memory">
+        <Image
+          src="/images/proposal.webp"
+          alt="Marvin and Jovelyn smiling during a desert trip"
+          fill
+          sizes="100vw"
+          className="wedding-cover"
+        />
+      </section>
+
+      <PrenupVideoSection />
 
       <section id="venues" className="wedding-venues">
         <div className="wedding-section-heading wedding-section-heading-light">
@@ -249,6 +287,32 @@ export default function WeddingHomePage() {
               </a>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section id="timeline" className="wedding-timeline-hero">
+        <Image
+          src="/images/DSC03880.jpg"
+          alt="Marvin and Jovelyn riding a horse carriage in front of a heritage building"
+          fill
+          sizes="100vw"
+          className="wedding-cover"
+        />
+        <div className="wedding-timeline-overlay" />
+        <div className="wedding-timeline-content">
+          <h2>The Timeline</h2>
+          <div className="wedding-timeline-list">
+            {timelineEvents.map(({ icon: Icon, time, title }) => (
+              <article key={title}>
+                <Icon className="wedding-timeline-icon" size={34} strokeWidth={1.35} />
+                <span className="wedding-timeline-node" aria-hidden="true" />
+                <div className="wedding-timeline-copy">
+                  <span>{time}</span>
+                  <h3>{title}</h3>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -340,7 +404,7 @@ export default function WeddingHomePage() {
           </section>
 
           <section className="wedding-entourage-group" aria-labelledby="wedding-party-heading">
-            <h3 id="wedding-party-heading">Bridesmaid &amp; Groomsmen</h3>
+            <h3 id="wedding-party-heading">Bridesmaids &amp; Groomsmen</h3>
             <div className="wedding-entourage-principal-list">
               {weddingParty.map(([left, right]) => (
                 <div className="wedding-entourage-pair" key={`${left}-${right || "groomsman"}`}>
@@ -382,32 +446,6 @@ export default function WeddingHomePage() {
         </div>
       </section>
 
-      <section id="timeline" className="wedding-timeline-hero">
-        <Image
-          src="/images/DSC03880.jpg"
-          alt="Marvin and Jovelyn riding a horse carriage in front of a heritage building"
-          fill
-          sizes="100vw"
-          className="wedding-cover"
-        />
-        <div className="wedding-timeline-overlay" />
-        <div className="wedding-timeline-content">
-          <h2>The Timeline</h2>
-          <div className="wedding-timeline-list">
-            {timelineEvents.map(({ icon: Icon, time, title }) => (
-              <article key={title}>
-                <Icon className="wedding-timeline-icon" size={34} strokeWidth={1.35} />
-                <span className="wedding-timeline-node" aria-hidden="true" />
-                <div className="wedding-timeline-copy">
-                  <span>{time}</span>
-                  <h3>{title}</h3>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="wedding-gift-note">
         <div className="wedding-gift-card">
           <Image
@@ -420,11 +458,12 @@ export default function WeddingHomePage() {
         <div>
           <p className="wedding-kicker">gift note</p>
           <p>
-            We’ve built a love both strong and true. And now
-            we start our life anew. If you would like to lend a
-            hand, A cash gift helps our dreams be planned.
+            Your presence on our special day is the greatest gift of all. If
+            you would like to give something more, a monetary gift toward our
+            future together would be deeply appreciated.
             <br></br>
-            For your convenience, we&apos;ve included our QR code below to our digital bank accounts.
+            For your convenience, we&apos;ve included QR codes for our digital
+            bank accounts below.
           </p>
           <div className="wedding-bank-qr-grid" aria-label="Digital bank account QR codes">
             {digitalBankAccounts.map((account) => (
@@ -442,44 +481,6 @@ export default function WeddingHomePage() {
           </div>
         </div>
       </section>
-      <h2 className="proposal-title">
-        <span>The Proposal</span>
-      </h2>
-      <div className="proposal-content">
-        <p>
-          They call Mt. Pulag the Playground of the Gods, and on that morning,
-          it felt exactly that way.
-        </p>
-
-        <p>
-          Above the clouds, beneath the sunrise, and surrounded by the most perfect
-          backdrop imaginable, our lives changed forever. In a place known for its
-          breathtaking views, we found ourselves looking ahead to the greatest
-          adventure yet.
-        </p>
-
-        <p>
-          A beautiful journey, a life-changing question, and the beginning of our
-          forever.
-        </p>
-
-        <p className="proposal-ending">
-          And just like that, a mountain we climbed together became the place where
-          our next chapter began.
-        </p>
-      </div>
-      <section className="wedding-image-break wedding-image-break-soft" aria-label="Marvin and Jovelyn travel memory">
-        <Image
-          src="/images/proposal.webp"
-          alt="Marvin and Jovelyn smiling during a desert trip"
-          fill
-          sizes="100vw"
-          className="wedding-cover"
-        />
-      </section>
-
-      <PrenupVideoSection />
-
       <section className="wedding-reminders">
         <div className="wedding-section-heading wedding-section-heading-light">
           <p className="wedding-kicker">reminders</p>

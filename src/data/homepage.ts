@@ -28,7 +28,7 @@ export const scrollHeroSatellites = [
   },
 ] as const;
 
-export const WEDDING_TARGET = "2026-09-11T16:00:00+08:00";
+export const WEDDING_TARGET = "2026-09-11T13:30:00+08:00";
 export const WEDDING_LOCATION_DIRECTIONS =
   "https://www.google.com/maps/place/santa+rosa+de+lima+parish+santa+rosa+laguna/data=!4m2!3m1!1s0x3397d9ba8cd1e037:0x47a6cb58d5e84769?sa=X&ved=1t:242&ictx=111";
 export const STORY_INTRO_WORDS =
@@ -105,17 +105,17 @@ export const storyChapters = [
 export const schedule = [
   {
     title: "Ceremony",
-    time: "4:00 PM - 6:00 PM",
+    time: "1:30 PM - 3:30 PM",
     body: "Join us as we exchange our vows in an intimate ceremony.",
   },
   {
     title: "Photoshoot",
-    time: "6:00 PM - 7:00 PM",
+    time: "3:30 PM - 4:00 PM",
     body: "Capture precious moments with us in the garden.",
   },
   {
     title: "Reception",
-    time: "7:00 PM - 9:00 PM",
+    time: "4:00 PM onwards",
     body: "Celebrate and dance the night away with dinner and drinks.",
   },
 ] as const;
@@ -185,12 +185,12 @@ export const faqs = [
   {
     question: "Where is the wedding?",
     answer:
-      "The ceremony will be held at Santa Rosa de Lima Parish Church, Santa Rosa Plaza, Laguna and the reception will be held at Pablos Event Place.",
+      "The ceremony will be held at Santa Rosa de Lima Parish Church, Santa Rosa Plaza, Laguna and the reception will be held at Pablo's Events Place.",
   },
   {
     question: "What time should I arrive?",
     answer:
-      "The ceremony begins at 1:30 PM. Please arrive around 15 minutes early so everyone has time to settle in.",
+      "Please arrive by 1:15 PM. The ceremony begins at 1:30 PM, giving everyone time to settle in.",
   },
   {
     question: "Is there a dress code?",
