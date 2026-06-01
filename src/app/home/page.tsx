@@ -96,6 +96,7 @@ const principalSponsors = [
   ["Mrs. Ryanita Llena", "Hon. Edwin Servo"],
 ] as const;
 
+
 const honorAttendants = [
   {
     heading: "Maid of Honor",
