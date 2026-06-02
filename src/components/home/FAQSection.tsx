@@ -16,9 +16,9 @@ export default function FAQSection() {
           <div>
             <h2>Questions and answers</h2>
             <p>Can&apos;t find the answer here?</p>
-            <a>
+            <p>
               Feel free to contact Marvin or Jovelyn via Messenger.
-            </a>
+            </p>
           </div>
         </div>
         <div className="cordially-faq-list">

@@ -113,7 +113,7 @@ const weddingParty = [
   ["Jonalyn Laurente", "Nickerson Regonay"],
   ["Trisha Cruz", "Brayan Regonay"],
   ["Michelle Panelo-Amar", "Kenneth Alcira"],
-  ["Giselle Mina", "Kervin Pulborido"],
+  ["Giselle Mina", "Kervin Polborido"],
   ["Justine Mojica", "Ammeler Tubosa"],
 ] as const;
 
