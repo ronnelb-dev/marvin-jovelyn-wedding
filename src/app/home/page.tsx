@@ -203,7 +203,7 @@ export default function WeddingHomePage() {
         </Link>
       </nav> */}
 
-      <WeddingHero priority showRsvp />
+      <WeddingHero priority />
 
       <section id="welcome" className="wedding-welcome-panel">
         <div className="wedding-welcome-panel-inner">
