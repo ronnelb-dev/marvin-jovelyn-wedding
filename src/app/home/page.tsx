@@ -94,6 +94,7 @@ const principalSponsors = [
   ["Mrs. Cecile Villapando", "Hon. Arnold Arcillas"],
   ["Mrs. Flory Mendez", "Dr. Peter Lloyd Mallari"],
   ["Mrs. Ryanita Llena", "Hon. Edwin Servo"],
+  ["Mrs. Rosybelle Miclat", "Mr. Edwin Dadula"],
 ] as const;
 
 
@@ -120,7 +121,7 @@ const weddingParty = [
 const childAttendants = [
   {
     heading: "Flower Girls",
-    names: ["Sunshine Pearl Artajo", "Levi Panis", "Alliah Mendez", "Allwena Mendez","Paris Paula Siño"],
+    names: ["Sunshine Pearl Artajo", "Livi Panis", "Alliah Mendez", "Allwena Mendez","Paris Paula Siño"],
   },
   {
     heading: "Ring Bearer",
