@@ -5,7 +5,6 @@ import {
   AlertCircle,
   Camera,
   CheckCircle2,
-  ImagePlus,
   Loader2,
   Upload,
 } from "lucide-react";
@@ -13,7 +12,6 @@ import {
   type ChangeEvent,
   type FormEvent,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -22,6 +20,7 @@ const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 const MAX_IMAGE_DIMENSION = 1600;
 const MAX_UPLOADER_NAME_LENGTH = 120;
+const UPLOADER_NAME_STORAGE_KEY = "marvin-jovelyn-wedding:uploader-name";
 const REQUEST_TIMEOUT_MS = 30000;
 const CLOUDINARY_UPLOAD_TIMEOUT_MS = 120000;
 const COMPRESSION_ERROR_MESSAGE =
@@ -226,19 +225,25 @@ export default function GuestPhotoGallery() {
   const [isLoadingGallery, setIsLoadingGallery] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploaderName, setUploaderName] = useState("");
+  const [isNameModalOpen, setIsNameModalOpen] = useState(false);
   const [selectedPhotos, setSelectedPhotos] = useState<SelectedPhotoPreview[]>([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const submitAfterFileSelectionRef = useRef(false);
+  const uploaderNameInputRef = useRef<HTMLInputElement>(null);
 
-  const selectedFileLabel = useMemo(() => {
-    if (selectedPhotos.length === 0) return "Choose images";
-
-    if (selectedPhotos.length === 1) return selectedPhotos[0].file.name;
-
-    return `${selectedPhotos.length} photos selected`;
-  }, [selectedPhotos]);
+  useEffect(() => {
+    if (!isNameModalOpen) return;
+    window.setTimeout(() => uploaderNameInputRef.current?.focus(), 0);
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setIsNameModalOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isNameModalOpen]);
 
   useEffect(() => {
     let isMounted = true;
@@ -307,6 +312,11 @@ export default function GuestPhotoGallery() {
         previewUrl: URL.createObjectURL(file),
       }));
     });
+
+    if (submitAfterFileSelectionRef.current) {
+      submitAfterFileSelectionRef.current = false;
+      window.setTimeout(() => formRef.current?.requestSubmit(), 0);
+    }
   }
 
   function clearSelectedPhotos(options: { clearMessages?: boolean } = {}) {
@@ -430,24 +440,9 @@ export default function GuestPhotoGallery() {
     return result.data;
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const trimmedName = uploaderName.trim();
+  async function uploadSelectedPhotos(trimmedName: string) {
     setSuccessMessage("");
     setErrorMessage("");
-
-    if (!trimmedName) {
-      setErrorMessage("Please enter the uploader name.");
-      return;
-    }
-
-    if (trimmedName.length > MAX_UPLOADER_NAME_LENGTH) {
-      setErrorMessage(
-        `Please keep the uploader name to ${MAX_UPLOADER_NAME_LENGTH} characters or less.`,
-      );
-      return;
-    }
 
     if (selectedPhotos.length === 0) {
       setErrorMessage("Please choose at least one image to upload.");
@@ -528,37 +523,49 @@ export default function GuestPhotoGallery() {
     }
   }
 
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (selectedPhotos.length === 0) {
+      submitAfterFileSelectionRef.current = true;
+      fileInputRef.current?.click();
+      return;
+    }
+    const storedName = window.localStorage.getItem(UPLOADER_NAME_STORAGE_KEY)?.trim() ?? "";
+    if (!storedName) {
+      setIsNameModalOpen(true);
+      return;
+    }
+    setUploaderName(storedName);
+    await uploadSelectedPhotos(storedName);
+  }
+
+  async function handleNameConfirmation(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmedName = uploaderName.trim();
+    if (!trimmedName) {
+      setErrorMessage("Please enter the uploader name.");
+      return;
+    }
+    if (trimmedName.length > MAX_UPLOADER_NAME_LENGTH) {
+      setErrorMessage(
+        `Please keep the uploader name to ${MAX_UPLOADER_NAME_LENGTH} characters or less.`,
+      );
+      return;
+    }
+    window.localStorage.setItem(UPLOADER_NAME_STORAGE_KEY, trimmedName);
+    setIsNameModalOpen(false);
+    await uploadSelectedPhotos(trimmedName);
+  }
+
   return (
     <section className="wedding-gallery-section" aria-label="Guest photo uploads">
       <div className="wedding-gallery-upload">
         <div className="wedding-gallery-upload-copy">
           <p className="wedding-kicker">share a photo</p>
-          <h2>Add your memory</h2>
-          <p>
-            Choose your favorite photos, add your name, and we&apos;ll gather them
-            with the rest of our wedding memories.
-          </p>
         </div>
 
-        <form className="wedding-gallery-form" onSubmit={handleSubmit}>
-          <label className="cordially-field">
-            <span>Uploader Name</span>
-            <input
-              type="text"
-              value={uploaderName}
-              maxLength={MAX_UPLOADER_NAME_LENGTH}
-              onChange={(event) => {
-                setUploaderName(event.target.value);
-                setSuccessMessage("");
-                if (errorMessage) setErrorMessage("");
-              }}
-              placeholder="Uploaded by"
-              disabled={isUploading}
-            />
-          </label>
-
-          <div className="wedding-gallery-file-field">
-            <span>Wedding Photo</span>
+        <form ref={formRef} className="wedding-gallery-form" onSubmit={handleSubmit}>
+          <div className="wedding-gallery-file-field wedding-gallery-file-field-hidden">
             <input
               id="guest-photo-file"
               ref={fileInputRef}
@@ -568,14 +575,6 @@ export default function GuestPhotoGallery() {
               onChange={handleFileChange}
               disabled={isUploading}
             />
-            <label htmlFor="guest-photo-file">
-              <ImagePlus size={20} />
-              <span>{selectedFileLabel}</span>
-            </label>
-            <p className="wedding-gallery-file-note">
-              Photos must be JPG, PNG, or WEBP and each photo must be a maximum of{" "}
-              {MAX_FILE_SIZE_MB}MB after compression.
-            </p>
           </div>
 
           {selectedPhotos.length > 0 ? (
@@ -650,7 +649,7 @@ export default function GuestPhotoGallery() {
 
       <div className="wedding-gallery-list-header">
         <p className="wedding-kicker">guest gallery</p>
-        <h2>Photos from our people</h2>
+        <p className="wedding-gallery-list-intro">Scroll below to see the wedding memories shared by other guests.</p>
       </div>
 
       {isLoadingGallery ? (
@@ -682,6 +681,27 @@ export default function GuestPhotoGallery() {
           <p>Be the first to add a favorite moment from the celebration.</p>
         </div>
       )}
+
+      {isNameModalOpen ? (
+        <div className="wedding-gallery-modal-backdrop" role="presentation">
+          <div className="wedding-gallery-modal" role="dialog" aria-modal="true" aria-labelledby="uploader-name-title">
+            <p className="wedding-kicker">before you share</p>
+            <h2 id="uploader-name-title">Who should we thank?</h2>
+            <p className="wedding-gallery-modal-copy">Add your name so your memory can be shared with the wedding gallery.</p>
+            <form onSubmit={handleNameConfirmation}>
+              <label className="cordially-field">
+                <span>Uploader name</span>
+                <input ref={uploaderNameInputRef} type="text" value={uploaderName} maxLength={MAX_UPLOADER_NAME_LENGTH} onChange={(event) => { setUploaderName(event.target.value); if (errorMessage) setErrorMessage(""); }} placeholder="Your name" autoComplete="name" />
+              </label>
+              {errorMessage ? <p className="wedding-gallery-modal-error">{errorMessage}</p> : null}
+              <div className="wedding-gallery-modal-actions">
+                <button type="button" className="wedding-gallery-modal-cancel" onClick={() => setIsNameModalOpen(false)}>Cancel</button>
+                <button type="submit" className="cordially-submit">Continue</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

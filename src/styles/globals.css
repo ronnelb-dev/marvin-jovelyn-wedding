@@ -3854,6 +3854,7 @@ a {
   background: rgba(255, 250, 240, 0.72);
   padding: clamp(24px, 5vw, 48px);
   box-shadow: 0 20px 58px rgba(49, 65, 40, 0.12);
+  margin-top: 10px;
 }
 
 .wedding-gallery-upload-copy {
@@ -3884,6 +3885,10 @@ a {
 .wedding-gallery-file-field {
   display: grid;
   gap: 10px;
+}
+
+.wedding-gallery-file-field-hidden {
+  display: none;
 }
 
 .wedding-gallery-file-field > span {
@@ -4065,6 +4070,41 @@ a {
   margin: clamp(74px, 9vw, 116px) auto 42px;
   text-align: center;
 }
+
+.wedding-gallery-list-intro {
+  max-width: 520px;
+  margin: 16px auto 0;
+  color: var(--wedding-sage-700);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.18rem;
+  line-height: 1.45;
+}
+
+.wedding-gallery-modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 31, 20, 0.52);
+  padding: 20px;
+}
+
+.wedding-gallery-modal {
+  width: min(100%, 460px);
+  border: 1px solid var(--wedding-border);
+  border-radius: 12px;
+  background: var(--wedding-paper);
+  padding: clamp(24px, 6vw, 38px);
+  box-shadow: 0 24px 70px rgba(20, 31, 20, 0.24);
+}
+
+.wedding-gallery-modal h2 { margin: 8px 0 0; color: var(--wedding-sage-900); font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2.2rem, 8vw, 3.2rem); font-weight: 500; line-height: 1; }
+.wedding-gallery-modal-copy { margin: 14px 0 22px; color: var(--wedding-sage-700); line-height: 1.5; }
+.wedding-gallery-modal-error { margin: 10px 0 0; color: #7b2424; font-size: .9rem; }
+.wedding-gallery-modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+.wedding-gallery-modal-actions button { min-height: 46px; padding: 0 18px; }
+.wedding-gallery-modal-cancel { border: 1px solid var(--wedding-border); border-radius: 4px; background: transparent; color: var(--wedding-sage-800); font-weight: 700; }
 
 .wedding-gallery-grid {
   display: grid;
@@ -4567,6 +4607,11 @@ a {
     margin-top: 54px;
     margin-bottom: 26px;
     text-align: left;
+  }
+
+  .wedding-gallery-list-intro {
+    margin-top: 10px;
+    font-size: 1.05rem;
   }
 
   .wedding-gallery-list-header h2 {
