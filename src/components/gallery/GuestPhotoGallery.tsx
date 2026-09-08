@@ -4,13 +4,20 @@ import Image from "next/image";
 import {
   AlertCircle,
   Camera,
+  ChevronLeft,
+  ChevronRight,
   CheckCircle2,
   Loader2,
   Upload,
+  X,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
 } from "lucide-react";
 import {
   type ChangeEvent,
   type FormEvent,
+  type PointerEvent as ReactPointerEvent,
   useEffect,
   useMemo,
   useRef,
@@ -22,6 +29,9 @@ const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 const MAX_IMAGE_DIMENSION = 1600;
 const MAX_UPLOADER_NAME_LENGTH = 120;
 const UPLOADER_NAME_STORAGE_KEY = "marvin-jovelyn-wedding:uploader-name";
+const LIGHTBOX_MIN_ZOOM = 1;
+const LIGHTBOX_MAX_ZOOM = 3;
+const LIGHTBOX_ZOOM_STEP = 0.5;
 const REQUEST_TIMEOUT_MS = 30000;
 const CLOUDINARY_UPLOAD_TIMEOUT_MS = 120000;
 const COMPRESSION_ERROR_MESSAGE =
@@ -224,6 +234,9 @@ async function optimizeImageForUpload(file: File) {
 export default function GuestPhotoGallery() {
   const [photos, setPhotos] = useState<GuestPhoto[]>([]);
   const [selectedUploader, setSelectedUploader] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [zoomScale, setZoomScale] = useState(LIGHTBOX_MIN_ZOOM);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
   const [isLoadingGallery, setIsLoadingGallery] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploaderName, setUploaderName] = useState("");
@@ -236,6 +249,9 @@ export default function GuestPhotoGallery() {
   const formRef = useRef<HTMLFormElement>(null);
   const submitAfterFileSelectionRef = useRef(false);
   const uploaderNameInputRef = useRef<HTMLInputElement>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const lightboxPointersRef = useRef(new Map<number, { x: number; y: number }>());
+  const pinchDistanceRef = useRef<number | null>(null);
 
   const displayedPhotos = useMemo(
     () =>
@@ -244,6 +260,54 @@ export default function GuestPhotoGallery() {
         : photos,
     [photos, selectedUploader],
   );
+
+  const activeLightboxPhoto = lightboxIndex === null ? null : displayedPhotos[lightboxIndex] ?? null;
+
+  function resetLightboxView() {
+    setZoomScale(LIGHTBOX_MIN_ZOOM);
+    setPanOffset({ x: 0, y: 0 });
+  }
+
+  function closeLightbox() {
+    setLightboxIndex(null);
+    resetLightboxView();
+  }
+
+  function moveLightbox(direction: -1 | 1) {
+    if (lightboxIndex === null) return;
+    const nextIndex = lightboxIndex + direction;
+    if (nextIndex < 0 || nextIndex >= displayedPhotos.length) return;
+    setLightboxIndex(nextIndex);
+    resetLightboxView();
+  }
+
+  function handleLightboxPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    event.currentTarget.setPointerCapture(event.pointerId);
+    lightboxPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (lightboxPointersRef.current.size === 2) {
+      const points = [...lightboxPointersRef.current.values()];
+      pinchDistanceRef.current = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+    }
+  }
+
+  function handleLightboxPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const previous = lightboxPointersRef.current.get(event.pointerId);
+    if (!previous) return;
+    lightboxPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (lightboxPointersRef.current.size === 2 && pinchDistanceRef.current) {
+      const points = [...lightboxPointersRef.current.values()];
+      const distance = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+      setZoomScale((current) => Math.min(LIGHTBOX_MAX_ZOOM, Math.max(LIGHTBOX_MIN_ZOOM, current * (distance / pinchDistanceRef.current!))));
+      pinchDistanceRef.current = distance;
+    } else if (zoomScale > LIGHTBOX_MIN_ZOOM) {
+      setPanOffset((current) => ({ x: current.x + event.clientX - previous.x, y: current.y + event.clientY - previous.y }));
+    }
+  }
+
+  function handleLightboxPointerUp(event: ReactPointerEvent<HTMLDivElement>) {
+    lightboxPointersRef.current.delete(event.pointerId);
+    if (lightboxPointersRef.current.size < 2) pinchDistanceRef.current = null;
+  }
 
   useEffect(() => {
     if (!isNameModalOpen) return;
@@ -254,6 +318,41 @@ export default function GuestPhotoGallery() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isNameModalOpen]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.setTimeout(() => lightboxCloseRef.current?.focus(), 0);
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setLightboxIndex(null);
+        resetLightboxView();
+      }
+      if ((event.key === "ArrowLeft" || event.key === "ArrowRight") && lightboxIndex !== null) {
+        const direction = event.key === "ArrowLeft" ? -1 : 1;
+        const nextIndex = lightboxIndex + direction;
+        if (nextIndex >= 0 && nextIndex < displayedPhotos.length) {
+          setLightboxIndex(nextIndex);
+          resetLightboxView();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxIndex, displayedPhotos.length]);
+
+  useEffect(() => {
+    if (lightboxIndex !== null && lightboxIndex >= displayedPhotos.length) {
+      setLightboxIndex(null);
+      resetLightboxView();
+    }
+  }, [displayedPhotos.length, lightboxIndex]);
 
   useEffect(() => {
     let isMounted = true;
@@ -695,14 +794,19 @@ export default function GuestPhotoGallery() {
         <div className="wedding-gallery-grid">
           {displayedPhotos.map((photo) => (
             <article className="wedding-gallery-card" key={photo.id}>
-              <div className="wedding-gallery-card-image">
+              <button
+                type="button"
+                className="wedding-gallery-card-image"
+                onClick={() => { setLightboxIndex(displayedPhotos.indexOf(photo)); resetLightboxView(); }}
+                aria-label={`Open wedding photo uploaded by ${photo.uploader_name}`}
+              >
                 <Image
                   src={photo.secure_url}
                   alt={`Wedding photo uploaded by ${photo.uploader_name}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1180px) 50vw, 33vw"
                 />
-              </div>
+              </button>
               <div className="wedding-gallery-card-meta">
                 <div>
                   <p>Uploaded by</p>
@@ -733,6 +837,35 @@ export default function GuestPhotoGallery() {
           </p>
         </div>
       )}
+
+      {activeLightboxPhoto && lightboxIndex !== null ? (
+        <div
+          className="wedding-gallery-lightbox-backdrop"
+          role="presentation"
+          onClick={(event) => { if (event.target === event.currentTarget) closeLightbox(); }}
+        >
+          <div className="wedding-gallery-lightbox" role="dialog" aria-modal="true" aria-label="Guest photo viewer">
+            <button ref={lightboxCloseRef} type="button" className="wedding-gallery-lightbox-close" onClick={closeLightbox} aria-label="Close photo viewer"><X size={24} /></button>
+            <button type="button" className="wedding-gallery-lightbox-nav wedding-gallery-lightbox-prev" onClick={() => moveLightbox(-1)} disabled={lightboxIndex === 0} aria-label="Previous image"><ChevronLeft size={32} /></button>
+            <div className="wedding-gallery-lightbox-stage" onPointerDown={handleLightboxPointerDown} onPointerMove={handleLightboxPointerMove} onPointerUp={handleLightboxPointerUp} onPointerCancel={handleLightboxPointerUp}>
+              <Image
+                src={activeLightboxPhoto.secure_url}
+                alt={`Wedding photo uploaded by ${activeLightboxPhoto.uploader_name}`}
+                fill
+                sizes="100vw"
+                className="wedding-gallery-lightbox-image"
+                style={{ transform: `translate(${panOffset.x}px, ${panOffset.y}px) scale(${zoomScale})` }}
+              />
+            </div>
+            <button type="button" className="wedding-gallery-lightbox-nav wedding-gallery-lightbox-next" onClick={() => moveLightbox(1)} disabled={lightboxIndex === displayedPhotos.length - 1} aria-label="Next image"><ChevronRight size={32} /></button>
+            <div className="wedding-gallery-lightbox-tools" aria-label="Zoom controls">
+              <button type="button" onClick={() => setZoomScale((current) => Math.max(LIGHTBOX_MIN_ZOOM, current - LIGHTBOX_ZOOM_STEP))} aria-label="Zoom out"><ZoomOut size={20} /></button>
+              <button type="button" onClick={resetLightboxView} aria-label="Reset zoom"><RotateCcw size={18} /></button>
+              <button type="button" onClick={() => setZoomScale((current) => Math.min(LIGHTBOX_MAX_ZOOM, current + LIGHTBOX_ZOOM_STEP))} aria-label="Zoom in"><ZoomIn size={20} /></button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {isNameModalOpen ? (
         <div className="wedding-gallery-modal-backdrop" role="presentation">
