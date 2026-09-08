@@ -12,6 +12,7 @@ import {
   type ChangeEvent,
   type FormEvent,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -222,6 +223,7 @@ async function optimizeImageForUpload(file: File) {
 
 export default function GuestPhotoGallery() {
   const [photos, setPhotos] = useState<GuestPhoto[]>([]);
+  const [selectedUploader, setSelectedUploader] = useState<string | null>(null);
   const [isLoadingGallery, setIsLoadingGallery] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploaderName, setUploaderName] = useState("");
@@ -234,6 +236,14 @@ export default function GuestPhotoGallery() {
   const formRef = useRef<HTMLFormElement>(null);
   const submitAfterFileSelectionRef = useRef(false);
   const uploaderNameInputRef = useRef<HTMLInputElement>(null);
+
+  const displayedPhotos = useMemo(
+    () =>
+      selectedUploader
+        ? photos.filter((photo) => photo.uploader_name === selectedUploader)
+        : photos,
+    [photos, selectedUploader],
+  );
 
   useEffect(() => {
     if (!isNameModalOpen) return;
@@ -525,16 +535,19 @@ export default function GuestPhotoGallery() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const storedName = window.localStorage.getItem(UPLOADER_NAME_STORAGE_KEY)?.trim() ?? "";
+
+    if (!storedName) {
+      setIsNameModalOpen(true);
+      return;
+    }
+
     if (selectedPhotos.length === 0) {
       submitAfterFileSelectionRef.current = true;
       fileInputRef.current?.click();
       return;
     }
-    const storedName = window.localStorage.getItem(UPLOADER_NAME_STORAGE_KEY)?.trim() ?? "";
-    if (!storedName) {
-      setIsNameModalOpen(true);
-      return;
-    }
+
     setUploaderName(storedName);
     await uploadSelectedPhotos(storedName);
   }
@@ -554,6 +567,13 @@ export default function GuestPhotoGallery() {
     }
     window.localStorage.setItem(UPLOADER_NAME_STORAGE_KEY, trimmedName);
     setIsNameModalOpen(false);
+
+    if (selectedPhotos.length === 0) {
+      submitAfterFileSelectionRef.current = true;
+      fileInputRef.current?.click();
+      return;
+    }
+
     await uploadSelectedPhotos(trimmedName);
   }
 
@@ -649,17 +669,31 @@ export default function GuestPhotoGallery() {
 
       <div className="wedding-gallery-list-header">
         <p className="wedding-kicker">guest gallery</p>
-        <p className="wedding-gallery-list-intro">Scroll below to see the wedding memories shared by other guests.</p>
+        <h2>{selectedUploader ? `Photos shared by ${selectedUploader}` : "Photos from our people"}</h2>
+        <p className="wedding-gallery-list-intro">
+          {selectedUploader
+            ? "Showing this guest's shared wedding memories."
+            : "Scroll below to see the wedding memories shared by other guests."}
+        </p>
       </div>
+
+      {selectedUploader ? (
+        <div className="wedding-gallery-filter-banner" role="status">
+          <span>Showing photos shared by {selectedUploader}</span>
+          <button type="button" onClick={() => setSelectedUploader(null)}>
+            Show all guest uploads
+          </button>
+        </div>
+      ) : null}
 
       {isLoadingGallery ? (
         <div className="wedding-gallery-empty">
           <Loader2 size={32} className="wedding-gallery-spinner" />
           <p>Loading guest photos...</p>
         </div>
-      ) : photos.length > 0 ? (
+      ) : displayedPhotos.length > 0 ? (
         <div className="wedding-gallery-grid">
-          {photos.map((photo) => (
+          {displayedPhotos.map((photo) => (
             <article className="wedding-gallery-card" key={photo.id}>
               <div className="wedding-gallery-card-image">
                 <Image
@@ -669,16 +703,34 @@ export default function GuestPhotoGallery() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1180px) 50vw, 33vw"
                 />
               </div>
-              <p>Uploaded by</p>
-              <h3>{photo.uploader_name}</h3>
+              <div className="wedding-gallery-card-meta">
+                <div>
+                  <p>Uploaded by</p>
+                  <h3>{photo.uploader_name}</h3>
+                </div>
+                {selectedUploader !== photo.uploader_name ? (
+                  <button
+                    type="button"
+                    className="wedding-gallery-filter-action"
+                    onClick={() => setSelectedUploader(photo.uploader_name)}
+                    aria-label={`See more from ${photo.uploader_name}`}
+                  >
+                    See more from {photo.uploader_name}
+                  </button>
+                ) : null}
+              </div>
             </article>
           ))}
         </div>
       ) : (
         <div className="wedding-gallery-empty">
           <Camera size={36} />
-          <h3>No guest photos yet</h3>
-          <p>Be the first to add a favorite moment from the celebration.</p>
+          <h3>{selectedUploader ? `No photos from ${selectedUploader} yet` : "No guest photos yet"}</h3>
+          <p>
+            {selectedUploader
+              ? "Try showing all guest uploads to browse the complete gallery."
+              : "Be the first to add a favorite moment from the celebration."}
+          </p>
         </div>
       )}
 
@@ -691,7 +743,7 @@ export default function GuestPhotoGallery() {
             <form onSubmit={handleNameConfirmation}>
               <label className="cordially-field">
                 <span>Uploader name</span>
-                <input ref={uploaderNameInputRef} type="text" value={uploaderName} maxLength={MAX_UPLOADER_NAME_LENGTH} onChange={(event) => { setUploaderName(event.target.value); if (errorMessage) setErrorMessage(""); }} placeholder="Your name" autoComplete="name" />
+                <input ref={uploaderNameInputRef} type="text" value={uploaderName} maxLength={MAX_UPLOADER_NAME_LENGTH} onChange={(event) => { setUploaderName(event.target.value); if (errorMessage) setErrorMessage(""); }} placeholder="Your name" autoComplete="name" required aria-required="true" />
               </label>
               {errorMessage ? <p className="wedding-gallery-modal-error">{errorMessage}</p> : null}
               <div className="wedding-gallery-modal-actions">

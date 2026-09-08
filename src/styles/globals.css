@@ -4080,6 +4080,46 @@ a {
   line-height: 1.45;
 }
 
+.wedding-gallery-filter-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 24px;
+  border: 1px solid rgba(49, 65, 40, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.72);
+  padding: 12px 14px;
+  color: var(--wedding-sage-800);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.wedding-gallery-filter-banner button,
+.wedding-gallery-filter-action {
+  border: 0;
+  background: transparent;
+  color: var(--wedding-sage-900);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.wedding-gallery-filter-banner button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  border: 1px solid rgba(49, 65, 40, 0.2);
+  border-radius: 4px;
+  padding: 0 12px;
+}
+
+.wedding-gallery-filter-banner button:hover,
+.wedding-gallery-filter-action:hover {
+  color: var(--wedding-gold);
+}
+
 .wedding-gallery-modal-backdrop {
   position: fixed;
   z-index: 100;
@@ -4141,8 +4181,16 @@ a {
   margin: 0;
 }
 
+.wedding-gallery-card-meta {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px;
+}
+
 .wedding-gallery-card p {
-  padding: 18px 18px 4px;
+  padding: 0 0 4px;
   color: var(--wedding-sage-700);
   font-size: 0.68rem;
   font-weight: 800;
@@ -4151,12 +4199,19 @@ a {
 }
 
 .wedding-gallery-card h3 {
-  padding: 0 18px 20px;
+  padding: 0;
   color: var(--wedding-sage-900);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: clamp(1.28rem, 2vw, 1.6rem);
   font-weight: 600;
   line-height: 1.18;
+}
+
+.wedding-gallery-filter-action {
+  min-height: 40px;
+  padding: 6px 0;
+  text-align: right;
+  line-height: 1.35;
 }
 
 .wedding-gallery-empty {
@@ -4614,6 +4669,17 @@ a {
     font-size: 1.05rem;
   }
 
+  .wedding-gallery-filter-banner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .wedding-gallery-filter-banner button {
+    width: 100%;
+  }
+
   .wedding-gallery-list-header h2 {
     margin-top: 6px;
     font-size: clamp(2.25rem, 12vw, 3.2rem);
@@ -4633,13 +4699,24 @@ a {
   }
 
   .wedding-gallery-card p {
-    padding: 14px 14px 3px;
+    padding: 0 0 3px;
     font-size: 0.64rem;
   }
 
   .wedding-gallery-card h3 {
-    padding: 0 14px 16px;
+    padding: 0;
     font-size: 1.25rem;
+  }
+
+  .wedding-gallery-card-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .wedding-gallery-filter-action {
+    text-align: left;
   }
 
   .wedding-gallery-empty {
