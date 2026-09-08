@@ -4183,10 +4183,14 @@ a {
 
 .wedding-gallery-card-meta {
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 18px;
+}
+
+.wedding-gallery-card-meta > div {
+  min-width: 0;
 }
 
 .wedding-gallery-card p {
@@ -4205,9 +4209,11 @@ a {
   font-size: clamp(1.28rem, 2vw, 1.6rem);
   font-weight: 600;
   line-height: 1.18;
+  overflow-wrap: anywhere;
 }
 
 .wedding-gallery-filter-action {
+  flex: 0 1 auto;
   min-height: 40px;
   padding: 6px 0;
   text-align: right;
@@ -4709,14 +4715,14 @@ a {
   }
 
   .wedding-gallery-card-meta {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
     padding: 14px;
   }
 
   .wedding-gallery-filter-action {
-    text-align: left;
+    text-align: right;
   }
 
   .wedding-gallery-empty {
