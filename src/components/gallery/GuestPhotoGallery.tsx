@@ -32,6 +32,7 @@ const UPLOADER_NAME_STORAGE_KEY = "marvin-jovelyn-wedding:uploader-name";
 const LIGHTBOX_MIN_ZOOM = 1;
 const LIGHTBOX_MAX_ZOOM = 3;
 const LIGHTBOX_ZOOM_STEP = 0.5;
+const GALLERY_BATCH_SIZE = 16;
 const REQUEST_TIMEOUT_MS = 30000;
 const CLOUDINARY_UPLOAD_TIMEOUT_MS = 120000;
 const COMPRESSION_ERROR_MESSAGE =
@@ -234,6 +235,9 @@ async function optimizeImageForUpload(file: File) {
 export default function GuestPhotoGallery() {
   const [photos, setPhotos] = useState<GuestPhoto[]>([]);
   const [selectedUploader, setSelectedUploader] = useState<string | null>(null);
+  const [visiblePhotoCount, setVisiblePhotoCount] = useState(GALLERY_BATCH_SIZE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasReachedEnd, setHasReachedEnd] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [zoomScale, setZoomScale] = useState(LIGHTBOX_MIN_ZOOM);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
@@ -250,16 +254,49 @@ export default function GuestPhotoGallery() {
   const submitAfterFileSelectionRef = useRef(false);
   const uploaderNameInputRef = useRef<HTMLInputElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const gallerySentinelRef = useRef<HTMLDivElement>(null);
   const lightboxPointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchDistanceRef = useRef<number | null>(null);
 
-  const displayedPhotos = useMemo(
+  const filteredPhotos = useMemo(
     () =>
       selectedUploader
         ? photos.filter((photo) => photo.uploader_name === selectedUploader)
         : photos,
     [photos, selectedUploader],
   );
+
+  const displayedPhotos = useMemo(
+    () => filteredPhotos.slice(0, visiblePhotoCount),
+    [filteredPhotos, visiblePhotoCount],
+  );
+
+  useEffect(() => {
+    setVisiblePhotoCount(GALLERY_BATCH_SIZE);
+    setHasReachedEnd(false);
+  }, [selectedUploader]);
+
+  useEffect(() => {
+    const sentinel = gallerySentinelRef.current;
+    if (!sentinel || isLoadingGallery) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || isLoadingMore || hasReachedEnd) return;
+        if (visiblePhotoCount >= filteredPhotos.length) {
+          setHasReachedEnd(true);
+          return;
+        }
+        setIsLoadingMore(true);
+        window.setTimeout(() => {
+          setVisiblePhotoCount((current) => Math.min(current + GALLERY_BATCH_SIZE, filteredPhotos.length));
+          setIsLoadingMore(false);
+        }, 250);
+      },
+      { rootMargin: "240px 0px" },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [filteredPhotos.length, hasReachedEnd, isLoadingGallery, isLoadingMore, visiblePhotoCount]);
 
   const activeLightboxPhoto = lightboxIndex === null ? null : displayedPhotos[lightboxIndex] ?? null;
 
@@ -779,7 +816,7 @@ export default function GuestPhotoGallery() {
       {selectedUploader ? (
         <div className="wedding-gallery-filter-banner" role="status">
           <span>Showing photos shared by {selectedUploader}</span>
-          <button type="button" onClick={() => setSelectedUploader(null)}>
+          <button type="button" onClick={() => { setSelectedUploader(null); setVisiblePhotoCount(GALLERY_BATCH_SIZE); setHasReachedEnd(false); }}>
             Show all guest uploads
           </button>
         </div>
@@ -837,6 +874,18 @@ export default function GuestPhotoGallery() {
           </p>
         </div>
       )}
+
+      <div ref={gallerySentinelRef} className="wedding-gallery-scroll-sentinel" aria-hidden="true" />
+      {isLoadingMore ? (
+        <p className="wedding-gallery-scroll-status" role="status">
+          <Loader2 size={18} className="wedding-gallery-spinner" /> Loading more guest photos...
+        </p>
+      ) : null}
+      {hasReachedEnd && displayedPhotos.length > 0 ? (
+        <p className="wedding-gallery-scroll-status wedding-gallery-scroll-end" role="status">
+          You&apos;ve reached the end of the guest gallery.
+        </p>
+      ) : null}
 
       {activeLightboxPhoto && lightboxIndex !== null ? (
         <div

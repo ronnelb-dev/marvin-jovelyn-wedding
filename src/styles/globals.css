@@ -4152,6 +4152,29 @@ a {
   gap: 18px;
 }
 
+.wedding-gallery-scroll-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+.wedding-gallery-scroll-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  margin: 18px 0 0;
+  color: var(--wedding-sage-700);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.wedding-gallery-scroll-end {
+  color: var(--wedding-sage-800);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.15rem;
+}
+
 .wedding-gallery-card {
   overflow: hidden;
   border: 1px solid var(--wedding-border);
