@@ -2,6 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
 
 const MAX_UPLOADER_NAME_LENGTH = 120;
+const PAGE_SIZE = 30;
+
+interface GuestPhotoCursor {
+  createdAt: string;
+  id: string;
+}
 
 interface GuestPhoto {
   id: string;
@@ -17,6 +23,7 @@ type GuestPhotosResponse =
   | {
       success: true;
       data: GuestPhoto[] | GuestPhoto;
+      nextCursor?: string | null;
     }
   | {
       success: false;
@@ -50,20 +57,76 @@ function parseDimension(value: unknown) {
   return Math.round(value);
 }
 
+function encodeCursor(photo: GuestPhoto) {
+  return Buffer.from(
+    JSON.stringify({ createdAt: photo.created_at, id: photo.id } satisfies GuestPhotoCursor),
+  ).toString("base64url");
+}
+
+function decodeCursor(value: string | string[] | undefined): GuestPhotoCursor | null {
+  if (!value || Array.isArray(value) || value.length > 1024) return null;
+
+  try {
+    const parsed = JSON.parse(Buffer.from(value, "base64url").toString("utf8")) as Partial<GuestPhotoCursor>;
+    if (
+      typeof parsed.createdAt !== "string" ||
+      Number.isNaN(Date.parse(parsed.createdAt)) ||
+      !/^[0-9T:.+Z-]+$/.test(parsed.createdAt) ||
+      typeof parsed.id !== "string" ||
+      parsed.id.length === 0 ||
+      parsed.id.length > 128 ||
+      !/^[A-Za-z0-9-]+$/.test(parsed.id)
+    ) {
+      return null;
+    }
+    return { createdAt: parsed.createdAt, id: parsed.id };
+  } catch {
+    return null;
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GuestPhotosResponse>,
 ) {
   try {
-    const supabase = getSupabaseClient();
-
     if (req.method === "GET") {
-      const { data, error } = await supabase
+      const rawCursor = req.query.cursor;
+      const cursor = decodeCursor(rawCursor);
+      const uploader = typeof req.query.uploader === "string" ? req.query.uploader.trim() : "";
+
+      if (rawCursor && !cursor) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid pagination cursor",
+        });
+      }
+
+      if (uploader.length > MAX_UPLOADER_NAME_LENGTH) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid uploader filter",
+        });
+      }
+
+      const supabase = getSupabaseClient();
+      let query = supabase
         .from("guest_photos")
         .select(
           "id,uploader_name,cloudinary_public_id,secure_url,width,height,created_at",
         )
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .order("id", { ascending: false })
+        .limit(PAGE_SIZE + 1);
+
+      if (uploader) query = query.eq("uploader_name", uploader);
+      if (cursor) {
+        query = query.or(
+          `created_at.lt.${cursor.createdAt},and(created_at.eq.${cursor.createdAt},id.lt.${cursor.id})`,
+        );
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         console.error("Guest photos fetch error:", error);
@@ -73,13 +136,19 @@ export default async function handler(
         });
       }
 
+      const page = (data ?? []).slice(0, PAGE_SIZE) as GuestPhoto[];
       return res.status(200).json({
         success: true,
-        data: data ?? [],
+        data: page,
+        nextCursor:
+          (data?.length ?? 0) > PAGE_SIZE && page.length > 0
+            ? encodeCursor(page[page.length - 1])
+            : null,
       });
     }
 
     if (req.method === "POST") {
+      const supabase = getSupabaseClient();
       const uploaderName =
         typeof req.body?.uploaderName === "string" ? req.body.uploaderName.trim() : "";
       const publicId =

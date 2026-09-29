@@ -25,7 +25,7 @@ const MUSIC_MUTED_STORAGE_KEY = "wedding-music-muted";
 
 export function WeddingMusicProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const showControl = pathname === "/home" || pathname === "/gallery" || pathname === "/rsvp";
+  const showControl = pathname === "/home" || pathname?.startsWith("/gallery") === true || pathname === "/rsvp";
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const mutedRef = useRef(true);
   const pausedForVideoRef = useRef(false);

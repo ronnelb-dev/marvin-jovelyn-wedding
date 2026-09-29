@@ -4,35 +4,28 @@ import Image from "next/image";
 import {
   AlertCircle,
   Camera,
-  ChevronLeft,
-  ChevronRight,
   CheckCircle2,
   Loader2,
+  RefreshCcw,
   Upload,
-  X,
-  ZoomIn,
-  ZoomOut,
-  RotateCcw,
 } from "lucide-react";
 import {
   type ChangeEvent,
   type FormEvent,
-  type PointerEvent as ReactPointerEvent,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 
+import GalleryLightbox from "@/components/gallery/GalleryLightbox";
+
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 const MAX_IMAGE_DIMENSION = 1600;
 const MAX_UPLOADER_NAME_LENGTH = 120;
 const UPLOADER_NAME_STORAGE_KEY = "marvin-jovelyn-wedding:uploader-name";
-const LIGHTBOX_MIN_ZOOM = 1;
-const LIGHTBOX_MAX_ZOOM = 3;
-const LIGHTBOX_ZOOM_STEP = 0.5;
-const GALLERY_BATCH_SIZE = 16;
 const REQUEST_TIMEOUT_MS = 30000;
 const CLOUDINARY_UPLOAD_TIMEOUT_MS = 120000;
 const COMPRESSION_ERROR_MESSAGE =
@@ -235,13 +228,13 @@ async function optimizeImageForUpload(file: File) {
 export default function GuestPhotoGallery() {
   const [photos, setPhotos] = useState<GuestPhoto[]>([]);
   const [selectedUploader, setSelectedUploader] = useState<string | null>(null);
-  const [visiblePhotoCount, setVisiblePhotoCount] = useState(GALLERY_BATCH_SIZE);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasReachedEnd, setHasReachedEnd] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [zoomScale, setZoomScale] = useState(LIGHTBOX_MIN_ZOOM);
-  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
   const [isLoadingGallery, setIsLoadingGallery] = useState(true);
+  const [galleryErrorMessage, setGalleryErrorMessage] = useState("");
+  const [reloadToken, setReloadToken] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [uploaderName, setUploaderName] = useState("");
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
@@ -253,98 +246,91 @@ export default function GuestPhotoGallery() {
   const formRef = useRef<HTMLFormElement>(null);
   const submitAfterFileSelectionRef = useRef(false);
   const uploaderNameInputRef = useRef<HTMLInputElement>(null);
-  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
   const gallerySentinelRef = useRef<HTMLDivElement>(null);
-  const lightboxPointersRef = useRef(new Map<number, { x: number; y: number }>());
-  const pinchDistanceRef = useRef<number | null>(null);
+  const requestInFlightRef = useRef(false);
+  const galleryAbortRef = useRef<AbortController | null>(null);
 
-  const filteredPhotos = useMemo(
-    () =>
-      selectedUploader
-        ? photos.filter((photo) => photo.uploader_name === selectedUploader)
-        : photos,
-    [photos, selectedUploader],
+  const lightboxImages = useMemo(
+    () => photos.map((photo) => ({
+      id: photo.id,
+      src: photo.secure_url,
+      alt: `Wedding photo uploaded by ${photo.uploader_name}`,
+    })),
+    [photos],
   );
 
-  const displayedPhotos = useMemo(
-    () => filteredPhotos.slice(0, visiblePhotoCount),
-    [filteredPhotos, visiblePhotoCount],
-  );
+  const loadPhotosPage = useCallback(async (cursor: string | null, replace: boolean) => {
+    if (replace) {
+      galleryAbortRef.current?.abort();
+      requestInFlightRef.current = false;
+    }
+    if (requestInFlightRef.current) return;
 
-  useEffect(() => {
-    setVisiblePhotoCount(GALLERY_BATCH_SIZE);
-    setHasReachedEnd(false);
+    requestInFlightRef.current = true;
+    setGalleryErrorMessage("");
+    if (replace) {
+      setIsLoadingGallery(true);
+    } else {
+      setIsLoadingMore(true);
+    }
+
+    const controller = new AbortController();
+    galleryAbortRef.current = controller;
+
+    try {
+      const params = new URLSearchParams();
+      if (cursor) params.set("cursor", cursor);
+      if (selectedUploader) params.set("uploader", selectedUploader);
+      const response = await fetch(`/api/guest-photos?${params}`, { signal: controller.signal });
+      const result = await parseJsonResponse<{
+        success: true;
+        data: GuestPhoto[];
+        nextCursor: string | null;
+      }>(response);
+
+      setPhotos((current) => {
+        const base = replace ? [] : current;
+        const seen = new Set(base.map((photo) => photo.id));
+        return [...base, ...result.data.filter((photo) => !seen.has(photo.id))];
+      });
+      setNextCursor(result.nextCursor);
+      setHasReachedEnd(result.nextCursor === null);
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === "AbortError")) {
+        setGalleryErrorMessage(
+          getErrorMessage(error, "We could not load the guest photo gallery."),
+        );
+      }
+    } finally {
+      if (galleryAbortRef.current === controller) {
+        requestInFlightRef.current = false;
+        setIsLoadingGallery(false);
+        setIsLoadingMore(false);
+      }
+    }
   }, [selectedUploader]);
 
   useEffect(() => {
+    setPhotos([]);
+    setNextCursor(null);
+    setHasReachedEnd(false);
+    setLightboxIndex(null);
+    loadPhotosPage(null, true);
+    return () => galleryAbortRef.current?.abort();
+  }, [loadPhotosPage, reloadToken]);
+
+  useEffect(() => {
     const sentinel = gallerySentinelRef.current;
-    if (!sentinel || isLoadingGallery) return;
+    if (!sentinel || isLoadingGallery || isLoadingMore || hasReachedEnd || !nextCursor || galleryErrorMessage) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting || isLoadingMore || hasReachedEnd) return;
-        if (visiblePhotoCount >= filteredPhotos.length) {
-          setHasReachedEnd(true);
-          return;
-        }
-        setIsLoadingMore(true);
-        window.setTimeout(() => {
-          setVisiblePhotoCount((current) => Math.min(current + GALLERY_BATCH_SIZE, filteredPhotos.length));
-          setIsLoadingMore(false);
-        }, 250);
+        if (entry.isIntersecting) loadPhotosPage(nextCursor, false);
       },
-      { rootMargin: "240px 0px" },
+      { rootMargin: "320px 0px" },
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [filteredPhotos.length, hasReachedEnd, isLoadingGallery, isLoadingMore, visiblePhotoCount]);
-
-  const activeLightboxPhoto = lightboxIndex === null ? null : displayedPhotos[lightboxIndex] ?? null;
-
-  function resetLightboxView() {
-    setZoomScale(LIGHTBOX_MIN_ZOOM);
-    setPanOffset({ x: 0, y: 0 });
-  }
-
-  function closeLightbox() {
-    setLightboxIndex(null);
-    resetLightboxView();
-  }
-
-  function moveLightbox(direction: -1 | 1) {
-    if (lightboxIndex === null) return;
-    const nextIndex = lightboxIndex + direction;
-    if (nextIndex < 0 || nextIndex >= displayedPhotos.length) return;
-    setLightboxIndex(nextIndex);
-    resetLightboxView();
-  }
-
-  function handleLightboxPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    event.currentTarget.setPointerCapture(event.pointerId);
-    lightboxPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    if (lightboxPointersRef.current.size === 2) {
-      const points = [...lightboxPointersRef.current.values()];
-      pinchDistanceRef.current = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
-    }
-  }
-
-  function handleLightboxPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    const previous = lightboxPointersRef.current.get(event.pointerId);
-    if (!previous) return;
-    lightboxPointersRef.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    if (lightboxPointersRef.current.size === 2 && pinchDistanceRef.current) {
-      const points = [...lightboxPointersRef.current.values()];
-      const distance = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
-      setZoomScale((current) => Math.min(LIGHTBOX_MAX_ZOOM, Math.max(LIGHTBOX_MIN_ZOOM, current * (distance / pinchDistanceRef.current!))));
-      pinchDistanceRef.current = distance;
-    } else if (zoomScale > LIGHTBOX_MIN_ZOOM) {
-      setPanOffset((current) => ({ x: current.x + event.clientX - previous.x, y: current.y + event.clientY - previous.y }));
-    }
-  }
-
-  function handleLightboxPointerUp(event: ReactPointerEvent<HTMLDivElement>) {
-    lightboxPointersRef.current.delete(event.pointerId);
-    if (lightboxPointersRef.current.size < 2) pinchDistanceRef.current = null;
-  }
+  }, [galleryErrorMessage, hasReachedEnd, isLoadingGallery, isLoadingMore, loadPhotosPage, nextCursor]);
 
   useEffect(() => {
     if (!isNameModalOpen) return;
@@ -355,74 +341,6 @@ export default function GuestPhotoGallery() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [isNameModalOpen]);
-
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.setTimeout(() => lightboxCloseRef.current?.focus(), 0);
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setLightboxIndex(null);
-        resetLightboxView();
-      }
-      if ((event.key === "ArrowLeft" || event.key === "ArrowRight") && lightboxIndex !== null) {
-        const direction = event.key === "ArrowLeft" ? -1 : 1;
-        const nextIndex = lightboxIndex + direction;
-        if (nextIndex >= 0 && nextIndex < displayedPhotos.length) {
-          setLightboxIndex(nextIndex);
-          resetLightboxView();
-        }
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [lightboxIndex, displayedPhotos.length]);
-
-  useEffect(() => {
-    if (lightboxIndex !== null && lightboxIndex >= displayedPhotos.length) {
-      setLightboxIndex(null);
-      resetLightboxView();
-    }
-  }, [displayedPhotos.length, lightboxIndex]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadPhotos() {
-      try {
-        const response = await fetch("/api/guest-photos");
-        const result = await parseJsonResponse<{ success: true; data: GuestPhoto[] }>(
-          response,
-        );
-
-        if (isMounted) {
-          setPhotos(result.data);
-        }
-      } catch (error) {
-        if (isMounted) {
-          setErrorMessage(
-            getErrorMessage(error, "We could not load the guest photo gallery."),
-          );
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoadingGallery(false);
-        }
-      }
-    }
-
-    loadPhotos();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -625,7 +543,12 @@ export default function GuestPhotoGallery() {
           setUploadStatus(`Adding photo ${photoNumber} of ${totalPhotos} to the gallery...`);
           const savedPhoto = await saveGuestPhoto(uploadResult, trimmedName);
           savedPhotos.push(savedPhoto);
-          setPhotos((current) => [savedPhoto, ...current]);
+          if (!selectedUploader || selectedUploader === savedPhoto.uploader_name) {
+            setPhotos((current) => [
+              savedPhoto,
+              ...current.filter((photo) => photo.id !== savedPhoto.id),
+            ]);
+          }
         } catch (error) {
           failedUploads.push(
             `${photo.file.name}: ${getErrorMessage(
@@ -816,7 +739,7 @@ export default function GuestPhotoGallery() {
       {selectedUploader ? (
         <div className="wedding-gallery-filter-banner" role="status">
           <span>Showing photos shared by {selectedUploader}</span>
-          <button type="button" onClick={() => { setSelectedUploader(null); setVisiblePhotoCount(GALLERY_BATCH_SIZE); setHasReachedEnd(false); }}>
+          <button type="button" onClick={() => setSelectedUploader(null)}>
             Show all guest uploads
           </button>
         </div>
@@ -827,14 +750,23 @@ export default function GuestPhotoGallery() {
           <Loader2 size={32} className="wedding-gallery-spinner" />
           <p>Loading guest photos...</p>
         </div>
-      ) : displayedPhotos.length > 0 ? (
+      ) : galleryErrorMessage && photos.length === 0 ? (
+        <div className="wedding-gallery-empty wedding-gallery-error" role="alert">
+          <AlertCircle size={36} />
+          <h3>We couldn&apos;t load the guest gallery</h3>
+          <p>{galleryErrorMessage}</p>
+          <button type="button" className="wedding-gallery-retry" onClick={() => setReloadToken((value) => value + 1)}>
+            <RefreshCcw size={18} /> Try again
+          </button>
+        </div>
+      ) : photos.length > 0 ? (
         <div className="wedding-gallery-grid">
-          {displayedPhotos.map((photo) => (
+          {photos.map((photo, index) => (
             <article className="wedding-gallery-card" key={photo.id}>
               <button
                 type="button"
                 className="wedding-gallery-card-image"
-                onClick={() => { setLightboxIndex(displayedPhotos.indexOf(photo)); resetLightboxView(); }}
+                onClick={() => setLightboxIndex(index)}
                 aria-label={`Open wedding photo uploaded by ${photo.uploader_name}`}
               >
                 <Image
@@ -881,40 +813,25 @@ export default function GuestPhotoGallery() {
           <Loader2 size={18} className="wedding-gallery-spinner" /> Loading more guest photos...
         </p>
       ) : null}
-      {hasReachedEnd && displayedPhotos.length > 0 ? (
+      {galleryErrorMessage && photos.length > 0 ? (
+        <div className="wedding-gallery-load-more-error" role="alert">
+          <span>{galleryErrorMessage}</span>
+          <button type="button" onClick={() => loadPhotosPage(nextCursor, false)}>Try again</button>
+        </div>
+      ) : null}
+      {hasReachedEnd && photos.length > 0 ? (
         <p className="wedding-gallery-scroll-status wedding-gallery-scroll-end" role="status">
           You&apos;ve reached the end of the guest gallery.
         </p>
       ) : null}
 
-      {activeLightboxPhoto && lightboxIndex !== null ? (
-        <div
-          className="wedding-gallery-lightbox-backdrop"
-          role="presentation"
-          onClick={(event) => { if (event.target === event.currentTarget) closeLightbox(); }}
-        >
-          <div className="wedding-gallery-lightbox" role="dialog" aria-modal="true" aria-label="Guest photo viewer">
-            <button ref={lightboxCloseRef} type="button" className="wedding-gallery-lightbox-close" onClick={closeLightbox} aria-label="Close photo viewer"><X size={24} /></button>
-            <button type="button" className="wedding-gallery-lightbox-nav wedding-gallery-lightbox-prev" onClick={() => moveLightbox(-1)} disabled={lightboxIndex === 0} aria-label="Previous image"><ChevronLeft size={32} /></button>
-            <div className="wedding-gallery-lightbox-stage" onPointerDown={handleLightboxPointerDown} onPointerMove={handleLightboxPointerMove} onPointerUp={handleLightboxPointerUp} onPointerCancel={handleLightboxPointerUp}>
-              <Image
-                src={activeLightboxPhoto.secure_url}
-                alt={`Wedding photo uploaded by ${activeLightboxPhoto.uploader_name}`}
-                fill
-                sizes="100vw"
-                className="wedding-gallery-lightbox-image"
-                style={{ transform: `translate(${panOffset.x}px, ${panOffset.y}px) scale(${zoomScale})` }}
-              />
-            </div>
-            <button type="button" className="wedding-gallery-lightbox-nav wedding-gallery-lightbox-next" onClick={() => moveLightbox(1)} disabled={lightboxIndex === displayedPhotos.length - 1} aria-label="Next image"><ChevronRight size={32} /></button>
-            <div className="wedding-gallery-lightbox-tools" aria-label="Zoom controls">
-              <button type="button" onClick={() => setZoomScale((current) => Math.max(LIGHTBOX_MIN_ZOOM, current - LIGHTBOX_ZOOM_STEP))} aria-label="Zoom out"><ZoomOut size={20} /></button>
-              <button type="button" onClick={resetLightboxView} aria-label="Reset zoom"><RotateCcw size={18} /></button>
-              <button type="button" onClick={() => setZoomScale((current) => Math.min(LIGHTBOX_MAX_ZOOM, current + LIGHTBOX_ZOOM_STEP))} aria-label="Zoom in"><ZoomIn size={20} /></button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      <GalleryLightbox
+        images={lightboxImages}
+        activeIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onIndexChange={setLightboxIndex}
+        label="Guest photo viewer"
+      />
 
       {isNameModalOpen ? (
         <div className="wedding-gallery-modal-backdrop" role="presentation">
