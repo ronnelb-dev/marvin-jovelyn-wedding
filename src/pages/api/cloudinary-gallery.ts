@@ -5,6 +5,13 @@ import { getCuratedGalleryById } from "@/lib/gallery-catalog";
 const PAGE_SIZE = 30;
 const MAX_CURSOR_LENGTH = 2048;
 
+type CloudinaryFolderField = "asset_folder" | "folder";
+
+interface GalleryCursor {
+  folderField: CloudinaryFolderField;
+  nextCursor: string;
+}
+
 interface CloudinaryResource {
   asset_id?: string;
   public_id?: string;
@@ -24,6 +31,31 @@ function firstQueryValue(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
 }
 
+function encodeGalleryCursor(folderField: CloudinaryFolderField, nextCursor: string) {
+  return Buffer.from(JSON.stringify({ folderField, nextCursor } satisfies GalleryCursor)).toString(
+    "base64url",
+  );
+}
+
+function decodeGalleryCursor(value: string | undefined): GalleryCursor | null {
+  if (!value || value.length > MAX_CURSOR_LENGTH) return null;
+
+  try {
+    const parsed = JSON.parse(Buffer.from(value, "base64url").toString("utf8")) as Partial<GalleryCursor>;
+    if (
+      (parsed.folderField !== "asset_folder" && parsed.folderField !== "folder") ||
+      typeof parsed.nextCursor !== "string" ||
+      parsed.nextCursor.length === 0 ||
+      parsed.nextCursor.length > MAX_CURSOR_LENGTH
+    ) {
+      return null;
+    }
+    return { folderField: parsed.folderField, nextCursor: parsed.nextCursor };
+  } catch {
+    return null;
+  }
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
@@ -31,14 +63,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const galleryId = firstQueryValue(req.query.gallery);
-  const cursor = firstQueryValue(req.query.cursor);
+  const rawCursor = firstQueryValue(req.query.cursor);
+  const cursor = rawCursor ? decodeGalleryCursor(rawCursor) : null;
   const gallery = galleryId ? getCuratedGalleryById(galleryId) : undefined;
 
   if (!gallery) {
     return res.status(400).json({ success: false, error: "Invalid gallery" });
   }
 
-  if (cursor && cursor.length > MAX_CURSOR_LENGTH) {
+  if (rawCursor && !cursor) {
     return res.status(400).json({ success: false, error: "Invalid pagination cursor" });
   }
 
@@ -50,35 +83,71 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500).json({ success: false, error: "Gallery service is not configured" });
   }
 
+  const cloudinaryFolder = gallery.cloudinaryFolder;
+  const configuredCloudName = cloudName;
+
   try {
-    const body: Record<string, unknown> = {
-      expression: `resource_type:image AND folder="${gallery.cloudinaryFolder}"`,
-      sort_by: [{ created_at: "desc" }, { public_id: "desc" }],
-      max_results: PAGE_SIZE,
-    };
-    if (cursor) body.next_cursor = cursor;
+    async function searchFolder(
+      folderField: CloudinaryFolderField,
+      nextCursor?: string,
+    ) {
+      const body: Record<string, unknown> = {
+        expression: `resource_type:image AND ${folderField}="${cloudinaryFolder}"`,
+        sort_by: [{ created_at: "desc" }, { public_id: "desc" }],
+        max_results: PAGE_SIZE,
+      };
+      if (nextCursor) body.next_cursor = nextCursor;
 
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/resources/search`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${Buffer.from(`${apiKey}:${apiSecret}`).toString("base64")}`,
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${encodeURIComponent(configuredCloudName)}/resources/search`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${Buffer.from(`${apiKey}:${apiSecret}`).toString("base64")}`,
+          },
+          body: JSON.stringify(body),
         },
-        body: JSON.stringify(body),
-      },
-    );
+      );
 
-    if (!response.ok) {
-      console.error("Cloudinary gallery fetch failed:", response.status);
-      return res.status(response.status === 429 ? 503 : 502).json({
+      if (!response.ok) {
+        return { ok: false as const, status: response.status };
+      }
+
+      return {
+        ok: true as const,
+        result: (await response.json()) as CloudinarySearchResponse,
+      };
+    }
+
+    let folderField: CloudinaryFolderField = cursor?.folderField ?? "asset_folder";
+    let search = await searchFolder(folderField, cursor?.nextCursor);
+
+    // New Cloudinary product environments use dynamic folders (`asset_folder`).
+    // Fall back only on the first page for legacy fixed-folder environments.
+    if (
+      !cursor &&
+      (!search.ok || ((search.result.resources?.length ?? 0) === 0 && !search.result.next_cursor))
+    ) {
+      const legacySearch = await searchFolder("folder");
+      if (legacySearch.ok && (legacySearch.result.resources?.length ?? 0) > 0) {
+        folderField = "folder";
+        search = legacySearch;
+      } else if (!search.ok && legacySearch.ok) {
+        folderField = "folder";
+        search = legacySearch;
+      }
+    }
+
+    if (!search.ok) {
+      console.error("Cloudinary gallery fetch failed:", search.status);
+      return res.status(search.status === 429 ? 503 : 502).json({
         success: false,
         error: "The gallery is temporarily unavailable. Please try again.",
       });
     }
 
-    const result = (await response.json()) as CloudinarySearchResponse;
+    const result = search.result;
     const data = (result.resources ?? []).flatMap((resource) => {
       if (!resource.public_id || !resource.secure_url) return [];
       return [{
@@ -95,7 +164,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({
       success: true,
       data,
-      nextCursor: result.next_cursor ?? null,
+      nextCursor: result.next_cursor
+        ? encodeGalleryCursor(folderField, result.next_cursor)
+        : null,
     });
   } catch (error) {
     console.error("Cloudinary gallery error:", error);

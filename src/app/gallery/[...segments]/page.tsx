@@ -40,13 +40,12 @@ export async function generateMetadata({ params }: GalleryRouteProps): Promise<M
   };
 }
 
-function GalleryHeader({ title, kicker, description, isPrenup = false }: { title: string; kicker: string; description: string; isPrenup?: boolean }) {
+function GalleryHeader({ title, kicker, description }: { title: string; kicker: string; description: string }) {
   return (
     <>
       <nav className="wedding-gallery-breadcrumbs" aria-label="Breadcrumb">
         <ol>
           <li><Link href="/gallery">Galleries</Link></li>
-          {isPrenup ? <li><ChevronRight aria-hidden="true" /><Link href="/gallery#prenup-photos">Prenup Photos</Link></li> : null}
           <li aria-current="page"><ChevronRight aria-hidden="true" /><span>{title}</span></li>
         </ol>
       </nav>
@@ -76,7 +75,7 @@ export default async function GalleryCollectionPage({ params }: GalleryRouteProp
 
   return (
     <main className="wedding-home wedding-gallery-page">
-      <GalleryHeader title={gallery.title} kicker={gallery.kicker} description={gallery.description} isPrenup={gallery.segments[0] === "prenup-photos"} />
+      <GalleryHeader title={gallery.title} kicker={gallery.kicker} description={gallery.description} />
       <section className="wedding-gallery-section wedding-curated-section" aria-label={`${gallery.title} photos`}>
         <CuratedGallery galleryId={gallery.id} title={gallery.title} />
       </section>
