@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import CuratedGallery from "@/components/gallery/CuratedGallery";
+import GalleryVideoFeature from "@/components/gallery/GalleryVideoFeature";
 import GuestPhotoGallery from "@/components/gallery/GuestPhotoGallery";
 import {
   curatedGalleries,
@@ -76,6 +77,15 @@ export default async function GalleryCollectionPage({ params }: GalleryRouteProp
   return (
     <main className="wedding-home wedding-gallery-page">
       <GalleryHeader title={gallery.title} kicker={gallery.kicker} description={gallery.description} />
+      {gallery.video ? (
+        <GalleryVideoFeature
+          videoId={gallery.video.youtubeId}
+          title={gallery.video.title}
+          kicker={gallery.video.kicker}
+          heading={gallery.video.heading}
+          description={gallery.video.description}
+        />
+      ) : null}
       <section className="wedding-gallery-section wedding-curated-section" aria-label={`${gallery.title} photos`}>
         <CuratedGallery galleryId={gallery.id} title={gallery.title} />
       </section>

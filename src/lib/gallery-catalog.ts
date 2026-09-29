@@ -13,6 +13,13 @@ export interface GalleryCatalogEntry {
   route: string;
   segments: string[];
   cloudinaryFolder: string;
+  video?: {
+    youtubeId: string;
+    title: string;
+    kicker: string;
+    heading: string;
+    description: string;
+  };
 }
 
 export const guestGallery = {
@@ -41,6 +48,13 @@ export const curatedGalleries: GalleryCatalogEntry[] = [
     route: "/gallery/prenup-photos",
     segments: ["prenup-photos"],
     cloudinaryFolder: "marvin-jovelyn-wedding/prenup-photos",
+    video: {
+      youtubeId: "TuiVa2W_o80",
+      title: "Marvin and Jovelyn prenup video",
+      kicker: "our prenup film",
+      heading: "Before we said I do",
+      description: "A glimpse into our story before the wedding day.",
+    },
   },
   {
     id: "proposal",
@@ -68,6 +82,13 @@ export const curatedGalleries: GalleryCatalogEntry[] = [
     route: "/gallery/wedding-sde",
     segments: ["wedding-sde"],
     cloudinaryFolder: "marvin-jovelyn-wedding/wedding-sde",
+    video: {
+      youtubeId: "1qd5mfj7MfE",
+      title: "Marvin and Jovelyn wedding same-day edit",
+      kicker: "our wedding film",
+      heading: "The day we became forever",
+      description: "Relive the joy, laughter, and love from our wedding day.",
+    },
   },
 ];
 
